@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.256">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Johannes Tomasoni">
+<meta name="dcterms.date" content="2021-08-15">
+<meta name="description" content="Applying portfolio theory on model ensembling.">
+
+<title>AI curious - Model allocation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">AI curious</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Johannes Tomasoni</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/joatom"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/JohannesTomason"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Model allocation</h1>
+                  <div>
+        <div class="description">
+          Applying portfolio theory on model ensembling.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Basics</div>
+                <div class="quarto-category">ML</div>
+                <div class="quarto-category">Economics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Johannes Tomasoni </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 15, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-ensembling-works" id="toc-why-ensembling-works" class="nav-link active" data-scroll-target="#why-ensembling-works">1. Why ensembling works</a></li>
+  <li><a href="#weights-by-residual-variance" id="toc-weights-by-residual-variance" class="nav-link" data-scroll-target="#weights-by-residual-variance">2. Weights by residual variance</a></li>
+  <li><a href="#portfolio-theory-for-ensembling" id="toc-portfolio-theory-for-ensembling" class="nav-link" data-scroll-target="#portfolio-theory-for-ensembling">3. Portfolio theory for ensembling</a></li>
+  <li><a href="#ensembling-tps-aug-2021" id="toc-ensembling-tps-aug-2021" class="nav-link" data-scroll-target="#ensembling-tps-aug-2021">4. Ensembling TPS Aug 2021</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">5. Results</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#ressources" id="toc-ressources" class="nav-link" data-scroll-target="#ressources">Ressources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<blockquote class="blockquote">
+<p>This notebook was originally published on https://www.kaggle.com/joatom/model-allocation.</p>
+</blockquote>
+<p>In this notebook I experiment with two ensembling strategies.</p>
+<p>There are many ways to combine different models to improve predictions. A common technique for regression tasks is taking a weighted average of the model predictions (<code>y_pred = (m1(x)*w1 + ... + mn(x)*wn) / n</code>). Another common technique is building a meta model, that is trained on the models’ outputs.</p>
+<p>The first chapter starts with a simple linear combination of two models. And we explore with an simple example, why ensembling actually works. These insights will lead, in the second chapter, to the first technique on how to choose weights for a linear ensemble by using residual variance. In the third chapter an alternative for the weight selection is examined. This second technique is inspired by portfolio theory (a theory to combine financial assets). In the fourth chapter the two techniques are applied and compared on the <a href="https://www.kaggle.com/c/tabular-playground-series-aug-2021">Tabular Playground Series (TPS) - Aug 2021</a> competition. Finaly cross validation (CV) and leaderboard (LB) Scores are listed in the fith chapter.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the ease of explanation we make some simplifying assumptions, such as equal distribution of the data, same distribution on unseen data, … (just think of a vanilla world).</p>
+</div>
+</div>
+<section id="why-ensembling-works" class="level1">
+<h1>1. Why ensembling works</h1>
+<p>Suppose there are two fitted regression models and they predict values like shown in the first chart.</p>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<p><img src="2021-08-15-model-allocation_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>To get a better intuition on how good the two models fit the ground truth, we plot the residuals <code>y_true(x)-m(x)</code>.</p>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<p><img src="2021-08-15-model-allocation_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>If we had to choose one of the models, which one would we prefer? Model 2 does better on the first data point and perfect on the third, but it contains an outlier the 5th data point.</p>
+<p>Let’s look at the mean and the variance of the residuals.</p>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="7">
+<div class="cell-output cell-output-stdout">
+<pre><code>Model #1. mean:  0.0714, var:  1.6020
+Model #2. mean:  0.0000, var:  2.0000</code></pre>
+</div>
+</div>
+<p>On the long run Model2 has an average residual of 0. Model 1 carries along a residual of 0.0714. So on average Model 2 seams to do better.</p>
+<p>But Model 2 also has a higher variance. That implies we have a great chance to do a great prediction (e.g.&nbsp;x=3) but we also have high risk to screw the prediction (e.g.&nbsp;x=5).</p>
+<p>Now we build a simple linear ensemble of the two models like <code>ens = 0.5 * m1 + 0.5 m2</code>.</p>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<p><img src="2021-08-15-model-allocation_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The ensemble line is closer to the true values. It also looks smoother then m1 and m2.</p>
+<div class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<p><img src="2021-08-15-model-allocation_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>In the residual chart we can see that the ensemble does a bit worse for x=3 compared to Model 2. But it also decreases the residuals for the outliers (points 1, 5, 7).</p>
+<p>Let’s check the stats:</p>
+<div class="cell" data-execution_count="12">
+<div class="cell-output cell-output-stdout">
+<pre><code>Ensemble. mean:  0.0357, var:  0.2219</code></pre>
+</div>
+</div>
+<p>We dramatically reduced the variance, hence reduced the risk/chance. The mean value is now in between Model 1 and Model 2.</p>
+<p>Finally let’s play around with the model weights in the ensemble and check how mean and variance change.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate weights for w1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>weight_m1 <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">30</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ens_mean <span class="op">=</span> np.zeros(<span class="dv">30</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ens_var <span class="op">=</span> np.zeros(<span class="dv">30</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, w1 <span class="kw">in</span> <span class="bu">enumerate</span>(weight_m1):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># build ensemble for different weights</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ens <span class="op">=</span> m1<span class="op">*</span>w1 <span class="op">+</span> m2<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>w1)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ens_res <span class="op">=</span> y_true <span class="op">-</span> ens</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># keep track of mean and var of the differently weighted ensembles</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    ens_mean[i] <span class="op">=</span> ens_res.mean()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    ens_var[i] <span class="op">=</span> ens_res.var()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<p><img src="2021-08-15-model-allocation_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>With the previous 50:50 split the variance seems almost at the lowest point. So we only get a reduction of the mean below 0.0357 if we allow the ensemble to have more variance, hence take more risk.</p>
+</section>
+<section id="weights-by-residual-variance" class="level1">
+<h1>2. Weights by residual variance</h1>
+<p>Since the Model 1 and Model 2 are well fitted, their average residuals are pretty close to 0. So let’s focus on reducing our variance to avoid surprises on later later predictions.</p>
+<p>We now solve for the optimal weights that minimizes the variance of the residual of our ensemble with this function:</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fun <span class="op">=</span> <span class="kw">lambda</span> w: (y_true<span class="op">-</span>np.matmul(w, preds)).var()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We also define a constraint so that the <code>w.sum() == 0</code>:</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># w.sum() = 1  &lt;=&gt; 0 = w.sum()-1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cons <span class="op">=</span> ({<span class="st">'type'</span>: <span class="st">'eq'</span>, <span class="st">'fun'</span>: <span class="kw">lambda</span> w: w.<span class="bu">sum</span>()<span class="op">-</span><span class="dv">1</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you want, you can also set bounds, so that the weights want be negative.</p>
+<p>I don’t. I like the idea of going <em>short</em> with a model. And negative weights really increase the results of TPS predictions in chapter 4.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bnds <span class="op">=</span> ((<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we are all set to retrieve the optimal weights.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predictions of Model1 and Model 2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> np.array([m1, m2])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># init weights</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>w_init <span class="op">=</span> np.ones(preds.shape[<span class="dv">0</span>])<span class="op">/</span>preds.shape[<span class="dv">0</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># run optimization</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> scipy.optimize.minimize(fun, w_init, method<span class="op">=</span><span class="st">'SLSQP'</span>,  constraints<span class="op">=</span>cons) <span class="co">#,bounds=bnds</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># get optimal weights</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>w_calc <span class="op">=</span> res.x</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Calculated weights: </span><span class="sc">{</span>w_calc<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Calculated weights: [0.53150242 0.46849758]</code></pre>
+</div>
+</div>
+<p>Let’s see how the calculated weights perform.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ens_ex1 <span class="op">=</span> np.matmul(w_calc, preds)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ens_ex1_res<span class="op">=</span>y_true<span class="op">-</span>ens_ex1</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Ensemble Ex1. mean: </span><span class="sc">{</span>ens_ex1_res<span class="sc">.</span>mean()<span class="sc">: .4f}</span><span class="ss">, var: </span><span class="sc">{</span>ens_ex1_res<span class="sc">.</span>var()<span class="sc">: .4f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ensemble Ex1. mean:  0.0380, var:  0.2157</code></pre>
+</div>
+</div>
+<p>We con compare the results with the first ensemble 50:50 split. With the calculated weights we could further reduce the variance of the model (0.2219 -&gt; 0.2157). But unfortunately the mean increased a bit (0.0357 -&gt; 0.0380).</p>
+<p>We see the trade off between mean and variance and have to decide if we prefer a more stable model or take some risk for better results.</p>
+</section>
+<section id="portfolio-theory-for-ensembling" class="level1">
+<h1>3. Portfolio theory for ensembling</h1>
+<p>In finance different assets are often combined in a portfolio. There are many criteria for the asset selection/allocation. One of them is by choosing a risk strategy. In 1952 the economist Harry Markowitz defined a <em>Portfolio Selection</em> strategy which built the foundation of many portfolio strategies to come. There is a great summary on <a href="https://en.wikipedia.org/wiki/Modern_portfolio_theory">Wikipidia</a>, but the original paper can also be found with a google search.</p>
+<p>So, what it is all about. Let’s assume we are living in an easy, plain vanilla world. We want to build a portfolio that yields high return with low risk. That’s not easy. If we only buy stocks of our favorite fruit grower, a rainy summer would result in a low return. Wouldn’t it be smart to also buy stocks of a raincoat producer, just in case. But what if the summer was sunny, then we would have rather invested the entire money in fruits instead of raincoats. It’s clearly a trade off. Either we lower the risk of loosing money in a rainy summer and invest in both (fruits and raincoats). Or we take the risk investing all money in fruits to maybe gain more money. And if we lower the risk, in which raincoat producer should we invest? The one with the bumpy stock price or the one with a steady, but slowly growing stock price.</p>
+<p>Now, we already see the first similarities between our ensemble example above and the Portfolio Theory. Risk can be measured through variance and a good return of our ensemble is results in a low expected residual.</p>
+<p>But there is even more in Portfolio Theory. It also takes dependencies between assets into account. If the summer is sunny the fruit price goes up and the raincoat price goes down, they are somewhat negative correlated.</p>
+<p>Since we expect the average residual of our fitted models to be close to 0 and we build a linear model, we can expect our ensemble average residual also to be close to 0. Therefore, we focus on optimizing the portfolio variance, which can be boiled down to <code>Var_p = w'*Cov*w</code>. The covariance measures the dependency between combined models and also considers the variance.</p>
+<blockquote class="blockquote">
+<p>What data can we actually use? In the financial example <em>returns</em> are the increase or decrease of an asset price (p/p_t-1), hence we are looking on returns for a certain period of time. In ML we can take our <strong>out-of-fold</strong> (oof) predictions and calculate the residuals from the train targets to build a dataset.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Can we do this despite we are looking at a time-series in the financial example? Yes, in this <em>basic</em> portfolio theory we don’t take time dependencies into account. But it’s important to keep the same order for the different asset returns for correlation/covariance calculation. We want to compare the residual of model 1 and 2 for always the same data item.</p>
+</blockquote>
+<p>The optimization function for the second ensemble technique is:</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">## following https://en.wikipedia.org/wiki/Modern_portfolio_theory</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictions of Model 1 and Model 2</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> np.array([m1,m2])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals of Model 1 and Model 2</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>preds_res <span class="op">=</span> np.array([m1_res, m2_res])</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># handle residuals like asset returns</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> np.array(preds_res.mean(axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># factor by which R is considered during optimization. turned off for our example</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="dv">0</span> <span class="co">#-1</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># covariance matrix of model residuals</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>CM <span class="op">=</span> np.cov(preds_res)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># optimization function</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>fun <span class="op">=</span> <span class="kw">lambda</span> w: np.matmul(np.matmul(w.T,CM),w) <span class="op">-</span> q <span class="op">*</span> np.matmul(R,w)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># constraint: weights must sum up to 1.0</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>cons <span class="op">=</span> ({<span class="st">'type'</span>: <span class="st">'eq'</span>, <span class="st">'fun'</span>: <span class="kw">lambda</span> x: x.<span class="bu">sum</span>()<span class="op">-</span><span class="dv">1</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the optimization.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># init weights</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>w_init <span class="op">=</span> np.ones(preds.shape[<span class="dv">0</span>])<span class="op">/</span>preds.shape[<span class="dv">0</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># run optimization</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> scipy.optimize.minimize(fun, w_init, method<span class="op">=</span><span class="st">'SLSQP'</span>,  constraints<span class="op">=</span>cons) <span class="co">#,bounds=bnds</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># get optimal weights</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>w_calc <span class="op">=</span> res.x</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Calculated weights: </span><span class="sc">{</span>w_calc<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Calculated weights: [0.53150242 0.46849758]</code></pre>
+</div>
+</div>
+<p>The weights are the same as in the first technique. That really surprised me. And I run a couple of examples with different models. But the weights were only slightly different between the two techniques.</p>
+</section>
+<section id="ensembling-tps-aug-2021" class="level1">
+<h1>4. Ensembling TPS Aug 2021</h1>
+<p>Now that we have to techniques to ensemble, let’s try them on the <a href="https://www.kaggle.com/c/tabular-playground-series-aug-2021/overview">TPS August 2021</a> data.</p>
+<p>We do a 7 kfold split and calculate the residuals on the out-of-fold-predictions, that are used for validation. We train 7 regression models with different architecture so we get some diversity.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>N_SPLITS <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">2021</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>PATH_INPUT <span class="op">=</span> <span class="st">'/home/kaggle/TPS-AUG-2021/input/'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and shuffle</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> pd.read_csv(PATH_INPUT <span class="op">+</span> <span class="st">'test.csv'</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> pd.read_csv(PATH_INPUT <span class="op">+</span> <span class="st">'train.csv'</span>).sample(frac<span class="op">=</span><span class="fl">1.0</span>, random_state <span class="op">=</span> SEED).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>train[<span class="st">'fold_crit'</span>] <span class="op">=</span> train.loss</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>train.loc[train.loss<span class="op">&gt;=</span><span class="dv">39</span>, <span class="st">'fold_crit'</span>]<span class="op">=</span><span class="dv">39</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> <span class="st">'loss'</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fold_crit <span class="op">=</span> <span class="st">'fold_crit'</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(train.columns)<span class="op">-</span><span class="bu">set</span>([<span class="st">'id'</span>,<span class="st">'kfold'</span>,<span class="st">'loss'</span>,<span class="st">'fold_crit'</span>]<span class="op">+</span>[target]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply abhisheks splitting technique</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>skf <span class="op">=</span> StratifiedKFold(n_splits <span class="op">=</span> N_SPLITS, random_state <span class="op">=</span> <span class="va">None</span>, shuffle <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>train.kfold <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f, (train_idx, valid_idx) <span class="kw">in</span> <span class="bu">enumerate</span>(skf.split(X <span class="op">=</span> train, y <span class="op">=</span> train[fold_crit].values)):</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    train.loc[valid_idx,<span class="st">'kfold'</span>] <span class="op">=</span> f</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>train.groupby(<span class="st">'kfold'</span>)[target].count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>kfold
+0.0    35715
+1.0    35715
+2.0    35714
+3.0    35714
+4.0    35714
+5.0    35714
+6.0    35714
+Name: loss, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define models</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'LinReg'</span>: LinearRegression(n_jobs<span class="op">=-</span><span class="dv">1</span>),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'HGB'</span>: HistGradientBoostingRegressor(),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'XGB'</span>: XGBRegressor(tree_method <span class="op">=</span> <span class="st">'gpu_hist'</span>, reg_lambda<span class="op">=</span> <span class="dv">6</span>, reg_alpha<span class="op">=</span> <span class="dv">10</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'KNN'</span>: KNeighborsRegressor(<span class="dv">100</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BayesRidge'</span>: BayesianRidge(),</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ExtraTrees'</span>: ExtraTreesRegressor(max_depth<span class="op">=</span><span class="dv">2</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Poisson'</span>: Pipeline(steps<span class="op">=</span>[(<span class="st">'scale'</span>, StandardScaler()),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                (<span class="st">'pois'</span>, PoissonRegressor(max_iter<span class="op">=</span><span class="dv">100</span>))])    </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Fit models and save oof predictions.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (m_name, m) <span class="kw">in</span> models.items():</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'# Model:</span><span class="sc">{</span>m_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">'</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    train[m_name <span class="op">+</span> <span class="st">'_oof'</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    test[m_name] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    y_oof <span class="op">=</span> np.zeros(train.shape[<span class="dv">0</span>])</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> <span class="bu">range</span>(N_SPLITS):</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        train_df <span class="op">=</span> train[train[<span class="st">'kfold'</span>] <span class="op">!=</span> f]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        valid_df <span class="op">=</span> train[train[<span class="st">'kfold'</span>] <span class="op">==</span> f]</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        m.fit(train_df[features], train_df[target])</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        oof_preds <span class="op">=</span> m.predict(valid_df[features])</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        y_oof[valid_df.index] <span class="op">=</span> oof_preds</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'Fold </span><span class="sc">{</span>f<span class="sc">}</span><span class="ss"> rmse: </span><span class="sc">{</span>mean_squared_error(valid_df[target], oof_preds, squared <span class="op">=</span> <span class="va">False</span>)<span class="sc">:0.5f}</span><span class="ss">'</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        test[m_name] <span class="op">+=</span> m.predict(test[features]) <span class="op">/</span> N_SPLITS</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    train[m_name <span class="op">+</span> <span class="st">'_oof'</span>] <span class="op">=</span> y_oof</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total rmse: </span><span class="sc">{</span>mean_squared_error(train[target], train[m_name <span class="op">+</span> <span class="st">'_oof'</span>], squared <span class="op">=</span> <span class="va">False</span>)<span class="sc">:0.5f}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>oof_cols <span class="op">=</span> [m_name <span class="op">+</span> <span class="st">'_oof'</span> <span class="cf">for</span> m_name <span class="kw">in</span> models.keys()]</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"# ALL Mean ensemble rmse: </span><span class="sc">{</span>mean_squared_error(train[target], train[oof_cols].mean(axis<span class="op">=</span><span class="dv">1</span>), squared <span class="op">=</span> <span class="va">False</span>)<span class="sc">:0.5f}</span><span class="ch">\n</span><span class="ss">"</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Model:LinReg
+
+Fold 0 rmse: 7.89515
+Fold 1 rmse: 7.90212
+Fold 2 rmse: 7.90260
+Fold 3 rmse: 7.89748
+Fold 4 rmse: 7.89844
+Fold 5 rmse: 7.89134
+Fold 6 rmse: 7.89643
+
+Total rmse: 7.89765
+
+# Model:HGB
+
+Fold 0 rmse: 7.86447
+Fold 1 rmse: 7.87374
+Fold 2 rmse: 7.86688
+Fold 3 rmse: 7.86255
+Fold 4 rmse: 7.86822
+Fold 5 rmse: 7.85785
+Fold 6 rmse: 7.86566
+
+Total rmse: 7.86563
+
+# Model:XGB
+
+Fold 0 rmse: 7.91179
+Fold 1 rmse: 7.92748
+Fold 2 rmse: 7.92141
+Fold 3 rmse: 7.91901
+Fold 4 rmse: 7.91125
+Fold 5 rmse: 7.90286
+Fold 6 rmse: 7.92340
+
+Total rmse: 7.91675
+
+# Model:KNN
+
+Fold 0 rmse: 7.97845
+Fold 1 rmse: 7.97709
+Fold 2 rmse: 7.98165
+Fold 3 rmse: 7.97895
+Fold 4 rmse: 7.97781
+Fold 5 rmse: 7.97798
+Fold 6 rmse: 7.98711
+
+Total rmse: 7.97986
+
+# Model:BayesRidge
+
+Fold 0 rmse: 7.89649
+Fold 1 rmse: 7.90576
+Fold 2 rmse: 7.90349
+Fold 3 rmse: 7.90007
+Fold 4 rmse: 7.90121
+Fold 5 rmse: 7.89455
+Fold 6 rmse: 7.89928
+
+Total rmse: 7.90012
+
+# Model:ExtraTrees
+
+Fold 0 rmse: 7.93239
+Fold 1 rmse: 7.93247
+Fold 2 rmse: 7.92993
+Fold 3 rmse: 7.93121
+Fold 4 rmse: 7.93129
+Fold 5 rmse: 7.93247
+Fold 6 rmse: 7.93364
+
+Total rmse: 7.93191
+
+# Model:Poisson
+
+Fold 0 rmse: 7.89597
+Fold 1 rmse: 7.90240
+Fold 2 rmse: 7.90233
+Fold 3 rmse: 7.89682
+Fold 4 rmse: 7.89873
+Fold 5 rmse: 7.89241
+Fold 6 rmse: 7.89701
+
+Total rmse: 7.89795
+
+# ALL Mean ensemble rmse: 7.88061
+</code></pre>
+</div>
+</div>
+<p>Let’s a look at the correlation heatmap.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>oof_cols <span class="op">=</span> [m_name <span class="op">+</span> <span class="st">'_oof'</span> <span class="cf">for</span> m_name <span class="kw">in</span> models.keys()]</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>oofs <span class="op">=</span> train[oof_cols]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>oof_diffs <span class="op">=</span> oofs.copy()</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> oof_cols:</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    oof_diffs[c] <span class="op">=</span> oofs[c]<span class="op">-</span>train[target]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    oof_diffs[c] <span class="op">=</span> oof_diffs[c]<span class="co">#**2</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>sns.heatmap(oof_diffs.corr())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>&lt;AxesSubplot:&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-08-15-model-allocation_files/figure-html/cell-32-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>XGB and KNN are most diverse, so I export a 50:50 ensemble. I’ll also export an equally weighted ensemble of all models and HGB only because it is the best single model.</p>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="32">
+<div class="cell-output cell-output-stdout">
+<pre><code>CV: ALL equaly weighted: 7.880605075536334
+CV: XGB only: 7.916746570344035
+CV: HGB only: 7.865625158180185
+CV: XGB and LinReg (50:50): 7.872064005057903
+CV: XGB and KNN (50:50): 7.893210466099108</code></pre>
+</div>
+</div>
+<p>Next we inspect the variance and mean of the residuals. Means are close to 0, as expected.</p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>oof_diffs.var(), oof_diffs.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>(LinReg_oof        62.373163
+ HGB_oof           61.868296
+ XGB_oof           62.675125
+ KNN_oof           63.678431
+ BayesRidge_oof    62.412188
+ ExtraTrees_oof    62.915511
+ Poisson_oof       62.377910
+ dtype: float64,
+ LinReg_oof       -0.000055
+ HGB_oof          -0.003314
+ XGB_oof           0.001392
+ KNN_oof          -0.005395
+ BayesRidge_oof   -0.000024
+ ExtraTrees_oof   -0.000136
+ Poisson_oof      -0.000084
+ dtype: float64)</code></pre>
+</div>
+</div>
+<p>These are the histograms of the residuals:</p>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>array([[&lt;AxesSubplot:title={'center':'LinReg_oof'}&gt;,
+        &lt;AxesSubplot:title={'center':'HGB_oof'}&gt;,
+        &lt;AxesSubplot:title={'center':'XGB_oof'}&gt;],
+       [&lt;AxesSubplot:title={'center':'KNN_oof'}&gt;,
+        &lt;AxesSubplot:title={'center':'BayesRidge_oof'}&gt;,
+        &lt;AxesSubplot:title={'center':'ExtraTrees_oof'}&gt;],
+       [&lt;AxesSubplot:title={'center':'Poisson_oof'}&gt;, &lt;AxesSubplot:&gt;,
+        &lt;AxesSubplot:&gt;]], dtype=object)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-08-15-model-allocation_files/figure-html/cell-35-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Finally, we apply the two techniques to calculate the ensembling weights</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> oof_diffs.mean().values</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>CM <span class="op">=</span> oof_diffs.cov().values</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>q<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Var technique</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>fun_ex1 <span class="op">=</span> <span class="kw">lambda</span> w: (train[target]<span class="op">-</span>np.matmul(oofs.values, w)).var()</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Cov technique</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>fun_ex2 <span class="op">=</span> <span class="kw">lambda</span> w: np.matmul(np.matmul(w.T,CM),w) <span class="op">-</span> q <span class="op">*</span> np.matmul(R,w)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>cons <span class="op">=</span> ({<span class="st">'type'</span>: <span class="st">'eq'</span>, <span class="st">'fun'</span>: <span class="kw">lambda</span> x: x.<span class="bu">sum</span>()<span class="op">-</span><span class="dv">1</span>})</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>bnds <span class="op">=</span> ((<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>),</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">0</span>,<span class="va">None</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 1</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>w_init <span class="op">=</span> np.ones((<span class="bu">len</span>(models)))<span class="op">/</span><span class="bu">len</span>(models)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> scipy.optimize.minimize(fun_ex1, w_init, method<span class="op">=</span><span class="st">'SLSQP'</span>,  constraints<span class="op">=</span>cons) <span class="co">#,bounds=bnds</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>w_calc <span class="op">=</span> res.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="37">
+<div class="cell-output cell-output-stdout">
+<pre><code>CV: Ex1 calc weights: 7.85594426240217</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 2</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>w_init <span class="op">=</span> np.ones((<span class="bu">len</span>(models)))<span class="op">/</span><span class="bu">len</span>(models)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> scipy.optimize.minimize(fun_ex2, w_init, method<span class="op">=</span><span class="st">'SLSQP'</span>,  constraints<span class="op">=</span>cons) <span class="co">#,bounds=bnds</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>w_calc <span class="op">=</span> res.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-jupyter="{&quot;source_hidden&quot;:true}" data-execution_count="39">
+<div class="cell-output cell-output-stdout">
+<pre><code>CV: Ex2 calc weights: 7.855944262936231</code></pre>
+</div>
+</div>
+</section>
+<section id="results" class="level1">
+<h1>5. Results</h1>
+<p>The competition metric is root mean squared error (RMSE). These are the scores of the different ensembles:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Ensemble</th>
+<th>CV</th>
+<th>public LB</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HGB only</td>
+<td>7.86563</td>
+<td>7.90117</td>
+</tr>
+<tr class="even">
+<td>All weights eq.</td>
+<td>7.88061</td>
+<td>7.92183</td>
+</tr>
+<tr class="odd">
+<td>XGB and KNN (50:50)</td>
+<td>7.89321</td>
+<td>7.91603</td>
+</tr>
+<tr class="even">
+<td>Ex1 (Var)</td>
+<td>7.85594</td>
+<td>7.88876</td>
+</tr>
+<tr class="odd">
+<td>Ex2 (Cov)</td>
+<td>7.85594</td>
+<td>7.88876</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Modern Portfolio Theory: https://en.wikipedia.org/wiki/Modern_portfolio_theory</li>
+<li>TPS August 2021 Competition: https://www.kaggle.com/c/tabular-playground-series-aug-2021/overview</li>
+</ul>
+</section>
+<section id="ressources" class="level1">
+<h1>Ressources</h1>
+<ul>
+<li>Original notebook: https://www.kaggle.com/joatom/model-allocation</li>
+<li>TPS data: https://www.kaggle.com/c/tabular-playground-series-aug-2021/data</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

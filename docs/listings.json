@@ -1,0 +1,20 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/2022-08-30-art_diffusion/index.html",
+      "/posts/2022-04-28-ml-pm/index.html",
+      "/posts/2022-02-28-relationship/index.html",
+      "/posts/2022-01-31-learn_along/index.html",
+      "/posts/2021-11-22-vpp-seq/2021-11-22-vpp-seq.html",
+      "/posts/2021-08-15-model-allocation/2021-08-15-model-allocation.html",
+      "/posts/2021-06-19-watchtrain/watchtrain.html",
+      "/posts/2021-05-28-hotel/index.html",
+      "/posts/2021-04-14-nonlinearity/index.html",
+      "/posts/2021-04-06-mortality-germany/2021-04-06-mortality-germany.html",
+      "/posts/2020-12-26-blog-translator/index.html",
+      "/posts/2020-12-12-a-handful-of-bricks-from-sql-to-pandas/index.html",
+      "/posts/2020-01-05-bgml-geotab/index.html"
+    ]
+  }
+]

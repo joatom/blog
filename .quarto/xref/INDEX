@@ -1,0 +1,62 @@
+{
+  "about.qmd": {
+    "about.html": "6a23cd48"
+  },
+  "posts/post-with-code/index.qmd": {
+    "index.html": "b2f65fa5"
+  },
+  "posts/welcome/index.qmd": {
+    "index.html": "97ceeee4"
+  },
+  "index.qmd": {
+    "index.html": "f85c7fe8"
+  },
+  "posts/2020-01-05-bgml-geotab/index.qmd": {
+    "index.html": "42b97ba5"
+  },
+  "posts/2020-12-12-a-handful-of-bricks-from-sql-to-pandas/index.qmd": {
+    "index.html": "5aa0e230"
+  },
+  "posts/2020-12-26-blog-translator/index-de.qmd": {
+    "index-de.html": "e144fa23"
+  },
+  "posts/2020-12-26-blog-translator/index.qmd": {
+    "index.html": "559080cb"
+  },
+  "posts/2021-04-06-mortality-germany/2021-04-06-mortality-germany.ipynb": {
+    "2021-04-06-mortality-germany.html": "be326d3c"
+  },
+  "posts/2021-04-06-mortality-germany/2021-04-06-mortality-germany_de.ipynb": {
+    "2021-04-06-mortality-germany_de.html": "d151f22a"
+  },
+  "posts/2021-04-14-nonlinearity/2021-04-14-nonlinearity.qmd": {
+    "2021-04-14-nonlinearity.html": "6bed07f8"
+  },
+  "posts/2021-04-14-nonlinearity/index.qmd": {
+    "index.html": "afd7aed3"
+  },
+  "posts/2021-05-28-hotel/index.qmd": {
+    "index.html": "2ccc011d"
+  },
+  "posts/2021-06-19-watchtrain/watchtrain.qmd": {
+    "watchtrain.html": "5280ff29"
+  },
+  "posts/2021-08-15-model-allocation/2021-08-15-model-allocation.ipynb": {
+    "2021-08-15-model-allocation.html": "f39ff5b5"
+  },
+  "posts/2021-11-22-vpp-seq/2021-11-22-vpp-seq.ipynb": {
+    "2021-11-22-vpp-seq.html": "2f772aeb"
+  },
+  "posts/2022-01-31-learn_along/index.qmd": {
+    "index.html": "00584b5c"
+  },
+  "posts/2022-02-28-relationship/index.qmd": {
+    "index.html": "397695b6"
+  },
+  "posts/2022-04-28-ml-pm/index.qmd": {
+    "index.html": "42124e69"
+  },
+  "posts/2022-08-30-art_diffusion/index.qmd": {
+    "index.html": "2d93dce5"
+  }
+}

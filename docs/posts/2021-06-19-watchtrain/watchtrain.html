@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.256">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Johannes Tomasoni">
+<meta name="dcterms.date" content="2021-06-19">
+<meta name="description" content="I bought a Fitbit, now I can watch my models train!">
+
+<title>AI curious - Streaming ML training progress to a smart watch</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">AI curious</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Johannes Tomasoni</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/joatom"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/JohannesTomason"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Streaming ML training progress to a smart watch</h1>
+                  <div>
+        <div class="description">
+          I bought a Fitbit, now I can watch my models train!
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">API</div>
+                <div class="quarto-category">ML</div>
+                <div class="quarto-category">Side Project</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Johannes Tomasoni </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 19, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#user-story" id="toc-user-story" class="nav-link active" data-scroll-target="#user-story">User story</a></li>
+  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">Architecture</a>
+  <ul class="collapse">
+  <li><a href="#api-server" id="toc-api-server" class="nav-link" data-scroll-target="#api-server">API-Server</a></li>
+  <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a>
+  <ul class="collapse">
+  <li><a href="#fastai" id="toc-fastai" class="nav-link" data-scroll-target="#fastai">Fastai</a></li>
+  <li><a href="#pytorch" id="toc-pytorch" class="nav-link" data-scroll-target="#pytorch">Pytorch</a></li>
+  </ul></li>
+  <li><a href="#watch" id="toc-watch" class="nav-link" data-scroll-target="#watch">Watch</a></li>
+  </ul></li>
+  <li><a href="#lessons-learned" id="toc-lessons-learned" class="nav-link" data-scroll-target="#lessons-learned">Lessons learned</a>
+  <ul class="collapse">
+  <li><a href="#fastapi" id="toc-fastapi" class="nav-link" data-scroll-target="#fastapi">FastAPI</a></li>
+  <li><a href="#websockets" id="toc-websockets" class="nav-link" data-scroll-target="#websockets">Websockets</a></li>
+  <li><a href="#fitbit-sdk" id="toc-fitbit-sdk" class="nav-link" data-scroll-target="#fitbit-sdk">Fitbit SDK</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p align="center">
+<span class="emoji" data-emoji="mountain_snow">🏔️</span>
+</p>
+<p>During the Covid winter I hardly had any reason to leave the house. It was clear that I actively had to look after my mental and physical well-being. So, I decided to buy a smart watch (Fitbit Versa 3) and take on the 10000 steps per day challenge. Henceforth I spent much more time outside and in the sunlight moving my body.</p>
+<p align="center">
+<span class="emoji" data-emoji="partly_sunny">⛅</span>
+</p>
+<p>When I registered my new Fitbit I instantly got attracted by the <em><a href="https://dev.fitbit.com/">For Developers</a></em> link. As you might guess my thoughts started spinning like - <em>Aha, they are providing a SDK! I got to try this out at some point and build an app for the watch.</em> - I wanted this app to be related to ML or at least to data somehow. My first thought was - <em>Would it be possible to use the green heart-rate sensor light as an OCR? - Nope, to complicated for a fun project.</em> - Then I went on with the registration of the watch on the webpage.</p>
+<p align="center">
+<span class="emoji" data-emoji="sun_behind_small_cloud">🌤️</span>
+</p>
+<p>Some month later, on a usual Sunday, I lay resting on the couch after lunch while the kids and my wife were cleaning the table and kitchen (I did the cooking ;-)). A little bored, I thought of my ML-model that was training on <em><a href="https://joatom.github.io/ai_curious/vision/classification/2021/05/28/hotel.html">Hotel Room classification</a></em> for a couple of hours upstairs in the office. I wanted to know how it was preceding. Sneaking upstairs would result in half an hour in front of the computer, followed by some trouble with my wife <span class="emoji" data-emoji="unamused">😒</span>. - <em>May by I should eventually register at Neptune.ai or wandb.ai, then I could preview my trainings from the couch on my cell phone!?</em> … <em>Or may be I now have a new fun project for my new watch <span class="emoji" data-emoji="smile">😄</span> <span class="emoji" data-emoji="bulb">💡</span>!</em> -</p>
+<section id="user-story" class="level1">
+<h1>User story</h1>
+<p>Those were the requirements that finally got implemented: - Statistics (for metrics and losses) need to be captured during the training, so that I can see if training improves. - Progress of training needs to be captured and made available to the watch instantly, so that I can estimate how long the training will take to finish. - Stats &amp; progs should be processable in pytorch and fastai trainings, so that I can use my preferred ML libraries. - The watch plots the metrics history of the current training as line chart. so that I can quickly see if training improves on which metric. - The metrics values should be plotted, so I can easily compare with former trainings. - Progress on epochs and batches (train and valid) are plotted, so I can easily estimate how long the remaining training steps will last.</p>
+<p>As by-product the training progress can also be displayed on a browser. This feature was build in parallel for debugging purpose.</p>
+</section>
+<section id="architecture" class="level1">
+<h1>Architecture</h1>
+<section id="api-server" class="level2">
+<h2 class="anchored" data-anchor-id="api-server">API-Server</h2>
+<p>The requirements led to the architecture shown in the diagram. In the center of the application is an API-Server to coordinate the training and the watch. The <em>Training</em>, <em>Watch</em> and <em>Web</em> are client applications connected to the API-Server’s <em>Watchtrain-Topic</em>. The <em>Topic</em> contains a connection pool for the <em>Training</em> client (data <em>Producer</em>) and another connection pool for the <em>Web</em> and the <em>Watch</em> clients (data <em>Consumer</em>).</p>
+<p><img src="arch.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>The initial idea was to setup a classical Consumer/Producer (Pub/Sub) pattern. But it ended up a bit different. The Topic holds the data in an object rather than a queue-like state and also does some data processing. The Producer and Consumer can still subscribe at any time, but they are also strongly connected via Websockets. I took the chance to play around with websockets, since it is also available on the watch.</p>
+</blockquote>
+<p>For each client type there is an <em>Agent</em> that processes the data and messages that are send from the clients. The stats and progress data is saved in the topic. The topic generates the metric chart that is send to the Consumers, since I couldn’t find a charts library in the watch SDK.</p>
+<p>The Topic-Consumer-Producer-Agent “pattern” with the connection pool handler is set up in a generic way so it’s easy to develop other applications in the same manner and run them on the API-Server.</p>
+<p>As API-Server I used FastApi which is easy to start with as shown on the <a href="https://fastapi.tiangolo.com/tutorial/">tutorial site</a> or in <a href="https://www.youtube.com/watch?v=Mw9etoRz0Ic">this video</a>.</p>
+<p>The communications between the components is done with JSON. Messages start with an <em>action</em>-field followed by the <em>training_id</em> and a more or less complex payload. Depending of the <em>action</em> value different functionalities are triggered, such as sending the metric image to the client or converting batch information into a progress bar.</p>
+</section>
+<section id="training" class="level2">
+<h2 class="anchored" data-anchor-id="training">Training</h2>
+<section id="fastai" class="level3">
+<h3 class="anchored" data-anchor-id="fastai">Fastai</h3>
+<p>The easiest way to implement the train logging is by using the Fastai Callback infrastructure. So I built a <em>WebsocketLogger</em> which gets past to the training like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> cnn_learner(dls, resnet18, pretrained <span class="op">=</span> <span class="va">False</span>, metrics<span class="op">=</span>[accuracy, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                                                                Recall(average<span class="op">=</span><span class="st">'macro'</span>), </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                                                Precision(average<span class="op">=</span><span class="st">'macro'</span>)])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>learn.unfreeze</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">10</span>, lr_max <span class="op">=</span> <span class="fl">5e-3</span>, cbs<span class="op">=</span>[WebsocketLogger(<span class="st">'ws://myapiserver:8555/ws/watchtrain/producer/12345'</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Starting out by looking at the source code of the fastai build-in <a href="https://github.com/fastai/fastai/blob/master/fastai/callback/progress.py">CSVLoggers and ProgressCallback</a> I learned how to track train data (metrics, epoch and batch progress). A bit challenging was the integration of the websocket client. I preferred a permanent connection rather than many one time (open-send-close) connections. Otherwise a simple REST call would have been more suitable. It is also very important that training must not break when the websocket connection is lost or the API-Server isn’t available anymore.</p>
+<p>That’s how it is implemented using the <a href="https://github.com/websocket-client/websocket-client">websocket-client</a> library:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, conn, ...):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.conn <span class="op">=</span> conn</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.heartbeat <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>._ws_connect()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># gets called when a websocket is opened</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _on_ws_open(<span class="va">self</span>,ws):</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ws connection is now ready =&gt; unlock</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.ws_ready_lock.release()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.heartbeat <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _ws_connect(<span class="va">self</span>):</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.heartbeat <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># aquire lock until websocket is ready to use</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.ws_ready_lock <span class="op">=</span> threading.Lock()</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.ws_ready_lock.acquire()</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Connecting websocket ...'</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.ws <span class="op">=</span> websocket.WebSocketApp(<span class="va">self</span>.conn,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                                      on_open <span class="op">=</span> <span class="va">self</span>._on_ws_open,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                                      on_message <span class="op">=</span> <span class="va">self</span>._on_ws_message,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                                      on_error <span class="op">=</span> <span class="va">self</span>._on_ws_error,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                                      on_close <span class="op">=</span> <span class="va">self</span>._on_ws_close)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run websocket in background</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    thread.start_new_thread(<span class="va">self</span>.ws.run_forever, ())</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># wait for websocket to be initialized, </span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if connection is not possible (e.g. APIServer is down) resume after 3 sec, but heartbeat stays FALSE</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.ws_ready_lock.acquire(timeout <span class="op">=</span> <span class="dv">3</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'... websocket connected.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <em>WebSocketApp</em> runs as a local websocket-handler in the background. The <em>Locks</em> are used to make sure the connection gets properly established before the first messages are send. The <em>heartbeat</em> is introduced to keep the training running even if the websocket connection is broken and could not be reconnected via <em>WebSocketApp</em>.</p>
+<p>If there is no heartbeat anymore _ws_connect() is called again after any epoch. If the API-Server is still not reachable the training continuous after a 3 second waiting time.</p>
+</section>
+<section id="pytorch" class="level3">
+<h3 class="anchored" data-anchor-id="pytorch">Pytorch</h3>
+<p>I skipped the pytorch implementation until I need it. But it is straight forward. Start a WebSocketApp thread in the background. Send the data from inside of the training/validation/inference-loop.</p>
+</section>
+</section>
+<section id="watch" class="level2">
+<h2 class="anchored" data-anchor-id="watch">Watch</h2>
+<p><img src="watch1.png" class="img-fluid"></p>
+<p>The layout is held pretty simple as shown in the picture. There is a progress bar for the epochs and one for the mini batches (train and valid). In the center is the chart of the metrics. And at the bottom are the latest metric values. The cell phone that belongs to the watch establish a websocket connection to the API-Server and puts <em>EventListeners</em> for incoming messages into place. The incoming messages are uploaded to the watch were they can be displayed.</p>
+</section>
+</section>
+<section id="lessons-learned" class="level1">
+<h1>Lessons learned</h1>
+<section id="fastapi" class="level2">
+<h2 class="anchored" data-anchor-id="fastapi">FastAPI</h2>
+<p>FastAPI is a well-documented and easy to use framework. In the beginning I set it up with HTTPS. There is a tutorial on how to setup <a href="https://traefik.io/resources/traefik-fastapi-kuberrnetes-ai-ml/">FastAPI with Traefik</a>. But since I wanted to run the server at home I had to invest some evenings to figure out, how to set it up by myself. I used <a href="https://github.com/FiloSottile/mkcert">mkcert</a> for SSL creation. A docker file to setup an FastAPI-Server at home can now be found <a href="https://github.com/joatom/dev-environments/tree/master/apiserver">here</a>. At the end when I got it working I decided to not use HTTPS for reasons described below, <span class="emoji" data-emoji="man_shrugging">🤷‍♂️</span>.</p>
+</section>
+<section id="websockets" class="level2">
+<h2 class="anchored" data-anchor-id="websockets">Websockets</h2>
+<p>The different components communicate instantly. The data is pushed to the watch, which is the preferred behavior on the receiving site. With the websocket on the training site it is a bit more complicated to be fail safe and pickup communication when the connection is broken for a longer period of time. I might switch this part to a simple REST-post in a later version. But this way it was a fun exersice nevertheless.</p>
+</section>
+<section id="fitbit-sdk" class="level2">
+<h2 class="anchored" data-anchor-id="fitbit-sdk">Fitbit SDK</h2>
+<p>The Fitbit SDK is nice. They provide an online IDE which can easily be connected to your devices. The SDK is documented with a few examples. They also host helpful forum.</p>
+<p>I had a bit of a hard time when I tried to load and display the Metrics chart image to the watch. I had to figure out that there are two types of jpeg, progressive and basic. And only one worked. It also was hard to figure out that the the image needs to have a certain size to be displayed. But that’s part of the normal learning path with a new technology.</p>
+<p>And than, there was this one thing that really upset me (But as fare as I read in forums it is not the Fitbit SDKs fault!). Android doesn’t allow regular HTTP connection through apps. That’s why I setup the API-Server with HTTPS. But since I generated the certificate on my own, it wasn’t a trusted source and therefore Android didn’t accept it. Then I found some post that showed how to access HTTP from a local net, but only for IP range 192.168.0.x. That meant either building a Reverse Proxy or changing the Subnet of my network. And then finally I needed to deal with the docker net-addresse where the API-Server is running. As suspected, one evening I freaked out - <em>?#@!, I just want to send a JSON to my cell phone! 30 years of web-development and all we ended up is JavaScript and SSL-certs @!#</em> - That was a good time to go to bed, put the project aside for a few days and celebrate that most of the time I’m into data instead of GUI <span class="emoji" data-emoji="grin">😁</span>.</p>
+<p>Besides that I really enjoyed it to build a nice app for my Fitbit.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>It was a fun project! Websockets, API, ML, App on a watch, it all fits together. I still have a thousand ideas for improvements and features. But for now I leave it as it is.</p>
+</section>
+<section id="implementation" class="level1">
+<h1>Implementation</h1>
+<p>The code for this project can be found in this repository: https://github.com/joatom/watchtrain</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p>Here is a list of my inspirations, templates and useful content listed by topic.</p>
+<p><strong>Fitbit SDK</strong></p>
+<ul>
+<li><a href="https://studio.fitbit.com/">Online IDE</a> (there also is a CLI version for VScode)</li>
+<li><a href="https://dev.fitbit.com/build/guides/">Tutorials</a></li>
+</ul>
+<p><strong>FastAPI</strong></p>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/tutorial/">FastAPI’s tutorials</a></li>
+<li><a href="https://fastapi.tiangolo.com/advanced/websockets/">FastAPI and websockets</a></li>
+<li><a href="https://fastapi.tiangolo.com/deployment/docker/">Docker setup</a></li>
+<li><a href="https://traefik.io/resources/traefik-fastapi-kuberrnetes-ai-ml/">FastAPI with Traefik</a></li>
+<li><a href="https://www.youtube.com/watch?v=Mw9etoRz0Ic">Video Tutorial</a> for using FastAPI to serve ML models</li>
+</ul>
+<p><strong>Training</strong></p>
+<ul>
+<li><a href="https://docs.fast.ai/tutorial.datablock.html#Image-classification">Fastai’s Datablock tutorial</a></li>
+<li><a href="https://docs.fast.ai/callback.progress.html">CSV and Progress logger</a></li>
+</ul>
+<p><strong>Others</strong></p>
+<ul>
+<li><a href="https://www.uvicorn.org/deployment/#running-with-https">Uvicorn HTTPS options</a></li>
+<li><a href="https://github.com/FiloSottile/mkcert">Mkcert installation guide</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

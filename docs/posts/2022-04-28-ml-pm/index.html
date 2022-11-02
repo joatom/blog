@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.256">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Johannes Tomasoni">
+<meta name="dcterms.date" content="2022-04-28">
+<meta name="description" content="Analogies of solving ML tasks and a small project">
+
+<title>AI curious - Tackling Projects like a ML Challenge</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">AI curious</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Johannes Tomasoni</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/joatom"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/JohannesTomason"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Tackling Projects like a ML Challenge</h1>
+                  <div>
+        <div class="description">
+          Analogies of solving ML tasks and a small project
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Project Management</div>
+                <div class="quarto-category">ML</div>
+                <div class="quarto-category">Business</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Johannes Tomasoni </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 28, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p align="center">
+<img src="ml_pm.png" class="img-fluid">
+</p>
+<section id="welcome-to-the-party" class="level1">
+<h1>Welcome to the party</h1>
+<p align="center">
+<span class="emoji" data-emoji="cocktail">🍸</span>
+</p>
+<p>I’ve lately volunteered for a small side project. The task was to build a curriculum for a technical topic. I was joined by a few people who shared similar interest in the technical topic. The team members were located in different countries around the world and we only recently got to know each other.</p>
+</section>
+<section id="no-time-to-waste" class="level1">
+<h1>No time to waste</h1>
+<p align="center">
+<span class="emoji" data-emoji="running">🏃</span>
+</p>
+<p>Since everybody was busy with their regular jobs we quickly wanted to get started and decided to gather learning content (YouTube, Web Pages, Learning Platforms, …) individually. We scheduled our second meeting to share the learning material that everybody had collected in the meantime. We quickly came up with a bunch of great resources. So we spent this second session to randomly present the resources to each other. At the end of the meeting I was puzzled. I had seen so many resources that where totally different than the ones I came up with. And I couldn’t imagine on how to put them together to a curriculum. Without any structure the great resources were kind of useless. Moreover, our newly formed team was also lacking of structure, which made it even harder to solve our task in a short time.</p>
+<p>After the first two sessions it was obvious. We had to treat our task like a small <em>project</em>!</p>
+</section>
+<section id="pitfalls-when-you-rush" class="level1">
+<h1>Pitfalls when you rush</h1>
+<p align="center">
+<span class="emoji" data-emoji="construction">🚧</span>
+</p>
+<p>At this early stage it was still easy to readjust and start over again. But before we checkout the changes we made, let’s take a look what went went wrong so-fare.</p>
+<section id="who-are-we" class="level2">
+<h2 class="anchored" data-anchor-id="who-are-we">Who are we?</h2>
+<p>The <em>dynamics of a team</em> can be described in Tuckman’s [BT65] four stages,</p>
+<ul>
+<li><strong>forming</strong>, where group members try <em>“to identify the boundaries of both interpersonal and task behaviors”</em>,</li>
+<li><strong>storming</strong>, where interpersonal conflicts arise, hence everyone searches for her/his role in the team,</li>
+<li><strong>norming</strong>, where everyone settles for her/his role in the team and new group <em>”standards evolve”</em>,</li>
+<li><strong>performing</strong>, where finally <em>”the group energy is channeled into the task”</em> and the group works efficiently.</li>
+</ul>
+<p>Because everyone in our team was short in time we tried to skip the <em>Storming</em> and <em>Norming</em> stage and go straight to <em>Performing</em>. But Tuckman’s stages seem the work like physical laws, a group can’t circumvent certain stages. Even if formal hierarchies already exist, humans need to build trust first and find their role in the team. This is only possible through human interaction, which takes time. Though, the <em>Storming</em> and <em>Norming</em> phase can be very short if you take on a very standardized role to execute very standardized work. Which wasn’t the case in our small creative (non standardized) project.</p>
+</section>
+<section id="who-is-it-for" class="level2">
+<h2 class="anchored" data-anchor-id="who-is-it-for">Who is it for?</h2>
+<p>We all had a common sense of the technical topic we were supposed to cover. But the field of the technical topic is huge, with all levels of difficulties. At this point there also was only a <em>vague definition</em> of the audience of the curriculum.</p>
+</section>
+<section id="how-are-we-gonna-make-it" class="level2">
+<h2 class="anchored" data-anchor-id="how-are-we-gonna-make-it">How are we gonna make it?</h2>
+<p>We also didn’t talk in advance what steps we would take to reach our goal. Hence, we didn’t set a framework.</p>
+<p>The overall situation could basically be summarized as: &gt; A bunch of ambitious strangers from different cultural background were short in time and wanted to solve a vaguely defined task without a framework.</p>
+</section>
+</section>
+<section id="its-time-for-a-reset" class="level1">
+<h1>It’s time for a reset</h1>
+<p align="center">
+<span class="emoji" data-emoji="previous_track_button">⏮️</span>
+</p>
+<p>After we identified the obvious obstacles, we thought on how to readjust our way of working.</p>
+<section id="obstacle-1-being-short-on-time" class="level2">
+<h2 class="anchored" data-anchor-id="obstacle-1-being-short-on-time">Obstacle 1: <em>being short on time</em></h2>
+<p>The obvious adjustment would have been to take more time for the task at hand. Unfortunately this was not the preferred option in this case, because we volunteered for a side project that shouldn’t badly effect the regular work we had to do. But we could save some time by avoiding ineffective meetings, hence being well prepared when attending a meeting. ## Obstacle 2: <em>working in a new team</em> The time restriction was hard, so we sacrificed team building. That’s always a huge risk and relies on the hope that everyone acts professionally and has the same intrinsic motivation. Luckily, it worked out well. ## Obstacle 3: <em>vague goals</em> We had to define the goals more precisely. ## Obstacle 4: <em>missing framework</em> We had to define a structure on how to approach the task. Given the time limit and the interpersonal constraints this was the part with the highest chance to make a positive impact on the outcome of our project. And that’s what the rest of this blog will focus on.</p>
+</section>
+</section>
+<section id="give-it-all-some-structure" class="level1">
+<h1>Give it all some structure</h1>
+<p align="center">
+<span class="emoji" data-emoji="office">🏢</span>
+</p>
+<p>There are certainly many ways to give a project some structure. But since we were gathering material for a technical topic I found it amusing to tackle the project like a small Machine Learning (ML) project.</p>
+<p>A ML project can, for instance, be defined in these steps:</p>
+<ol type="1">
+<li>Define the overall goal (vision) <span class="emoji" data-emoji="framed_picture">🖼️</span></li>
+<li>Re/define the objectives <span class="emoji" data-emoji="paintbrush">🖌️</span></li>
+<li>Look at the data <span class="emoji" data-emoji="mag_right">🔎</span></li>
+<li>Define metrics <span class="emoji" data-emoji="dart">🎯</span></li>
+<li>Define test strategy <span class="emoji" data-emoji="clipboard">📋</span></li>
+<li>Define architecture <span class="emoji" data-emoji="building_construction">🏗️</span><br>
+</li>
+<li>Prepare data <span class="emoji" data-emoji="construction_worker">👷</span></li>
+<li>Execute <span class="emoji" data-emoji="arrow_forward">▶️</span></li>
+<li>Evaluate <span class="emoji" data-emoji="bar_chart">📊</span></li>
+<li>Iterate over steps 2 to 10 <span class="emoji" data-emoji="repeat">🔁</span></li>
+</ol>
+<p>Let’s briefly look what these steps could mean for a <strong>ML project</strong>. And what the outcomes of each step are. Say a cook we wants to build a classifier for flower pictures to identify herbs.</p>
+<section id="state-your-overall-goal" class="level2">
+<h2 class="anchored" data-anchor-id="state-your-overall-goal">1. State your overall goal <span class="emoji" data-emoji="framed_picture">🖼️</span></h2>
+<p>Write the foremost goal down in huge letters and pin it on the wall. <em>A classifier to predict flowers.</em> Every decision you make from now on must follow this goal. If you lose yourself in details during the process you can always refocus by looking at the wall reading the huge letters stating your overall goal. ## 2. Re/define the objectives <span class="emoji" data-emoji="paintbrush">🖌️</span> Figure out what is important and what not. Define the objectives precisely (e.g.&nbsp;through User Stories). <em>”As a cook I want the classifier to recognize all herbs in my garden, so that I don’t use the poisoning ones in my meals.”</em> ## 3. Look at the data <span class="emoji" data-emoji="mag_right">🔎</span> Check the quality and structure of the data. Do exploratory data analysis (EDA). <em>”Some of the pictures of the flowers and herbs are zoomed in, some are in panorama view and show many flowers. Classes are balanced.”</em> ## 4. Define metrics <span class="emoji" data-emoji="dart">🎯</span> Decide what your algorithm should optimize for. <em>The cook will zoom in closely the take the picture. And since the training targets are well balanced, we choose Accuracy as metric.</em> ## 5. Define test strategy <span class="emoji" data-emoji="clipboard">📋</span> With the knowledge from EDA we decide on a test strategy and identify what is missing to implement the test strategy. “<em>A stratified-KFold-split makes sense, but the labels still need some cleanup.</em>” ## 6. Define architecture <span class="emoji" data-emoji="building_construction">🏗️</span> We always want to start with a simple baseline in the first iteration. Later-on the architecture can get more complex, e.g.&nbsp;through ensembling. <em>Let’s start with a Resnet18.</em> ## 7. Prepare data <span class="emoji" data-emoji="construction_worker">👷</span> Clean and enrich the data. <em>There is enough data. Remove the panorama shots. Clean the labels. Define the train/test/validation data sets.</em> ## 8. Execute <span class="emoji" data-emoji="arrow_forward">▶️</span> Build a model and train. ## 9. Evaluate <span class="emoji" data-emoji="bar_chart">📊</span> Evaluate the model against the metrics. <em>Accuracy is only 80%. Let’s look at the most miss classified data and try to change the architecture in the next iteration.</em></p>
+<p>I follow this procedure when I’m participating in Kaggle competition almost every time and I’m sure others follow similar approaches. Depending on how well prepared the data already is, some steps may be executed in slightly different order, e.g.&nbsp;architecture choice can also happen after data preparation. But for sure you want to have a clear picture from the very beginning for what to optimize for and how you evaluate it.</p>
+</section>
+</section>
+<section id="transfer-learning-to-project-management" class="level1">
+<h1>Transfer Learning to Project Management</h1>
+<p align="center">
+<span class="emoji" data-emoji="thought_balloon">💭</span>
+</p>
+<p>How can the structure of a ML-Project now be applied to my small side project - building a curriculum for a technical topic?</p>
+<section id="define-the-overall-goal" class="level2">
+<h2 class="anchored" data-anchor-id="define-the-overall-goal">1. Define the overall goal <span class="emoji" data-emoji="framed_picture">🖼️</span></h2>
+<p>We want to collect learning material so that people with different skill-sets and backgrounds can learn about the technical topic to use on in their jobs.</p>
+</section>
+<section id="redefine-the-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="redefine-the-objectives">2. Re/define the objectives <span class="emoji" data-emoji="paintbrush">🖌️</span></h2>
+<p>The audience consists of highly educated professionals, that need the technical knowledge for different reasons. Some need a deep technical understanding to use it as a Software Developer, some need a broad overview for their role as Project Manager and some just want to learn about the topic out of curiosity. Because of the heterogeneity of the audience I found it suitable to define different <strong>Personas</strong>. E.g. <em>Andrea, Project Manager, doesn’t like to be fooled by the nerds during the meetings when they talk in their jargon.</em> or <em>Peter, Java evangelist, curious about that hot topic everybody is talking about. “Can’t be that hard, to just learn another language.”</em>. With the personas in place we created categories where we could instantly assign the resources we already had collected. The human characteristics of the personas also lead to an imagination where the collected resources eventually fit to the the stories of the Personas we had in our minds.</p>
+<p>In a later iteration we refined the objectives and added two other kind of categories. The one kind of category was concerning the knowledge depth (<em>beginner</em>, <em>intermediate</em> and <em>advanced</em>). The other kind of category distinguished between a business role and a tech role.</p>
+</section>
+<section id="look-at-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="look-at-the-data">3. Look at the data <span class="emoji" data-emoji="mag_right">🔎</span></h2>
+<p>Since we were limited on time we couldn’t do a deep analysis of every resource. If resources where known in advance by one of the team members we had to rely on her/his judgment. If resources were unknown we briefly scanned them or relied on public recommendations. It’s fare from optimal, but it must have been sufficient for a first iteration.</p>
+</section>
+<section id="define-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="define-metrics">4. Define Metrics <span class="emoji" data-emoji="dart">🎯</span></h2>
+<p>We defined soft metrics implicitly.</p>
+<ul>
+<li>Do resources fit a Persona?</li>
+<li>Are the curriculum suitable for a certain category (e.g.&nbsp;<em>beginner</em>)?</li>
+<li>Are the resources accessible?</li>
+<li>Are the resources of high quality?</li>
+<li>Is a resource complementing other resources or can it replace other resources in the curriculum?</li>
+</ul>
+</section>
+<section id="define-test-strategy" class="level2">
+<h2 class="anchored" data-anchor-id="define-test-strategy">5. Define Test strategy <span class="emoji" data-emoji="clipboard">📋</span></h2>
+<p>We had chosen <em>feedback</em> as our test strategy. Feedback was gatherd from outsiders that were not involved in the creation process.</p>
+</section>
+<section id="define-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="define-architecture">6. Define architecture <span class="emoji" data-emoji="building_construction">🏗️</span></h2>
+<p>The resources were collected in a wiki style manner that was easily accessible. The curriculum and its resources were structured by the categories defined in step 1.</p>
+</section>
+<section id="prepare-data" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-data">7. Prepare data <span class="emoji" data-emoji="construction_worker">👷</span></h2>
+<p>Collect the resources. Scan the resources. Save references. Check accessibility.</p>
+</section>
+<section id="execute" class="level2">
+<h2 class="anchored" data-anchor-id="execute">8. Execute <span class="emoji" data-emoji="arrow_forward">▶️</span></h2>
+<p>Build a baseline model by choosing the relevant resources, sort them by category and write them down in the wiki. Make the page look nice and welcoming.</p>
+</section>
+<section id="evaluate" class="level2">
+<h2 class="anchored" data-anchor-id="evaluate">9. Evaluate <span class="emoji" data-emoji="bar_chart">📊</span></h2>
+<p>Get feedback from stakeholders that are not part of the creation process.</p>
+</section>
+<section id="iterate" class="level2">
+<h2 class="anchored" data-anchor-id="iterate">10. Iterate <span class="emoji" data-emoji="repeat">🔁</span></h2>
+<p>After a few iterations we had a nice curriculum. Additionally we encourage the audience to extend the wiki page.</p>
+</section>
+</section>
+<section id="we-made-it" class="level1">
+<h1>We made it!</h1>
+<p align="center">
+<span class="emoji" data-emoji="champagne">🍾</span>
+</p>
+<p>Given the restriction on time and team building our small project worked out pretty well.</p>
+<p>And it was easy to transform our project management issue into a ML-task-like structure. Of course the analogy is a bit artificial. But keep in mind that <em>common sense</em> is the most important skill for project management. If you are a good ML practitioner, you can transform your knowledge into some project management skills. If you can do the one thing properly you can approach other issues properly as well.</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>[BT65] Tuckman, Bruce W. „Developmental Sequence in Small Groups.“ Psychological Bulletin 63, Nr. 6 (1965): 384–99. https://doi.org/10.1037/h0022100.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

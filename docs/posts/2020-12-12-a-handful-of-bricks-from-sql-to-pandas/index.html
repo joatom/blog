@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.256">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Johannes Tomasoni">
+<meta name="dcterms.date" content="2020-12-12">
+<meta name="description" content="A step by step guide to learn Pandas from a SQL perspective.">
+
+<title>AI curious - A handful of bricks - from SQL to Pandas</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">AI curious</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Johannes Tomasoni</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/joatom"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/JohannesTomason"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">A handful of bricks - from SQL to Pandas</h1>
+                  <div>
+        <div class="description">
+          A step by step guide to learn Pandas from a SQL perspective.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">SQL</div>
+                <div class="quarto-category">Pandas</div>
+                <div class="quarto-category">BigQuery</div>
+                <div class="quarto-category">ML</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Johannes Tomasoni </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 12, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sql-vs.-and-pandas" id="toc-sql-vs.-and-pandas" class="nav-link active" data-scroll-target="#sql-vs.-and-pandas">SQL <del>vs.</del> and Pandas</a></li>
+  <li><a href="#missing-bricks" id="toc-missing-bricks" class="nav-link" data-scroll-target="#missing-bricks">Missing bricks</a></li>
+  <li><a href="#a-simple-filter-the-behaviour-of-brackets." id="toc-a-simple-filter-the-behaviour-of-brackets." class="nav-link" data-scroll-target="#a-simple-filter-the-behaviour-of-brackets.">A simple Filter <em>(The behaviour of brackets.)</em></a></li>
+  <li><a href="#indexing-what-actually-is-an-index" id="toc-indexing-what-actually-is-an-index" class="nav-link" data-scroll-target="#indexing-what-actually-is-an-index">Indexing <em>(What actually is an index?)</em></a></li>
+  <li><a href="#joins-why-merge-doesnt-mean-upsert." id="toc-joins-why-merge-doesnt-mean-upsert." class="nav-link" data-scroll-target="#joins-why-merge-doesnt-mean-upsert.">Joins <em>(Why merge doesn’t mean upsert.)</em></a></li>
+  <li><a href="#conditional-joins-and-aggregation-almost-done" id="toc-conditional-joins-and-aggregation-almost-done" class="nav-link" data-scroll-target="#conditional-joins-and-aggregation-almost-done">Conditional Joins and Aggregation <em>(Almost done!)</em></a>
+  <ul class="collapse">
+  <li><a href="#conditional-join" id="toc-conditional-join" class="nav-link" data-scroll-target="#conditional-join">Conditional Join</a></li>
+  <li><a href="#aggregation" id="toc-aggregation" class="nav-link" data-scroll-target="#aggregation">Aggregation</a></li>
+  </ul></li>
+  <li><a href="#recursion-lost-in-trees" id="toc-recursion-lost-in-trees" class="nav-link" data-scroll-target="#recursion-lost-in-trees">Recursion <em>(Lost in trees?)</em></a></li>
+  <li><a href="#summary-got-it" id="toc-summary-got-it" class="nav-link" data-scroll-target="#summary-got-it">Summary <em>(Got it!)</em></a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Original article published at <a href="https://datamuni.com/@joatom/a-handful-of-bricks-from-sql-to-pandas">datamuni.com</a>.</p>
+<section id="sql-vs.-and-pandas" class="level1">
+<h1>SQL <del>vs.</del> and Pandas</h1>
+<p>I love SQL. It’s been around for decades to arrange and analyse data. Data is kept in tables which are stored in a relational structure. Consistancy and data integraty is kept in mind when designing a relational data model. However, when it comes to machine learning other data structures such as matrices and tensors become important to feat the underlying algorithms and make data processing more efficient. That’s where Pandas steps in. From a SQL developer perspective it is the library to close the gap between your data storage and the ml frameworks.</p>
+<p>This blog post shows how to translate some common and some advanced techniques from SQL to Pandas step-by-step. I didn’t just want to write a plain cheat sheet (actually Pandas has a good one to get started: <a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html">Comparison SQL</a> (Ref. 1)). Rather I want to unwind some concepts that might be helpful for a SQL developer who now and then deals with Pandas.</p>
+<p>The coding examples are built upon a <a href="https://www.kaggle.com/rtatman/lego-database">Lego Dataset</a> (Ref. 2), that contains a couple of tables with data about various lego sets. &gt; To follow along I’ve provided a <a href="https://www.kaggle.com/joatom/a-handful-of-bricks-from-sql-to-pandas">notebook</a> (Res. 1) on kaggle, where you can play with the blog examples either using SQLite or Bigquery. You can also checkout a <a href="https://github.com/joatom/blog-resources/tree/main/handful_bricks">docker container</a> (Res. 2) to play on your home machine.</p>
+</section>
+<section id="missing-bricks" class="level1">
+<h1>Missing bricks</h1>
+<p>First listen to this imaginary dialogue that guides us throug the coding:</p>
+<p><img src="chick.png" class="img-fluid">: <em>I miss all red bricks of the Lego Pizzeria. I definetly need a new one.</em></p>
+<p><img src="penguin.png" class="img-fluid">: <em>Don’t worry. We can try to solve this with data. That will be fun. :-)</em></p>
+<p><img src="chick.png" class="img-fluid">: <em>(!@#%&amp;) You’re kidding, right?</em></p>
+<p>Now that we have a mission we are ready to code and figuere out how to deal with missing bricks. First we inspect the tables. They are organized as shown in the relational diagram (Fig. 1).</p>
+<p><img src="schema.png" class="img-fluid"></p>
+<p>Fig. 1: Data model (<a href="https://www.kaggle.com/rtatman/lego-database">source: Lego dataset</a> (Ref. 2))</p>
+<p>There are colors, parts, sets and inventories. We should start by searching for the <em>Pizzeria</em> in the <code>sets</code> table using the set number (<em>41311</em>).</p>
+<p><img src="piz.png" class="img-fluid"></p>
+<p>Fig. 2: Lego Box with set number</p>
+</section>
+<section id="a-simple-filter-the-behaviour-of-brackets." class="level1">
+<h1>A simple Filter <em>(The behaviour of brackets.)</em></h1>
+<p>A simple <code>like</code>-filter on the <code>sets</code> table will return the set info.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> sets s</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> s.set_num <span class="kw">like</span> <span class="st">'41311%'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There are several ways to apply a filter in Pandas. The most SQL-like code utilizes the <code>query</code>-function which basicaly substitutes the <code>where</code> clause.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_sets.query(<span class="st">"set_num.str.contains('41311')"</span>, engine<span class="op">=</span><span class="st">'python'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>name</th>
+<th>year</th>
+<th>theme_id</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>3582</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>2017</td>
+<td>494</td>
+<td>287</td>
+</tr>
+</tbody>
+</table>
+<p>Since the <code>query</code> function expects a String as input parameter we loose syntax highlighting and syntax checking for our filter expression.</p>
+<p>Therefore a more commonly used expression consists of the <strong>bracket notation</strong> (The behaviour of the bracket notation of a class in python is implementated in the class function <code>__getitem__</code>)</p>
+<p>See how we can apply an equals filter using brackets.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_sets.query(<span class="st">"set_num == '41311-1'"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df_sets[df_sets.set_num <span class="op">==</span> <span class="st">'41311-1'</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>df_sets[df_sets[<span class="st">'set_num'</span>] <span class="op">==</span> <span class="st">'41311-1'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>name</th>
+<th>year</th>
+<th>theme_id</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>3582</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>2017</td>
+<td>494</td>
+<td>287</td>
+</tr>
+</tbody>
+</table>
+<p>There is a lot going on in this expression.</p>
+<p>Let’s take it apart.</p>
+<p><code>df_sets['set_num']</code> returns a single column (a <em>Pandas.Series</em> object). A Pandas DataFrame is basically a collection of Series. Additionaly there is a row index (often just called <em>index</em>) and a column index (<em>columnnames</em>). Think of a column store database.</p>
+<p><img src="df.png" class="img-fluid"></p>
+<p>Fig. 3: Elements of a DataFrame</p>
+<p>Applying a boolean condition (<code>== '41311-1'</code>) to a Series of the DataFrame (<code>df_sets['set_num']</code>) will result in a boolean collection of the size of the column.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bool_coll <span class="op">=</span> df_sets[<span class="st">'set_num'</span>] <span class="op">==</span> <span class="st">'41311-1'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># only look at the position 3580 - 3590 of the collection</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>bool_coll[<span class="dv">3580</span>:<span class="dv">3590</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3580</span>    False</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3581</span>    False</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3582</span>     True</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3583</span>    False</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3584</span>    False</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3585</span>    False</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3586</span>    False</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3587</span>    False</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3588</span>    False</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">3589</span>    False</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Name:</span> set_num, dtype: bool</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The boolean collection now gets past to the DataFrame and filters the rows:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_sets[bool_coll]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_sets[df_sets[<span class="st">'set_num'</span>] <span class="op">==</span> <span class="st">'41311-1'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depending on what type of object we pass to the square brackets the outcome result in very different behaviors.</p>
+<p>We have already seen in the example above that if we pass a <strong>boolean collection</strong> with the size of number of rows, the collection is been handled as a <strong>row filter</strong>.</p>
+<p>But if we pass a column name or a <strong>list of column</strong> names to the brackets instead, the given columns are selected like in the <code>SELECT</code> clause of an SQL statement.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="dt">year</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> lego.sets;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>=&gt;</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_sets[[<span class="st">'name'</span>, <span class="st">'year'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Row filter and column selection can be combined like this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.name,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       s.<span class="dt">year</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> lego.sets s</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> s.set_num <span class="op">=</span> <span class="st">'41311-1'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>=&gt;</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_temp <span class="op">=</span> df_sets[df_sets[<span class="st">'set_num'</span>] <span class="op">==</span> <span class="st">'41311-1'</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_temp[[<span class="st">'name'</span>,<span class="st">'year'</span>]]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or simply:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>df_sets[df_sets[<span class="st">'set_num'</span>] <span class="op">==</span> <span class="st">'41311-1'</span>][[<span class="st">'name'</span>,<span class="st">'year'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>name</th>
+<th>year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3582</td>
+<td>Heartlake Pizzeria</td>
+<td>2017</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="indexing-what-actually-is-an-index" class="level1">
+<h1>Indexing <em>(What actually is an index?)</em></h1>
+<p>Another way to access a row in Pandas is by using the row index. With the <code>loc</code> function (and brackets) we select the <em>Pizzeria</em> and another arbitrary set. We use the row numbers to filter the rows.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_sets.loc[[<span class="dv">236</span>, <span class="dv">3582</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>name</th>
+<th>year</th>
+<th>theme_id</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>236</strong></td>
+<td>10255-1</td>
+<td>Assembly Square</td>
+<td>2017</td>
+<td>155</td>
+<td>4009</td>
+</tr>
+<tr class="even">
+<td><strong>3582</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>2017</td>
+<td>494</td>
+<td>287</td>
+</tr>
+</tbody>
+</table>
+<p>If we inspect the DataFrame closely we realize that it doesn’t realy look like a simple table but rather like a <strong>cross table</strong>.</p>
+<p>The first column on the left is a row index and the table header is the column index. In the center the values of the columns are displayed (see Fig. 3).</p>
+<p>If we think of the values as a matrix the rows are dimension 0 and columns are dimension 1. The dimension is often used in DataFrame functions as <code>axis</code> parameter. E.g. dropping columns can be done using dimensional information:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- EXCEPT in SELECT clause only works with BIGQUERY</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.<span class="op">*</span> <span class="kw">EXCEPT</span> s.<span class="dt">year</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> lego.sets s;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>==&gt;</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_sets.drop([<span class="st">'year'</span>], axis <span class="op">=</span> <span class="dv">1</span>).head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>name</th>
+<th>theme_id</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>00-1</td>
+<td>Weetabix Castle</td>
+<td>414</td>
+<td>471</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>0011-2</td>
+<td>Town Mini-Figures</td>
+<td>84</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td><strong>2</strong></td>
+<td>0011-3</td>
+<td>Castle 2 for 1 Bonus Offer</td>
+<td>199</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>3</strong></td>
+<td>0012-1</td>
+<td>Space Mini-Figures</td>
+<td>143</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td><strong>4</strong></td>
+<td>0013-1</td>
+<td>Space Mini-Figures</td>
+<td>143</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>The indexes can be accessed with the <code>index</code> and <code>columns</code> variable. <code>axes</code> contains both.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_sets.index <span class="co"># row index</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_sets.columns <span class="co"># column index</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df_sets.axes <span class="co"># both</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">[RangeIndex</span><span class="er">(</span><span class="va">start</span><span class="op">=</span>0, <span class="va">stop</span><span class="op">=</span>11673, <span class="va">step</span><span class="op">=</span>1<span class="kw">)</span><span class="ex">,</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Index</span><span class="er">(</span><span class="ex">[</span><span class="st">'set_num'</span><span class="ex">,</span> <span class="st">'name'</span>, <span class="st">'year'</span>, <span class="st">'theme_id'</span>, <span class="st">'num_parts'</span>], dtype=<span class="st">'object'</span><span class="kw">)</span><span class="ex">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The row index doesn’t necessarely be the row number. We can also convert a column into a row index.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_sets.set_index(<span class="st">'set_num'</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>name</th>
+<th>year</th>
+<th>theme_id</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>set_num</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>00-1</strong></td>
+<td>Weetabix Castle</td>
+<td>1970</td>
+<td>414</td>
+<td>471</td>
+</tr>
+<tr class="odd">
+<td><strong>0011-2</strong></td>
+<td>Town Mini-Figures</td>
+<td>1978</td>
+<td>84</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td><strong>0011-3</strong></td>
+<td>Castle 2 for 1 Bonus Offer</td>
+<td>1987</td>
+<td>199</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>0012-1</strong></td>
+<td>Space Mini-Figures</td>
+<td>1979</td>
+<td>143</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td><strong>0013-1</strong></td>
+<td>Space Mini-Figures</td>
+<td>1979</td>
+<td>143</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>It is also possible to define hierarchicle indicies for multi dimensional representation.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df_sets.set_index([<span class="st">'year'</span>, <span class="st">'set_num'</span>]).sort_index(axis<span class="op">=</span><span class="dv">0</span>).head() <span class="co"># axis = 0 =&gt; row index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th>name</th>
+<th>theme_id</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>year</strong></td>
+<td><strong>set_num</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>150</strong></td>
+<td><strong>700.1.1-1</strong></td>
+<td>Individual 2 x 4 Bricks</td>
+<td>371</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>700.1.2-1</strong></td>
+<td>Individual 2 x 2 Bricks</td>
+<td>371</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>700.A-1</strong></td>
+<td>Automatic Binding Bricks Small Brick Set (Lego…</td>
+<td>366</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>700.B.1-1</strong></td>
+<td>Individual 1 x 4 x 2 Window (without glass)</td>
+<td>371</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>700.B.2-1</strong></td>
+<td>Individual 1 x 2 x 3 Window (without glass)</td>
+<td>371</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>Sometimes it is usefull to reset the index, hence reset the row numbers.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_sets.loc[[<span class="dv">236</span>, <span class="dv">3582</span>]].reset_index(drop <span class="op">=</span> <span class="va">True</span>) <span class="co"># set drop = False to keep the old index as new column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>name</th>
+<th>year</th>
+<th>theme_id</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>10255-1</td>
+<td>Assembly Square</td>
+<td>2017</td>
+<td>155</td>
+<td>4009</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>2017</td>
+<td>494</td>
+<td>287</td>
+</tr>
+</tbody>
+</table>
+<p>Now we get a sence what is meant by an index in Pandas in contrast to SQL.</p>
+<p><strong>Indices in SQL</strong> are hidden data structures (in form of e.g.&nbsp;b-trees or hash-tables). They are built to <strong>access data more quickly</strong>, to avoid full table scans when appropriate or to mantain consistancies when used with constraints.</p>
+<p>An <strong>index in Pandas</strong> can rather be seen as a <strong>dimensional access</strong> to the data values. They can be distingueshed between row and column indices.</p>
+</section>
+<section id="joins-why-merge-doesnt-mean-upsert." class="level1">
+<h1>Joins <em>(Why merge doesn’t mean upsert.)</em></h1>
+<p><img src="chick.png" class="img-fluid">: <em>What are we gonna do now about my missing parts?</em></p>
+<p><img src="penguin.png" class="img-fluid">: <em>We don’t have all the information we need, yet. We need to join the other tables.</em></p>
+<p>Though there is a function called <code>join</code> to join DataFrames I always use the <code>merge</code> function. This can be a bit confusing, when you are used to Oracle where <em>merge</em> means upsert/updelete rather then combining two tables.</p>
+<p>When combining two DataFrames with the <code>merge</code> function in Pandas we have to define the relationship more explicitly. If you are used to SQL thats what you want.</p>
+<p>In contrast the <code>join</code> function implicitly combines the DataFrames by their index or column names. It also enables multiply DataFrame joins in one statement as long as the join columns are matchable by name.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> sets s</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">INNER</span> <span class="kw">JOIN</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>       inventories i</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> s.set_num <span class="op">=</span> i.set_num <span class="co">-- USING (set_num)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>set_num</th>
+<th>name</th>
+<th>year</th>
+<th>theme_id</th>
+<th>num_parts</th>
+<th>id</th>
+<th>version</th>
+<th>set_num_1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00-1</td>
+<td>Weetabix Castle</td>
+<td>1970</td>
+<td>414</td>
+<td>471</td>
+<td>5574</td>
+<td>1</td>
+<td>00-1</td>
+</tr>
+<tr class="even">
+<td>0011-2</td>
+<td>Town Mini-Figures</td>
+<td>1978</td>
+<td>84</td>
+<td>12</td>
+<td>5087</td>
+<td>1</td>
+<td>0011-2</td>
+</tr>
+<tr class="odd">
+<td>0011-3</td>
+<td>Castle 2 for 1 Bonus Offer</td>
+<td>1987</td>
+<td>199</td>
+<td>2</td>
+<td>2216</td>
+<td>1</td>
+<td>0011-3</td>
+</tr>
+<tr class="even">
+<td>0012-1</td>
+<td>Space Mini-Figures</td>
+<td>1979</td>
+<td>143</td>
+<td>12</td>
+<td>1414</td>
+<td>1</td>
+<td>0012-1</td>
+</tr>
+<tr class="odd">
+<td>0013-1</td>
+<td>Space Mini-Figures</td>
+<td>1979</td>
+<td>143</td>
+<td>12</td>
+<td>4609</td>
+<td>1</td>
+<td>0013-1</td>
+</tr>
+</tbody>
+</table>
+<p>These Pandas statements all do the same:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_sets.merge(df_inventories, how <span class="op">=</span> <span class="st">'inner'</span>, on <span class="op">=</span> <span class="st">'set_num'</span>).head(<span class="dv">5</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#or if columns are matching</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>df_sets.merge(df_inventories, on <span class="op">=</span> <span class="st">'set_num'</span>).head(<span class="dv">5</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#or explicitly defined columns</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>df_sets.merge(df_inventories, how <span class="op">=</span> <span class="st">'inner'</span>, left_on <span class="op">=</span> <span class="st">'set_num'</span>, right_on <span class="op">=</span> <span class="st">'set_num'</span>).head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>name</th>
+<th>year</th>
+<th>theme_id</th>
+<th>num_parts</th>
+<th>id</th>
+<th>version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>00-1</td>
+<td>Weetabix Castle</td>
+<td>1970</td>
+<td>414</td>
+<td>471</td>
+<td>5574</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>0011-2</td>
+<td>Town Mini-Figures</td>
+<td>1978</td>
+<td>84</td>
+<td>12</td>
+<td>5087</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>2</strong></td>
+<td>0011-3</td>
+<td>Castle 2 for 1 Bonus Offer</td>
+<td>1987</td>
+<td>199</td>
+<td>2</td>
+<td>2216</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>3</strong></td>
+<td>0012-1</td>
+<td>Space Mini-Figures</td>
+<td>1979</td>
+<td>143</td>
+<td>12</td>
+<td>1414</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>4</strong></td>
+<td>0013-1</td>
+<td>Space Mini-Figures</td>
+<td>1979</td>
+<td>143</td>
+<td>12</td>
+<td>4609</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>To see witch parts are needed for the <em>Pizzeria</em> we combine some tables. We look for the inventory of the set and gather all parts. Then we get color and part category information.</p>
+<p>We end up with an inventory list:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.set_num, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>       s.name set_name, </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>       p.part_num, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>       p.name part_name, </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>       ip.quantity,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>       c.name color,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>       pc.name part_cat</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> sets s,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>       inventories i,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>       inventory_parts ip,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>       parts p,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>       colors c,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>       part_categories pc</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> s.set_num <span class="op">=</span> i.set_num</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> i.<span class="kw">id</span> <span class="op">=</span> ip.inventory_id</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> ip.part_num <span class="op">=</span> p.part_num</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> ip.color_id <span class="op">=</span> c.<span class="kw">id</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> p.part_cat_id <span class="op">=</span> pc.<span class="kw">id</span> </span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> s.set_num <span class="kw">in</span> (<span class="st">'41311-1'</span>)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> i.version <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> ip.is_spare <span class="op">=</span> <span class="st">'f'</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> p.name, s.set_num, c.name</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>set_num</th>
+<th>set_name</th>
+<th>part_num</th>
+<th>part_name</th>
+<th>quantity</th>
+<th>color</th>
+<th>part_cat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>25269pr03</td>
+<td>1/4 CIRCLE TILE 1X1 with Pizza Print</td>
+<td>4</td>
+<td>Tan</td>
+<td>Tiles Printed</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>32807</td>
+<td>BRICK 1X1X1 1/3, W/ ARCH</td>
+<td>4</td>
+<td>Red</td>
+<td>Other</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>6190</td>
+<td>Bar 1 x 3 (Radio Handle, Phone Handset)</td>
+<td>1</td>
+<td>Red</td>
+<td>Bars, Ladders and Fences</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>30374</td>
+<td>Bar 4L (Lightsaber Blade / Wand)</td>
+<td>1</td>
+<td>Light Bluish Gray</td>
+<td>Bars, Ladders and Fences</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>99207</td>
+<td>Bracket 1 x 2 - 2 x 2 Inverted</td>
+<td>1</td>
+<td>Black</td>
+<td>Plates Special</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>2453b</td>
+<td>Brick 1 x 1 x 5 with Solid Stud</td>
+<td>4</td>
+<td>Tan</td>
+<td>Bricks</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>3004</td>
+<td>Brick 1 x 2</td>
+<td>4</td>
+<td>Light Bluish Gray</td>
+<td>Bricks</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>3004</td>
+<td>Brick 1 x 2</td>
+<td>3</td>
+<td>Tan</td>
+<td>Bricks</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>3004</td>
+<td>Brick 1 x 2</td>
+<td>1</td>
+<td>White</td>
+<td>Bricks</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>3245b</td>
+<td>Brick 1 x 2 x 2 with Inside Axle Holder</td>
+<td>2</td>
+<td>White</td>
+<td>Bricks</td>
+</tr>
+</tbody>
+</table>
+<p>Lets create a general <code>inventory_list</code> as view and make the statement more readable and comparable with ANSI-syntax (separating filters/predicates from join conditions).</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">VIEW</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> inventory_list;</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> inventory_list <span class="kw">AS</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.set_num, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>       s.name set_name, </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>       s.theme_id,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>       s.num_parts,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>       p.part_num, </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>       ip.quantity,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>       p.name part_name, </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>       c.name color,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>       pc.name part_cat</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> sets s</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a> <span class="kw">INNER</span> <span class="kw">JOIN</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>       inventories i</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a> <span class="kw">USING</span> (set_num)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a> <span class="kw">INNER</span> <span class="kw">JOIN</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>       inventory_parts ip</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> (i.<span class="kw">id</span> <span class="op">=</span> ip.inventory_id)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a> <span class="kw">INNER</span> <span class="kw">JOIN</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>       parts p</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a> <span class="kw">USING</span> (part_num)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a> <span class="kw">INNER</span> <span class="kw">JOIN</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>       colors c</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> (ip.color_id <span class="op">=</span> c.<span class="kw">id</span>)</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a> <span class="kw">INNER</span> <span class="kw">JOIN</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>       part_categories pc</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> (p.part_cat_id <span class="op">=</span> pc.<span class="kw">id</span>)</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> i.version <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> ip.is_spare <span class="op">=</span> <span class="st">'f'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we translate the view to Pandas. We see how the structure relates to sql. The parameter <code>how</code> defines the type of join (here: <code>inner</code>), <code>on</code> represents the <code>USING</code> clause whereas <code>left_on</code> and <code>right_on</code> stand for the SQL <code>ON</code> condition.</p>
+<p>In SQL usually an optimizer defines based in rules or statistics the execution plan (the order in which the tables are accessed, combined and filtered). I’m not sure if Pandas follows a similar approache. To be safe, I assume the order and early column dropping might matter for performance and memory management.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_inventory_list <span class="op">=</span> df_sets[[<span class="st">'set_num'</span>, <span class="st">'name'</span>, <span class="st">'theme_id'</span>, <span class="st">'num_parts'</span>]] <span class="op">\</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                    .merge(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                    df_inventories[df_inventories[<span class="st">'version'</span>] <span class="op">==</span> <span class="dv">1</span>][[<span class="st">'id'</span>, <span class="st">'set_num'</span>]],</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                        how <span class="op">=</span> <span class="st">'inner'</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                        on <span class="op">=</span> <span class="st">'set_num'</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                    ) <span class="op">\</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                    .merge(</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                    df_inventory_parts[df_inventory_parts[<span class="st">'is_spare'</span>] <span class="op">==</span> <span class="st">'f'</span>][[<span class="st">'inventory_id'</span>, <span class="st">'part_num'</span>, <span class="st">'color_id'</span>, <span class="st">'quantity'</span>]],</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                        how <span class="op">=</span> <span class="st">'inner'</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                        left_on <span class="op">=</span> <span class="st">'id'</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>                        right_on <span class="op">=</span> <span class="st">'inventory_id'</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                    ) <span class="op">\</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                    .merge(</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                    df_parts[[<span class="st">'part_num'</span>, <span class="st">'name'</span>, <span class="st">'part_cat_id'</span>]],</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                        how <span class="op">=</span> <span class="st">'inner'</span>,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                        on <span class="op">=</span> <span class="st">'part_num'</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                    ) <span class="op">\</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                    .merge(</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>                    df_colors[[<span class="st">'id'</span>, <span class="st">'name'</span>]],</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                        how <span class="op">=</span> <span class="st">'inner'</span>,</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>                        left_on <span class="op">=</span> <span class="st">'color_id'</span>,</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>                        right_on <span class="op">=</span> <span class="st">'id'</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>                    ) <span class="op">\</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>                    .merge(</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>                    df_part_categories[[<span class="st">'id'</span>, <span class="st">'name'</span>]],</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>                        how <span class="op">=</span> <span class="st">'inner'</span>,</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>                        left_on <span class="op">=</span> <span class="st">'part_cat_id'</span>,</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>                        right_on <span class="op">=</span> <span class="st">'id'</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a><span class="co"># remove some columns and use index as row number (reset_index)</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>df_inventory_list <span class="op">=</span> df_inventory_list.drop([<span class="st">'id_x'</span>, <span class="st">'inventory_id'</span>, <span class="st">'color_id'</span>, <span class="st">'part_cat_id'</span>, <span class="st">'id_y'</span>, <span class="st">'id'</span>], axis <span class="op">=</span> <span class="dv">1</span>).reset_index(drop <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns</span></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>df_inventory_list.columns <span class="op">=</span> [<span class="st">'set_num'</span>, <span class="st">'set_name'</span>, <span class="st">'theme_id'</span>, <span class="st">'num_parts'</span>, <span class="st">'part_num'</span>, <span class="st">'quantity'</span>, <span class="st">'part_name'</span>, <span class="st">'color'</span>, <span class="st">'part_cat'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Lots of code here. So we better check if our Pandas code matches the results of our SQL code.</p>
+<p>Select the inventory list for our example, write it to a DataFrame (<code>df_test_from_sql</code>) and compare the results.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df_test_from_sql <span class="op">&lt;&lt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> il.<span class="op">*</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> inventory_list il</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> il.set_num <span class="kw">in</span> (<span class="st">'41311-1'</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>       il.part_name, </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>       il.set_num, </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>       il.color</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>set_num</th>
+<th>set_name</th>
+<th>theme_id</th>
+<th>num_parts</th>
+<th>part_num</th>
+<th>quantity</th>
+<th>part_name</th>
+<th>color</th>
+<th>part_cat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>25269pr03</td>
+<td>4</td>
+<td>1/4 CIRCLE TILE 1X1 with Pizza Print</td>
+<td>Tan</td>
+<td>Tiles Printed</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>32807</td>
+<td>4</td>
+<td>BRICK 1X1X1 1/3, W/ ARCH</td>
+<td>Red</td>
+<td>Other</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>6190</td>
+<td>1</td>
+<td>Bar 1 x 3 (Radio Handle, Phone Handset)</td>
+<td>Red</td>
+<td>Bars, Ladders and Fences</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>30374</td>
+<td>1</td>
+<td>Bar 4L (Lightsaber Blade / Wand)</td>
+<td>Light Bluish Gray</td>
+<td>Bars, Ladders and Fences</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>99207</td>
+<td>1</td>
+<td>Bracket 1 x 2 - 2 x 2 Inverted</td>
+<td>Black</td>
+<td>Plates Special</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>2453b</td>
+<td>4</td>
+<td>Brick 1 x 1 x 5 with Solid Stud</td>
+<td>Tan</td>
+<td>Bricks</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3004</td>
+<td>4</td>
+<td>Brick 1 x 2</td>
+<td>Light Bluish Gray</td>
+<td>Bricks</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3004</td>
+<td>3</td>
+<td>Brick 1 x 2</td>
+<td>Tan</td>
+<td>Bricks</td>
+</tr>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3004</td>
+<td>1</td>
+<td>Brick 1 x 2</td>
+<td>White</td>
+<td>Bricks</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3245b</td>
+<td>2</td>
+<td>Brick 1 x 2 x 2 with Inside Axle Holder</td>
+<td>White</td>
+<td>Bricks</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_test_from_df <span class="op">=</span> df_inventory_list[df_inventory_list[<span class="st">'set_num'</span>].isin([<span class="st">'41311-1'</span>])].sort_values(by<span class="op">=</span>[<span class="st">'part_name'</span>, <span class="st">'set_num'</span>, <span class="st">'color'</span>]).head(<span class="dv">10</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>df_test_from_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>set_name</th>
+<th>theme_id</th>
+<th>num_parts</th>
+<th>part_num</th>
+<th>quantity</th>
+<th>part_name</th>
+<th>color</th>
+<th>part_cat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>507161</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>25269pr03</td>
+<td>4</td>
+<td>1/4 CIRCLE TILE 1X1 with Pizza Print</td>
+<td>Tan</td>
+<td>Tiles Printed</td>
+</tr>
+<tr class="even">
+<td><strong>543292</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>32807</td>
+<td>4</td>
+<td>BRICK 1X1X1 1/3, W/ ARCH</td>
+<td>Red</td>
+<td>Other</td>
+</tr>
+<tr class="odd">
+<td><strong>266022</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>6190</td>
+<td>1</td>
+<td>Bar 1 x 3 (Radio Handle, Phone Handset)</td>
+<td>Red</td>
+<td>Bars, Ladders and Fences</td>
+</tr>
+<tr class="even">
+<td><strong>273113</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>30374</td>
+<td>1</td>
+<td>Bar 4L (Lightsaber Blade / Wand)</td>
+<td>Light Bluish Gray</td>
+<td>Bars, Ladders and Fences</td>
+</tr>
+<tr class="odd">
+<td><strong>306863</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>99207</td>
+<td>1</td>
+<td>Bracket 1 x 2 - 2 x 2 Inverted</td>
+<td>Black</td>
+<td>Plates Special</td>
+</tr>
+<tr class="even">
+<td><strong>47206</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>2453b</td>
+<td>4</td>
+<td>Brick 1 x 1 x 5 with Solid Stud</td>
+<td>Tan</td>
+<td>Bricks</td>
+</tr>
+<tr class="odd">
+<td><strong>50211</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3004</td>
+<td>4</td>
+<td>Brick 1 x 2</td>
+<td>Light Bluish Gray</td>
+<td>Bricks</td>
+</tr>
+<tr class="even">
+<td><strong>45716</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3004</td>
+<td>3</td>
+<td>Brick 1 x 2</td>
+<td>Tan</td>
+<td>Bricks</td>
+</tr>
+<tr class="odd">
+<td><strong>16485</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3004</td>
+<td>1</td>
+<td>Brick 1 x 2</td>
+<td>White</td>
+<td>Bricks</td>
+</tr>
+<tr class="even">
+<td><strong>22890</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3245b</td>
+<td>2</td>
+<td>Brick 1 x 2 x 2 with Inside Axle Holder</td>
+<td>White</td>
+<td>Bricks</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assert equals</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> USE_BIGQUERY:</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    df_test_from_sql <span class="op">=</span> df_test_from_sql.DataFrame()</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>pd._testing.assert_frame_equal(df_test_from_sql, df_test_from_df.reset_index(drop <span class="op">=</span> <span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The results are equal as expected.</p>
+<p>Since we are only interested in the red bricks we create a list of those missing parts.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> inventory_list il</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> il.set_num <span class="op">=</span> <span class="st">'41311-1'</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> part_cat <span class="kw">like</span> <span class="st">'%Brick%'</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> color <span class="op">=</span> <span class="st">'Red'</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>       il.color, </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>       il.part_name, </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>       il.set_num;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>set_num</th>
+<th>set_name</th>
+<th>theme_id</th>
+<th>num_parts</th>
+<th>part_num</th>
+<th>quantity</th>
+<th>part_name</th>
+<th>color</th>
+<th>part_cat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3039</td>
+<td>1</td>
+<td>Slope 45° 2 x 2</td>
+<td>Red</td>
+<td>Bricks Sloped</td>
+</tr>
+<tr class="even">
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3045</td>
+<td>2</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>Red</td>
+<td>Bricks Sloped</td>
+</tr>
+</tbody>
+</table>
+<p>We need to watchout for the brackets when combining filters in DataFrames.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_missing_parts <span class="op">=</span> df_inventory_list[(df_inventory_list[<span class="st">'set_num'</span>] <span class="op">==</span> <span class="st">'41311-1'</span>) <span class="op">&amp;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                                     (df_inventory_list[<span class="st">'part_cat'</span>].<span class="bu">str</span>.contains(<span class="st">"Brick"</span>)) <span class="op">&amp;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                     (df_inventory_list[<span class="st">'color'</span>] <span class="op">==</span> <span class="st">'Red'</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                                    ].sort_values(by<span class="op">=</span>[<span class="st">'color'</span>, <span class="st">'part_name'</span>, <span class="st">'set_num'</span>]).reset_index(drop <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>df_missing_parts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>set_name</th>
+<th>theme_id</th>
+<th>num_parts</th>
+<th>part_num</th>
+<th>quantity</th>
+<th>part_name</th>
+<th>color</th>
+<th>part_cat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3039</td>
+<td>1</td>
+<td>Slope 45° 2 x 2</td>
+<td>Red</td>
+<td>Bricks Sloped</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>41311-1</td>
+<td>Heartlake Pizzeria</td>
+<td>494</td>
+<td>287</td>
+<td>3045</td>
+<td>2</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>Red</td>
+<td>Bricks Sloped</td>
+</tr>
+</tbody>
+</table>
+<p><img src="penguin.png" class="img-fluid">: <em>There we go, we are missing one 2x2 brick and tw0 2x2 double convex.</em></p>
+<p><img src="chick.png" class="img-fluid">: <em>Yup, that’s the roof of the fireplace. I knew that before.</em></p>
+</section>
+<section id="conditional-joins-and-aggregation-almost-done" class="level1">
+<h1>Conditional Joins and Aggregation <em>(Almost done!)</em></h1>
+<p>Next we search for sets that contain the missing parts. The quantity of the parts in the found sets must be greater or equal the quantity of the missing parts.</p>
+<p>In SQL it is done with an <strong>conditional join</strong> <code>il.quantity &gt;= mp.quantity</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sets_with_missing_parts <span class="op">&lt;&lt;</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- A list of missing parts</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> missing_parts <span class="kw">AS</span> (</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> il.set_name,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>         il.part_num, </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>         il.part_name,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>         il.color,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>         il.quantity</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> inventory_list il</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">WHERE</span> il.set_num <span class="op">=</span> <span class="st">'41311-1'</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>     <span class="kw">AND</span> il.part_cat <span class="kw">like</span> <span class="st">'%Brick%'</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>     <span class="kw">AND</span> il.color <span class="op">=</span> <span class="st">'Red'</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- Looking for set that contains as much of the missing parts as needed</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> mp.set_name <span class="kw">as</span> searching_for_set,</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>       il.set_num, </span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>       il.set_name, </span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>       il.part_name,</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>       <span class="co">-- total number of parts per set</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>       il.num_parts,</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>       <span class="co">-- how many of the missing parts were found in the set </span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> il.set_num) <span class="kw">AS</span> matches_per_set</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> inventory_list il</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a> <span class="kw">INNER</span> <span class="kw">JOIN</span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>       missing_parts mp</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> (il.part_num <span class="op">=</span> mp.part_num</span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> il.color <span class="op">=</span> mp.color</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>        <span class="co">-- searching for a set that contains at least as much parts as there are missing</span></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> il.quantity <span class="op">&gt;=</span> mp.quantity</span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a> <span class="co">-- don't search in the Pizzeria set</span></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> il.set_num <span class="op">&lt;&gt;</span> <span class="st">'41311-1'</span></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a> <span class="co">-- prioritize sets with all the missing parts and as few parts as possible</span></span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> </span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>       matches_per_set <span class="kw">DESC</span>, </span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>       il.num_parts, </span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>       il.set_num,</span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>       il.part_name</span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="conditional-join" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-join">Conditional Join</h2>
+<p>There is no intuitive way to do a conditional join on DataFrames. The easiest I’ve <a href="https://stackoverflow.com/questions/23508351/how-to-do-workaround-a-conditional-join-in-python-pandas">seen</a> so far is a two step solution. As substitution for the SQL <code>WITH</code>-clause we can reuse <code>df_missing_parts</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. merge on the equal conditions</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts <span class="op">=</span> df_inventory_list.merge(df_missing_parts, how <span class="op">=</span> <span class="st">'inner'</span>, on <span class="op">=</span> [<span class="st">'part_num'</span>, <span class="st">'color'</span>], suffixes <span class="op">=</span> (<span class="st">'_found'</span>, <span class="st">'_missing'</span>))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. apply filter for the qreater equals condition</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts <span class="op">=</span> df_sets_with_missing_parts[df_sets_with_missing_parts[<span class="st">'quantity_found'</span>] <span class="op">&gt;=</span> df_sets_with_missing_parts[<span class="st">'quantity_missing'</span>]]</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># select columns</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [<span class="st">'set_num'</span>, <span class="st">'set_name'</span>, <span class="st">'part_name'</span>, <span class="st">'num_parts'</span>]</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts <span class="op">=</span> df_sets_with_missing_parts[[<span class="st">'set_name_missing'</span>] <span class="op">+</span> [c <span class="op">+</span> <span class="st">'_found'</span> <span class="cf">for</span> c <span class="kw">in</span> cols]]</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts.columns <span class="op">=</span> [<span class="st">'searching_for_set'</span>] <span class="op">+</span> cols</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="aggregation" class="level2">
+<h2 class="anchored" data-anchor-id="aggregation">Aggregation</h2>
+<p>In the next step the aggregation of the analytic function</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> il.set_num) matches_per_set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>needs to be calculated. Hence the number of not-NaN values will be counted per <code>SET_NUM</code> group and assigned to each row in a new column (<code>matches_per_set</code>).</p>
+<p>But before translating the analytic function, let’s have a look at a regular aggregation, first. Say, we simply want to count the entries per <code>set_num</code> on group level (without assigning the results back to the original group entries) and also sum up all parts of a group. Then the SQL would look something like this:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.set_num,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> matches_per_set</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(s.num_parts) <span class="kw">AS</span> total_num_parts</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> <span class="op">..</span>.</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> <span class="op">..</span>.</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>       s.set_num;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All selected columns must either be aggregated by a function (<code>COUNT</code>, <code>SUM</code>) or defined as a group (<code>GROUP BY</code>). The result is a two column list with the group <code>set_num</code> and the aggregations <code>matches_per_set</code> and <code>total_num_part</code>.</p>
+<p>Now see how the counting is done with Pandas.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts.groupby([<span class="st">'set_num'</span>]).count()  .sort_values(<span class="st">'set_num'</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># for sum and count:</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># df_sets_with_missing_parts.groupby(['set_num']).agg(['count', 'sum']) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>searching_for_set</th>
+<th>set_name</th>
+<th>part_name</th>
+<th>num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>set_num</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>llca8-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>llca21-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>fruit1-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>MMMB026-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>MMMB003-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>…</strong></td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td><strong>10021-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>088-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>080-1</strong></td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>066-1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>00-4</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Wow, that’s different! The aggregation function is applied to every column independently and the group is set as row index. But it is also possible to define the aggregation function for each column explicitly like in SQL:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts.groupby([<span class="st">'set_num'</span>], as_index <span class="op">=</span> <span class="va">False</span>) <span class="op">\</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    .agg(matches_per_set <span class="op">=</span> pd.NamedAgg(column <span class="op">=</span> <span class="st">"set_num"</span>, aggfunc <span class="op">=</span> <span class="st">"count"</span>), </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>         total_num_parts <span class="op">=</span> pd.NamedAgg(column <span class="op">=</span> <span class="st">"num_parts"</span>, aggfunc <span class="op">=</span> <span class="st">"sum"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>set_num</th>
+<th>matches_per_set</th>
+<th>total_num_parts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>00-4</td>
+<td>1</td>
+<td>126</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>066-1</td>
+<td>1</td>
+<td>407</td>
+</tr>
+<tr class="odd">
+<td><strong>2</strong></td>
+<td>080-1</td>
+<td>2</td>
+<td>1420</td>
+</tr>
+<tr class="even">
+<td><strong>3</strong></td>
+<td>088-1</td>
+<td>1</td>
+<td>615</td>
+</tr>
+<tr class="odd">
+<td><strong>4</strong></td>
+<td>10021-1</td>
+<td>1</td>
+<td>974</td>
+</tr>
+<tr class="even">
+<td><strong>…</strong></td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td><strong>463</strong></td>
+<td>MMMB003-1</td>
+<td>1</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td><strong>464</strong></td>
+<td>MMMB026-1</td>
+<td>1</td>
+<td>43</td>
+</tr>
+<tr class="odd">
+<td><strong>465</strong></td>
+<td>fruit1-1</td>
+<td>1</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td><strong>466</strong></td>
+<td>llca21-1</td>
+<td>1</td>
+<td>42</td>
+</tr>
+<tr class="odd">
+<td><strong>467</strong></td>
+<td>llca8-1</td>
+<td>1</td>
+<td>58</td>
+</tr>
+</tbody>
+</table>
+<p>This looks more familiar. With the <code>as_index</code> argument the group becomes a column (rather than a row index).</p>
+<p>So, now we return to our initial task translating the <code>COUNT(*) OVER(PARTITION BY)</code> clause. One approach could be to join the results of the above aggregated DataFrame with the origanal DataFrame, like</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts.merge(my_agg_df, on <span class="op">=</span> <span class="st">'set_num'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A more common why is to use the <code>transform()</code> function:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add aggregatiom</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts[<span class="st">'matches_per_set'</span>] <span class="op">=</span> df_sets_with_missing_parts.groupby([<span class="st">'set_num'</span>])[<span class="st">'part_name'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>searching_for_set</th>
+<th>set_num</th>
+<th>set_name</th>
+<th>part_name</th>
+<th>num_parts</th>
+<th>matches_per_set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>00-4</td>
+<td>Weetabix Promotional Windmill</td>
+<td>Slope 45° 2 x 2</td>
+<td>126</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>066-1</td>
+<td>Basic Building Set</td>
+<td>Slope 45° 2 x 2</td>
+<td>407</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>2</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>080-1</td>
+<td>Basic Building Set with Train</td>
+<td>Slope 45° 2 x 2</td>
+<td>710</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>3</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>088-1</td>
+<td>Super Set</td>
+<td>Slope 45° 2 x 2</td>
+<td>615</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><strong>4</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>10021-1</td>
+<td>U.S.S. Constellation</td>
+<td>Slope 45° 2 x 2</td>
+<td>974</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s elaborate the magic that’s happening.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts.groupby([<span class="st">'set_num'</span>])[<span class="st">'part_name'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>returns a <code>GroupByDataFrame</code> which contains the group names (from <code>set_num</code>) and all row/column indicies and values related to the groups. Here only one column <code>['part_name']</code> is selected. In the next step <a href="https://github.com/pandas-dev/pandas/blob/v1.1.4/pandas/core/groupby/generic.py#L514"><code>transform</code> applies</a> the given function (<code>count</code>) to each column individually but only with the values in the current group. Finaly the results are assigned to each row in the group as shown in Fig. 4.</p>
+<p><img src="trnsf.png" class="img-fluid"></p>
+<p>Fig. 4: Aggregation with transform</p>
+<p>Now that we have gathered all the data we arange the results so that they can be compared to the SQL data:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort and pick top 16</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts <span class="op">=</span> df_sets_with_missing_parts.sort_values([<span class="st">'matches_per_set'</span>, <span class="st">'num_parts'</span>, <span class="st">'set_num'</span>, <span class="st">'part_name'</span>], ascending <span class="op">=</span> [<span class="va">False</span>, <span class="va">True</span>, <span class="va">True</span>, <span class="va">True</span>]).reset_index(drop <span class="op">=</span> <span class="va">True</span>).head(<span class="dv">16</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>df_sets_with_missing_parts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>searching_for_set</th>
+<th>set_num</th>
+<th>set_name</th>
+<th>part_name</th>
+<th>num_parts</th>
+<th>matches_per_set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>199-1</td>
+<td>Scooter</td>
+<td>Slope 45° 2 x 2</td>
+<td>41</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>199-1</td>
+<td>Scooter</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>41</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>2</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>212-2</td>
+<td>Scooter</td>
+<td>Slope 45° 2 x 2</td>
+<td>41</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>3</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>212-2</td>
+<td>Scooter</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>41</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>4</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>838-1</td>
+<td>Red Roof Bricks Parts Pack, 45 Degree</td>
+<td>Slope 45° 2 x 2</td>
+<td>58</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>5</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>838-1</td>
+<td>Red Roof Bricks Parts Pack, 45 Degree</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>58</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>6</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>5151-1</td>
+<td>Roof Bricks, Red, 45 Degrees</td>
+<td>Slope 45° 2 x 2</td>
+<td>59</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>7</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>5151-1</td>
+<td>Roof Bricks, Red, 45 Degrees</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>59</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>8</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>811-1</td>
+<td>Red Roof Bricks, Steep Pitch</td>
+<td>Slope 45° 2 x 2</td>
+<td>59</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>9</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>811-1</td>
+<td>Red Roof Bricks, Steep Pitch</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>59</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>10</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>663-1</td>
+<td>Hovercraft</td>
+<td>Slope 45° 2 x 2</td>
+<td>60</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>11</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>663-1</td>
+<td>Hovercraft</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>60</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>12</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>336-1</td>
+<td>Fire Engine</td>
+<td>Slope 45° 2 x 2</td>
+<td>76</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>13</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>336-1</td>
+<td>Fire Engine</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>76</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>14</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>6896-1</td>
+<td>Celestial Forager</td>
+<td>Slope 45° 2 x 2</td>
+<td>92</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>15</strong></td>
+<td>Heartlake Pizzeria</td>
+<td>6896-1</td>
+<td>Celestial Forager</td>
+<td>Slope 45° 2 x 2 Double Convex</td>
+<td>92</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assert equals</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> USE_BIGQUERY:</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    sets_with_missing_parts <span class="op">=</span> sets_with_missing_parts.DataFrame()</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>pd._testing.assert_frame_equal(sets_with_missing_parts, df_sets_with_missing_parts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The results are matching!</p>
+<p><img src="penguin.png" class="img-fluid">: We got it. We can buy the small Fire Engine to fix the roof of the fireplace. Now need for a new Pizzeria. :-)</p>
+<p><img src="chick.png" class="img-fluid">: (#@§?!*#) Are you sure your data is usefull for anything?</p>
+</section>
+</section>
+<section id="recursion-lost-in-trees" class="level1">
+<h1>Recursion <em>(Lost in trees?)</em></h1>
+<p>We solved the red brick problem. But since we have the data already open, let’s have a closer look at the <em>Fire Engine</em>, set number <em>336-1</em>.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.name <span class="kw">AS</span> set_name,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>       s.<span class="dt">year</span>,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>       t.<span class="kw">id</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>       t.name <span class="kw">AS</span> theme_name,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>       t.parent_id</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> sets s,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>       themes t</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> t.<span class="kw">id</span> <span class="op">=</span> s.theme_id</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> s.set_num <span class="op">=</span> <span class="st">'336-1'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>set_name</th>
+<th>year</th>
+<th>id</th>
+<th>theme_name</th>
+<th>parent_id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fire Engine</td>
+<td>1968</td>
+<td>376</td>
+<td>Fire</td>
+<td>373.0</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>fire engine</em> is quiet old (from 1968) and it belongs to the theme <em>Fire</em>. The <code>themes</code> table also includes as column called <code>parent_id</code>. This suggests that <code>themes</code> is a hierarchical structure. We can check this with an recursive <code>WITH</code>-clause in SQL. (*BQ: recursive WITH is not implemented in BIGQUERY.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE hier(name, parent_id, <span class="kw">level</span>) <span class="kw">AS</span> ( </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- init recursion</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> t.name, </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>           t.parent_id, </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>           <span class="dv">0</span> <span class="kw">AS</span> <span class="kw">level</span> </span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">FROM</span> themes t </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>     <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">376</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- recursive call</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> t.name, </span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>           t.parent_id, </span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>           h.<span class="kw">level</span> <span class="op">+</span><span class="dv">1</span> </span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>      <span class="kw">FROM</span> themes t, </span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>           hier h </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>     <span class="kw">WHERE</span> t.<span class="kw">id</span> <span class="op">=</span> h.parent_id</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="dv">1</span>) <span class="kw">OVER</span>() <span class="op">-</span> <span class="kw">level</span> <span class="kw">AS</span> <span class="kw">level</span>, </span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>       name <span class="kw">as</span> theme, </span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>       GROUP_CONCAT(name,<span class="st">' --&gt; '</span>) <span class="kw">over</span>(<span class="kw">order</span> <span class="kw">by</span> <span class="kw">level</span> <span class="kw">desc</span>) path</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> hier </span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="kw">level</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>level</th>
+<th>theme</th>
+<th>path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Classic</td>
+<td>Classic</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Vehicle</td>
+<td>Classic –&gt; Vehicle</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Fire</td>
+<td>Classic –&gt; Vehicle –&gt; Fire</td>
+</tr>
+</tbody>
+</table>
+<p>OK, that looks like a reasonable hierarchie. The <code>path</code> column includes the parents and grant parents of a theme. What if we want to reverse the order of the path. Unfortunately <code>GROUP_CONCAT</code> in SQLite doesn’t allow us to specify a sort order in the aggregation. It’s possible to add custom aggregation function in some databases. In SQLite we can compile <a href="https://www.sqlite.org/appfunc.html">application defined function</a> or in Oracle we can define <a href="https://docs.oracle.com/cd/B28359_01/appdev.111/b28425/aggr_functions.htm">customized aggregation function</a> even at runtime as types.</p>
+<p>Quiet some steps need to be taken to make the database use costumized aggregation efficently, so we can use them like regulare aggregation and windowing function. In Oracle for instance we have to define:</p>
+<ol type="1">
+<li>initial values: <code>plsql     total := 0;      n := 0;</code></li>
+<li>calculation per iteration step: <code>plsql     total := total + this_step_value;      n := n + 1;</code></li>
+<li>deletion per iteration for windowing: <code>plsql     total := total - removed_step_value;      n := n - 1;</code></li>
+<li>merging for parallel execution: <code>total := total_worker1 + total_worker2;      n := n_worker1 + n_worker2;</code></li>
+<li>termination: <code>plsql     my_avg := total / nullif(n-1, 0)</code></li>
+</ol>
+<p>Now, how are we gonna do this in Pandas? We start by traversing the hierarchie.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fire_engine_info <span class="op">=</span> df_themes[df_themes[<span class="st">'id'</span>] <span class="op">==</span> <span class="dv">376</span>].copy()</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>fire_engine_info[<span class="st">'level'</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>parent_id <span class="op">=</span> fire_engine_info.parent_id.values[<span class="dv">0</span>]</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>lvl <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> np.isnan(parent_id) <span class="kw">and</span> lvl <span class="op">&lt;</span> <span class="dv">10</span>:</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    lvl<span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    new_info <span class="op">=</span> df_themes[df_themes[<span class="st">'id'</span>] <span class="op">==</span> parent_id].copy()</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    new_info[<span class="st">'level'</span>] <span class="op">=</span> lvl</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    parent_id <span class="op">=</span> new_info.parent_id.values[<span class="dv">0</span>]</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    fire_engine_info <span class="op">=</span> fire_engine_info.append(new_info)</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>fire_engine_info[<span class="st">'grp'</span>]<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>fire_engine_info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>id</th>
+<th>name</th>
+<th>parent_id</th>
+<th>level</th>
+<th>grp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>375</strong></td>
+<td>376</td>
+<td>Fire</td>
+<td>373.0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td><strong>372</strong></td>
+<td>373</td>
+<td>Vehicle</td>
+<td>365.0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td><strong>364</strong></td>
+<td>365</td>
+<td>Classic</td>
+<td>NaN</td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>On the one hand this is pretty need, since we can do what ever we want in a manually coded loop. On the other hand I doubt that it is very efficent when we have to deal with lots of data. But to be fair, Recursive <code>WITH</code> isn’t that fast either in SQL.</p>
+<p>Finaly we consider how to do customized aggregation. We could do it in the loop above or we can rather use the library’s <code>transform</code> or <code>apply</code> functions.</p>
+<p>We define a custom aggregation function <code>cat_sorted</code> and then use the <code>apply</code> function like this:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cat_sorted(ser, df, val_col <span class="op">=</span> <span class="va">None</span>, sort_col <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    u<span class="op">=</span><span class="st">' --&gt; '</span>.join(df[df.<span class="bu">id</span>.isin(ser)].sort_values(sort_col)[val_col].values)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [u]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fire_engine_info.<span class="bu">apply</span>(<span class="kw">lambda</span> x: cat_sorted(x, fire_engine_info, <span class="st">'name'</span>, <span class="st">'level'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>id</th>
+<th>name</th>
+<th>parent_id</th>
+<th>level</th>
+<th>grp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>Fire –&gt; Vehicle –&gt; Classic</td>
+<td></td>
+<td>Vehicle –&gt; Classic</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>We can also apply rolling or windowing behaviour. &gt; Note that a rolling representation or windowing on string values is not possible because Pandas only allows numeric values for those action.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>fire_engine_info.rolling(<span class="dv">10</span>,min_periods<span class="op">=</span><span class="dv">1</span>)[<span class="st">'level'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">sum</span>(<span class="dv">10</span><span class="op">**</span>x), raw <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">375</span>      1.0</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">372</span>     11.0</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">364</span>    111.0</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Name:</span> level, dtype: float64</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, we not only understand the numbers on the lego package but also have a better understandig of Pandas.</p>
+</section>
+<section id="summary-got-it" class="level1">
+<h1>Summary <em>(Got it!)</em></h1>
+<p>SQL stays my favourite language to access structured data arranged over many tables. Pandas shines when data already is gathered together and easily accessable (e.g.&nbsp;as csv file). There are alternatives to Pandas to build ml pipelines, such as <a href="https://docs.dask.org/en/latest/">Dask</a> or <a href="https://docs.rapids.ai/api/cudf/stable/">CUDF</a>. But learning Pandas is a good foundation to learn more of them.</p>
+</section>
+<section id="resources" class="level1">
+<h1>Resources</h1>
+<p>To play with the examples: - <em>Res. 1</em> Kaggle notebook: https://www.kaggle.com/joatom/a-handful-of-bricks-from-sql-to-pandas - <em>Res. 2</em> Docker container: https://github.com/joatom/blog-resources/tree/main/handful_bricks</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li><em>Ref. 1</em> Pandas SQL comparison: https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html</li>
+<li><em>Ref. 2</em> The Lego dataset: https://www.kaggle.com/rtatman/lego-database</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
