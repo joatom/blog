@@ -11,3 +11,5 @@ vendor
 .netlify
 .tweet-cache
 __pycache__
+
+/.quarto/

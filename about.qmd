@@ -1,6 +1,6 @@
 ---
-title: "Johannes Tomasoni"
-image: profile.jpg
+title: "About"
+image: jt.jpeg
 about:
   template: jolla
   links:
