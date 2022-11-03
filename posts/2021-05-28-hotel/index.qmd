@@ -2,7 +2,8 @@
 toc: false
 layout: post
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2021-05-28"
 description: Some notes from a kaggle competition
 categories: [Vision, ML, Competition]

@@ -2,7 +2,8 @@
 toc: false
 layout: post
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2021-04-14"
 description: What the nonlinearity does in neural nets
 categories: [Basics, ML]

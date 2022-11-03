@@ -2,7 +2,8 @@
 toc: true
 layout: post
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2021-06-19"
 description:  I bought a Fitbit, now I can watch my models train!
 categories: [API, ML, Side Project]

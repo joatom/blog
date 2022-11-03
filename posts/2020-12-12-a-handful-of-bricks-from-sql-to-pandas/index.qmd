@@ -2,7 +2,8 @@
 toc: true
 layout: post
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2020-12-12"
 description: A step by step guide to learn Pandas from a SQL perspective.
 categories: [SQL, Pandas, BigQuery, ML]

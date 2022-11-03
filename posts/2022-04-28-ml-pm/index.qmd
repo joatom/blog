@@ -6,7 +6,8 @@ categories: [Project Management, ML, Business]
 image: ml_pm.png
 title: Tackling Projects like a ML Challenge
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2022-04-28"
 from: markdown+emoji
 author: Johannes Tomasoni

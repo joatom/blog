@@ -6,7 +6,8 @@ categories: [Art, ML, Society]
 image: Diffusion_Bentlage_r_bl.png
 title: Art and Diffusion
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2022-08-30"
 from: markdown+emoji
 author: Johannes Tomasoni

@@ -6,7 +6,8 @@ categories: [Tabular, EDA, ML]
 image: relationship.png
 title: Flat to hierarchie
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2022-02-28"
 from: markdown+emoji
 author: Johannes Tomasoni

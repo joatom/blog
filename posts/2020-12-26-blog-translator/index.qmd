@@ -2,7 +2,8 @@
 toc: true
 layout: post
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2020-12-26"
 description: How to translate a German blog post to English.
 categories: [NLP, ML]
