@@ -18,7 +18,7 @@ about:
 
 Hi there!
 
-I’m Johannes and this is my hobby blog. The content is limited to topics I’m curious in my spare time. Don’t expect to find here anything related to my job.
+I’m Johannes and this is my hobby blog. It contains personal notes from my ML learning journey, code snippets, book reviews and blog post of various topics.
 
 I’m happy when you leave a comment on blog posts you like.
 

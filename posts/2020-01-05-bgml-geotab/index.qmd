@@ -2,7 +2,8 @@
 toc: false
 layout: post
 comments:
-  hypothesis: true
+  utterances:
+    repo: joatom/blog
 date: "2020-01-05"
 description: "My kaggle **1st Place** solution of category 'BigQuery ML Models built in SQL'"
 categories: [SQL, BigQuery, ML, Competition]
