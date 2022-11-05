@@ -33,7 +33,7 @@ At this early stage it was still easy to readjust and start over again. But befo
 
 ## Who are we?
 
-The *dynamics of a team* can be described in Tuckman’s [BT65] four stages,
+The *dynamics of a team* can be described in @tuckman_developmental_1965’s four stages,
 
 - **forming**, where group members try *“to identify the boundaries of both interpersonal and task behaviors”*,
 - **storming**, where interpersonal conflicts arise, hence everyone searches for her/his role in the team,
@@ -157,4 +157,5 @@ Given the restriction on time and team building our small project worked out pre
 And it was easy to transform our project management issue into a ML-task-like structure. Of course the analogy is a bit artificial. But keep in mind that *common sense* is the most important skill for project management. If you are a good ML practitioner, you can transform your knowledge into some project management skills. If you can do the one thing properly you can approach other issues properly as well.
 
 # References
-- [BT65] Tuckman, Bruce W. „Developmental Sequence in Small Groups.“ Psychological Bulletin 63, Nr. 6 (1965): 384–99. https://doi.org/10.1037/h0022100.
+::: {#refs}
+:::

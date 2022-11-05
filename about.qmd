@@ -18,7 +18,7 @@ about:
 
 Hi there!
 
-I’m Johannes and this is my hobby blog. It contains personal notes from my ML learning journey, code snippets, book reviews and blog post of various topics.
+I’m Johannes and this is my hobby blog. It contains personal notes from my ML learning journey, code snippets, book reviews and blog posts of various topics.
 
 I’m happy when you leave a comment on blog posts you like.
 

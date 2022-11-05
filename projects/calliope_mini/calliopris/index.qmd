@@ -1,0 +1,27 @@
+---
+toc: false
+layout: post
+title: Calliopris
+description: Game of falling blocks on Calliope Mini
+author: Johannes Tomasoni
+date: "2018-09-11"
+categories: [Calliope Mini, Side Project, Game, Kids]
+comments:
+  utterances:
+    repo: joatom/blog
+from: markdown+emoji
+---
+<a href="https://github.com/joatom/calliopris">
+<img class="notebook-badge-image" src="../../../assets/github.svg" alt="View On GitHub"></a>
+
+# About
+Game for Calliope Mini.
+
+Got some fun out of the 5x5 display. I bet you know how to play this one ;).
+
+I just tried out the Calliope Mini. I decided to start with a homage to an endlessly played game from my childhood.
+
+- Restart: 0+GND
+- left: A
+- right: B
+- down (fast): A+B

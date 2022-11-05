@@ -4,13 +4,51 @@ project:
 
 website:
   title: "AI curious"
+  site-url: "https://joatom.github.io/blog/"
+  description: "AI curios"
+  twitter-card: true
+  open-graph: true
   navbar:
+    left:
+      - text: "Blog" 
+        file: index.qmd
+      - text: "Projects"
+        file: projects.qmd
     right:
       - about.qmd
       - icon: github
         href: https://github.com/joatom
       - icon: twitter
         href: https://twitter.com/JohannesTomason
+      - icon: rss
+        href: index.xml
+  sidebar:
+    - id: projects
+      title: "Projects"
+      style: "docked"
+      background: light
+      collapse-level: 2
+      align: left
+      contents: 
+        - text: "Projects"
+          href: projects.qmd
+        - section: "Art"
+          contents:
+          - projects/art/playing-with-rob/index.qmd
+        - section: "Calliope Mini"
+          contents:
+          - projects/calliope_mini/calliobingo/index.qmd
+          - projects/calliope_mini/calliopris/index.qmd
+          - projects/calliope_mini/callipianotech/index.qmd
+          - projects/calliope_mini/callirun/index.qmd
+        - section: "Fitbit"
+          contents:
+          - projects/fitbit/watchtrain/index.qmd
+
+  page-footer: "Copyright 2022, Johannes Tomasoni" 
+
+bibliography: references.bib
+
 format:
   html:
     theme: 

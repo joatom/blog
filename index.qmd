@@ -1,16 +1,19 @@
 ---
 title: "Posts"
 listing:
+  id: "blog-listings"
   contents: posts
   sort: "date desc"
   type: grid
-  categories: true
+  categories: unnumbered    
   sort-ui: false
   filter-ui: false
   fields: [image, date, title, author, reading-time, categories, subtitle]
+  feed: true
+  page-size: 6
 page-layout: full
 from: markdown+emoji
 title-block-banner: false
+sidebar: false
 ---
-
 

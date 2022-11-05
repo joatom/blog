@@ -1,0 +1,50 @@
+---
+toc: false
+layout: post
+title: Playing with Rob
+description: Learning about edge detection algorithms
+author: Johannes Tomasoni
+date: "2014-06-01"
+categories: [Art, Side Project, Vision]
+image: Druck_rob2.jpg
+comments:
+  utterances:
+    repo: joatom/blog
+from: markdown+emoji
+---
+<a href="https://github.com/joatom/ART-playing-with-rob">
+<img class="notebook-badge-image" src="../../../assets/github.svg" alt="View On GitHub"></a>
+
+# ImageProcessor
+
+## EdgeProcessor
+
+The program was written in June 2014 and cleaned up a bit in 2019. It was a small private side project to try out some image processing techniques and learn about edge detection. The code is writen in Java (I didn't know much about Python or cv2 in 2014). The code is rather slow and memory consuming.
+
+The algorithm was used by my brother and me in August 2016 in an art project.
+<p align="left">
+  <img src="Druck_rob2.jpg" width="400" title="Spielen mit Robbi">
+</p>
+
+
+### How to run
+Put a picture in the pix folder (e.g. Test.jpg). Run ``App.class Test.jpg``.
+The generated pictures will be placed in the pix folder.
+Use small image sizes only due to memory consumption.
+
+Red dots: start/end point of an edge
+
+**Example**
+
+Input:
+<p align="left">
+  <img src="Test.jpg" width="400" title="Spielen mit Robbi">
+</p>
+Output:
+<p align="left">
+  <img src="out_Test.png" width="400" title="Spielen mit Robbi">
+</p>
+Mixed:
+<p align="left">
+  <img src="out_clustered_edges_MIXED_Test.png" width="400" title="Spielen mit Robbi">
+</p>

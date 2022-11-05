@@ -1,0 +1,33 @@
+---
+toc: false
+layout: post
+title: Callirun
+description: Calliope jumo n run fun
+author: Johannes Tomasoni
+date: "2018-10-03"
+categories: [Calliope Mini, Side Project, Game, Kids]
+comments:
+  utterances:
+    repo: joatom/blog
+from: markdown+emoji
+---
+<a href="https://github.com/joatom/callirun">
+<img class="notebook-badge-image" src="../../../assets/github.svg" alt="View On GitHub"></a>
+
+# About
+Jump 'n' run game for Calliope Mini
+
+# How to play
+Jump over the obstacles.
+Obstacle sizes:
+
+- Purple: 2
+- Blue: 4
+- Green: 7
+- Yellow: 10
+- Orange: 13
+- Red: 15
+
+# Keys
+- B: Jump
+- Shake: Restart

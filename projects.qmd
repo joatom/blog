@@ -1,0 +1,22 @@
+---
+title: "Projects"
+listing:
+  id: "blog-listings"
+  contents: projects
+  sort: "date desc"
+  type: table
+  categories: unnumbered    
+  sort-ui: false
+  filter-ui: false
+  fields: [image, date, title, description]
+  feed: true
+  #page-size: 6
+page-layout: full
+from: markdown+emoji
+title-block-banner: false
+---
+
+This are some of my hobby projects.
+
+:::{#blog-listings}
+:::

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>AI curious</title>
+<link>https://joatom.github.io/blog/projects.html</link>
+<atom:link href="https://joatom.github.io/blog/projects.xml" rel="self" type="application/rss+xml"/>
+<description>AI curios</description>
+<generator>quarto-1.2.256</generator>
+<lastBuildDate>Fri, 18 Jun 2021 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>ML watchtrain</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/projects/fitbit/watchtrain/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p><a href="https://github.com/joatom/watchtrain"> <img class="notebook-badge-image" src="https://joatom.github.io/blog/assets/github.svg" alt="View On GitHub"></a></p>
+<section id="about" class="level1">
+<h1>About</h1>
+<p>This repository contains code to stream ML training progress (currently only fastai) to a Fitbit Versa 3. More details on this project can be found in my <a href="../../../posts/2021-06-19-watchtrain/index.html">blog post</a>.</p>
+<p align="left">
+<img src="https://joatom.github.io/blog/projects/fitbit/watchtrain/logo_watchtrain1.png" width="400" title="ML watchtrain">
+</p>
+<p>The project consists of three components, which can be found in the github repository:</p>
+<ul>
+<li>An <em>API server</em> that coordinates the communication between ML training and the watch.</li>
+<li>Code that runs on the <em>Fitbit</em> Versa 3 to display the training progress received from the API server.</li>
+<li>A websocket <em>logger</em> that uses fastai’s callback architecture to fetch training progress and metrics to send to the API server. The WebsocketLogger was heavily influenced by the original fastai <a href="https://docs.fast.ai/callback.progress.html">CSVLogger and Progress Callback</a>.</li>
+</ul>
+</section>
+<section id="how-to-run-it" class="level1">
+<h1>How to run it</h1>
+<p>The repository contains a Dockerfile that launches the API server. The <em>fitbit</em> code needs to be be deployed to the watch via <a href="https://studio.fitbit.com/">Fitbit Studio</a>. The API server address can be adjusted in the <em>/fitbit/companion/index.js</em>. A running example on how to use the fastai Callback for training can also be found in the repository.</p>
+<blockquote class="blockquote">
+<p>The watch, the API server and the training scripts should run in the same network, if run locally. On a local net the subnet mask needs to be 192.168.0.*. Alternatively the API server needs to run on a trusted HTTPS host. (see <a href="../../../posts/2021-06-19-watchtrain/index.html">blog post</a>)</p>
+</blockquote>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li><a href="../../../posts/2021-06-19-watchtrain/index.html">Blog post</a> about this project</li>
+<li>Fastapi Docker setup: https://fastapi.tiangolo.com/deployment/docker/</li>
+<li>Fitbit IDE: https://studio.fitbit.com/</li>
+<li>Fastai CSVLogger and Progress Callback: https://docs.fast.ai/callback.progress.html</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Fitbit</category>
+  <category>Side Project</category>
+  <category>ML</category>
+  <category>API</category>
+  <guid>https://joatom.github.io/blog/projects/fitbit/watchtrain/index.html</guid>
+  <pubDate>Fri, 18 Jun 2021 22:00:00 GMT</pubDate>
+  <media:content url="https://joatom.github.io/blog/projects/fitbit/watchtrain/logo_watchtrain1.png" medium="image" type="image/png" height="139" width="144"/>
+</item>
+<item>
+  <title>Callipianotech</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/projects/calliope_mini/callipianotech/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p><a href="https://github.com/joatom/callipianotech"> <img class="notebook-badge-image" src="https://joatom.github.io/blog/assets/github.svg" alt="View On GitHub"></a></p>
+<section id="about" class="level1">
+<h1>About</h1>
+<p>Calliope Mini as a learning epiano. The piano knows six tones and contains three learning modes. The project was a first time afternoon coding session with my daughter :).</p>
+</section>
+<section id="how-it-works" class="level1">
+<h1>How it works</h1>
+<p>First choose a learning mode (toggle with A or B):</p>
+<ul>
+<li>“P”: Play the tones <em>as recorded</em></li>
+<li>“M”: Play 20 of the recorded tones in a <em>Monte Carlo-style simulation</em>. The tones as randomly played by recorded frequency. For example, if C is played 3 times and D is played 6 times during recording session. The probability of C being played is 1/3.</li>
+<li>“B”: Play 20 of the recorder tones in a <em>Baysiean-style simulation</em>. The tones are randomly played, but depend on the frequency of recordings after the previous tone. For example, if the recording is C-D-E-F-G-G-E then the probability of G beeing played after F is 100%, but after G there is a probability of G or E beeing played of 50 % each.</li>
+</ul>
+<p>Press A+B to select a learning mode.</p>
+<p>Then record some tones.</p>
+<p>Keys:</p>
+<ul>
+<li>A: Tone C</li>
+<li>P0: Tone D</li>
+<li>P1: Tone E</li>
+<li>P2: Tone F</li>
+<li>P3: Tone G</li>
+<li>B: Tone A</li>
+</ul>
+<p>Press A+B to stop recording and start playing the record depending on the chosen learning mode.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Calliope Mini</category>
+  <category>Side Project</category>
+  <category>Statistics</category>
+  <category>Kids</category>
+  <guid>https://joatom.github.io/blog/projects/calliope_mini/callipianotech/index.html</guid>
+  <pubDate>Thu, 05 Dec 2019 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Calliobingo</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/projects/calliope_mini/calliobingo/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p><a href="https://github.com/joatom/calliobingo"> <img class="notebook-badge-image" src="https://joatom.github.io/blog/assets/github.svg" alt="View On GitHub"></a></p>
+<section id="about" class="level1">
+<h1>About</h1>
+<p align="left">
+<img src="https://joatom.github.io/blog/projects/calliope_mini/calliobingo/calliobingo2.jpg" width="400" title="Board view of calliobingo">
+</p>
+<p>The kids wanted to play Bingo. Unfortunately we don’t own a bingo game with numbers. So we made the Calliope Mini draw bingo numbers randomly.</p>
+</section>
+<section id="how-to-play" class="level1">
+<h1>How to play</h1>
+<ul>
+<li>press A+B: Toggle View
+<ul>
+<li>Drawing view: Draw and show a number out of a bag (default 25 numbers).
+<ul>
+<li>press A: draw Number</li>
+<li>press B: show last drawn number</li>
+</ul></li>
+<li>Board view: Show numbers already being drawn. Left upper corner = 1. Right lower corner 25.
+<ul>
+<li>press A: Page to next board page (if bag is bigger then 25 numbers). Page 1 (1-25), Page 2 (26-50) …</li>
+<li>press B: Page to preceding board page.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="configuration" class="level1">
+<h1>Configuration</h1>
+<p>To change the amount of numbers in the bag increase the <em>bagsize</em> variable, e.g.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><span class="kw" style="color: #003B4F;">let</span> bagsize <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">50</span></span></code></pre></div>
+<p>You can increase the bag size up to 100.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Calliope Mini</category>
+  <category>Side Project</category>
+  <category>Game</category>
+  <category>Kids</category>
+  <guid>https://joatom.github.io/blog/projects/calliope_mini/calliobingo/index.html</guid>
+  <pubDate>Sat, 02 Nov 2019 23:00:00 GMT</pubDate>
+  <media:content url="https://joatom.github.io/blog/projects/calliope_mini/calliobingo/calliobingo2.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Callirun</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/projects/calliope_mini/callirun/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p><a href="https://github.com/joatom/callirun"> <img class="notebook-badge-image" src="https://joatom.github.io/blog/assets/github.svg" alt="View On GitHub"></a></p>
+<section id="about" class="level1">
+<h1>About</h1>
+<p>Jump ‘n’ run game for Calliope Mini</p>
+</section>
+<section id="how-to-play" class="level1">
+<h1>How to play</h1>
+<p>Jump over the obstacles. Obstacle sizes:</p>
+<ul>
+<li>Purple: 2</li>
+<li>Blue: 4</li>
+<li>Green: 7</li>
+<li>Yellow: 10</li>
+<li>Orange: 13</li>
+<li>Red: 15</li>
+</ul>
+</section>
+<section id="keys" class="level1">
+<h1>Keys</h1>
+<ul>
+<li>B: Jump</li>
+<li>Shake: Restart</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Calliope Mini</category>
+  <category>Side Project</category>
+  <category>Game</category>
+  <category>Kids</category>
+  <guid>https://joatom.github.io/blog/projects/calliope_mini/callirun/index.html</guid>
+  <pubDate>Tue, 02 Oct 2018 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Calliopris</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/projects/calliope_mini/calliopris/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p><a href="https://github.com/joatom/calliopris"> <img class="notebook-badge-image" src="https://joatom.github.io/blog/assets/github.svg" alt="View On GitHub"></a></p>
+<section id="about" class="level1">
+<h1>About</h1>
+<p>Game for Calliope Mini.</p>
+<p>Got some fun out of the 5x5 display. I bet you know how to play this one ;).</p>
+<p>I just tried out the Calliope Mini. I decided to start with a homage to an endlessly played game from my childhood.</p>
+<ul>
+<li>Restart: 0+GND</li>
+<li>left: A</li>
+<li>right: B</li>
+<li>down (fast): A+B</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Calliope Mini</category>
+  <category>Side Project</category>
+  <category>Game</category>
+  <category>Kids</category>
+  <guid>https://joatom.github.io/blog/projects/calliope_mini/calliopris/index.html</guid>
+  <pubDate>Mon, 10 Sep 2018 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Playing with Rob</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/projects/art/playing-with-rob/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p><a href="https://github.com/joatom/ART-playing-with-rob"> <img class="notebook-badge-image" src="https://joatom.github.io/blog/assets/github.svg" alt="View On GitHub"></a></p>
+<section id="imageprocessor" class="level1">
+<h1>ImageProcessor</h1>
+<section id="edgeprocessor" class="level2">
+<h2 class="anchored" data-anchor-id="edgeprocessor">EdgeProcessor</h2>
+<p>The program was written in June 2014 and cleaned up a bit in 2019. It was a small private side project to try out some image processing techniques and learn about edge detection. The code is writen in Java (I didn’t know much about Python or cv2 in 2014). The code is rather slow and memory consuming.</p>
+The algorithm was used by my brother and me in August 2016 in an art project.
+<p align="left">
+<img src="https://joatom.github.io/blog/projects/art/playing-with-rob/Druck_rob2.jpg" width="400" title="Spielen mit Robbi">
+</p>
+<section id="how-to-run" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-run">How to run</h3>
+<p>Put a picture in the pix folder (e.g.&nbsp;Test.jpg). Run <code>App.class Test.jpg</code>. The generated pictures will be placed in the pix folder. Use small image sizes only due to memory consumption.</p>
+<p>Red dots: start/end point of an edge</p>
+<p><strong>Example</strong></p>
+Input:
+<p align="left">
+<img src="https://joatom.github.io/blog/projects/art/playing-with-rob/Test.jpg" width="400" title="Spielen mit Robbi">
+</p>
+Output:
+<p align="left">
+<img src="https://joatom.github.io/blog/projects/art/playing-with-rob/out_Test.png" width="400" title="Spielen mit Robbi">
+</p>
+Mixed:
+<p align="left">
+<img src="https://joatom.github.io/blog/projects/art/playing-with-rob/out_clustered_edges_MIXED_Test.png" width="400" title="Spielen mit Robbi">
+</p>
+
+
+</section>
+</section>
+</section>
+
+ ]]></description>
+  <category>Art</category>
+  <category>Side Project</category>
+  <category>Vision</category>
+  <guid>https://joatom.github.io/blog/projects/art/playing-with-rob/index.html</guid>
+  <pubDate>Sat, 31 May 2014 22:00:00 GMT</pubDate>
+  <media:content url="https://joatom.github.io/blog/projects/art/playing-with-rob/Druck_rob2.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>

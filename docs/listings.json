@@ -1,5 +1,16 @@
 [
   {
+    "listing": "/projects.html",
+    "items": [
+      "/projects/fitbit/watchtrain/index.html",
+      "/projects/calliope_mini/callipianotech/index.html",
+      "/projects/calliope_mini/calliobingo/index.html",
+      "/projects/calliope_mini/callirun/index.html",
+      "/projects/calliope_mini/calliopris/index.html",
+      "/projects/art/playing-with-rob/index.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/2022-08-30-art_diffusion/index.html",

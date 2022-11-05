@@ -23,6 +23,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -66,6 +85,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="AI curious - Tackling Projects like a ML Challenge">
+<meta property="og:description" content="Analogies of solving ML tasks and a small project">
+<meta property="og:image" content="https://joatom.github.io/blog/posts/2022-04-28-ml-pm/ml_pm.png">
+<meta property="og:site-name" content="AI curious">
+<meta property="og:image:height" content="241">
+<meta property="og:image:width" content="425">
+<meta name="twitter:title" content="AI curious - Tackling Projects like a ML Challenge">
+<meta name="twitter:description" content="Analogies of solving ML tasks and a small project">
+<meta name="twitter:image" content="https://joatom.github.io/blog/posts/2022-04-28-ml-pm/ml_pm.png">
+<meta name="twitter:image-height" content="241">
+<meta name="twitter:image-width" content="425">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -83,6 +114,16 @@ ul.task-list li input[type="checkbox"] {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html">
+ <span class="menu-text">Projects</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html">
@@ -95,6 +136,11 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://twitter.com/JohannesTomason"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -182,7 +228,7 @@ ul.task-list li input[type="checkbox"] {
 <p>At this early stage it was still easy to readjust and start over again. But before we checkout the changes we made, let’s take a look what went went wrong so-fare.</p>
 <section id="who-are-we" class="level2">
 <h2 class="anchored" data-anchor-id="who-are-we">Who are we?</h2>
-<p>The <em>dynamics of a team</em> can be described in Tuckman’s [BT65] four stages,</p>
+<p>The <em>dynamics of a team</em> can be described in <span class="citation" data-cites="tuckman_developmental_1965">Tuckman (<a href="#ref-tuckman_developmental_1965" role="doc-biblioref">1965</a>)</span>’s four stages,</p>
 <ul>
 <li><strong>forming</strong>, where group members try <em>“to identify the boundaries of both interpersonal and task behaviors”</em>,</li>
 <li><strong>storming</strong>, where interpersonal conflicts arise, hence everyone searches for her/his role in the team,</li>
@@ -304,9 +350,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
-<ul>
-<li>[BT65] Tuckman, Bruce W. „Developmental Sequence in Small Groups.“ Psychological Bulletin 63, Nr. 6 (1965): 384–99. https://doi.org/10.1037/h0022100.</li>
-</ul>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-tuckman_developmental_1965" class="csl-entry" role="doc-biblioentry">
+Tuckman, Bruce W. 1965. <span>“Developmental Sequence in Small Groups.”</span> <em>Psychological Bulletin</em> 63 (6): 384–99. <a href="https://doi.org/10.1037/h0022100">https://doi.org/10.1037/h0022100</a>.
+</div>
+</div>
 
 
 </section>
@@ -563,6 +611,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="joatom/blog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Johannes Tomasoni</div>
+  </div>
+</footer>
 
 
 

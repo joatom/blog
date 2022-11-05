@@ -4,7 +4,56 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Hi there!\nI’m Johannes and this is my hobby blog. It contains personal notes from my ML learning journey, code snippets, book reviews and blog post of various topics.\nI’m happy when you leave a comment on blog posts you like.\nCheers,\nJohannes"
+    "text": "Hi there!\nI’m Johannes and this is my hobby blog. It contains personal notes from my ML learning journey, code snippets, book reviews and blog posts of various topics.\nI’m happy when you leave a comment on blog posts you like.\nCheers,\nJohannes"
+  },
+  {
+    "objectID": "projects/fitbit/watchtrain/index.html",
+    "href": "projects/fitbit/watchtrain/index.html",
+    "title": "ML watchtrain",
+    "section": "",
+    "text": "About\nThis repository contains code to stream ML training progress (currently only fastai) to a Fitbit Versa 3. More details on this project can be found in my blog post.\n\n\n\nThe project consists of three components, which can be found in the github repository:\n\nAn API server that coordinates the communication between ML training and the watch.\nCode that runs on the Fitbit Versa 3 to display the training progress received from the API server.\nA websocket logger that uses fastai’s callback architecture to fetch training progress and metrics to send to the API server. The WebsocketLogger was heavily influenced by the original fastai CSVLogger and Progress Callback.\n\n\n\nHow to run it\nThe repository contains a Dockerfile that launches the API server. The fitbit code needs to be be deployed to the watch via Fitbit Studio. The API server address can be adjusted in the /fitbit/companion/index.js. A running example on how to use the fastai Callback for training can also be found in the repository.\n\nThe watch, the API server and the training scripts should run in the same network, if run locally. On a local net the subnet mask needs to be 192.168.0.*. Alternatively the API server needs to run on a trusted HTTPS host. (see blog post)\n\n\n\nReferences\n\nBlog post about this project\nFastapi Docker setup: https://fastapi.tiangolo.com/deployment/docker/\nFitbit IDE: https://studio.fitbit.com/\nFastai CSVLogger and Progress Callback: https://docs.fast.ai/callback.progress.html"
+  },
+  {
+    "objectID": "projects/calliope_mini/calliopris/index.html",
+    "href": "projects/calliope_mini/calliopris/index.html",
+    "title": "Calliopris",
+    "section": "",
+    "text": "About\nGame for Calliope Mini.\nGot some fun out of the 5x5 display. I bet you know how to play this one ;).\nI just tried out the Calliope Mini. I decided to start with a homage to an endlessly played game from my childhood.\n\nRestart: 0+GND\nleft: A\nright: B\ndown (fast): A+B"
+  },
+  {
+    "objectID": "projects/calliope_mini/callirun/index.html",
+    "href": "projects/calliope_mini/callirun/index.html",
+    "title": "Callirun",
+    "section": "",
+    "text": "About\nJump ‘n’ run game for Calliope Mini\n\n\nHow to play\nJump over the obstacles. Obstacle sizes:\n\nPurple: 2\nBlue: 4\nGreen: 7\nYellow: 10\nOrange: 13\nRed: 15\n\n\n\nKeys\n\nB: Jump\nShake: Restart"
+  },
+  {
+    "objectID": "projects/calliope_mini/callipianotech/index.html",
+    "href": "projects/calliope_mini/callipianotech/index.html",
+    "title": "Callipianotech",
+    "section": "",
+    "text": "About\nCalliope Mini as a learning epiano. The piano knows six tones and contains three learning modes. The project was a first time afternoon coding session with my daughter :).\n\n\nHow it works\nFirst choose a learning mode (toggle with A or B):\n\n“P”: Play the tones as recorded\n“M”: Play 20 of the recorded tones in a Monte Carlo-style simulation. The tones as randomly played by recorded frequency. For example, if C is played 3 times and D is played 6 times during recording session. The probability of C being played is 1/3.\n“B”: Play 20 of the recorder tones in a Baysiean-style simulation. The tones are randomly played, but depend on the frequency of recordings after the previous tone. For example, if the recording is C-D-E-F-G-G-E then the probability of G beeing played after F is 100%, but after G there is a probability of G or E beeing played of 50 % each.\n\nPress A+B to select a learning mode.\nThen record some tones.\nKeys:\n\nA: Tone C\nP0: Tone D\nP1: Tone E\nP2: Tone F\nP3: Tone G\nB: Tone A\n\nPress A+B to stop recording and start playing the record depending on the chosen learning mode."
+  },
+  {
+    "objectID": "projects/calliope_mini/calliobingo/index.html",
+    "href": "projects/calliope_mini/calliobingo/index.html",
+    "title": "Calliobingo",
+    "section": "",
+    "text": "About\n\n\n\nThe kids wanted to play Bingo. Unfortunately we don’t own a bingo game with numbers. So we made the Calliope Mini draw bingo numbers randomly.\n\n\nHow to play\n\npress A+B: Toggle View\n\nDrawing view: Draw and show a number out of a bag (default 25 numbers).\n\npress A: draw Number\npress B: show last drawn number\n\nBoard view: Show numbers already being drawn. Left upper corner = 1. Right lower corner 25.\n\npress A: Page to next board page (if bag is bigger then 25 numbers). Page 1 (1-25), Page 2 (26-50) …\npress B: Page to preceding board page.\n\n\n\n\n\nConfiguration\nTo change the amount of numbers in the bag increase the bagsize variable, e.g.\nlet bagsize = 50\nYou can increase the bag size up to 100."
+  },
+  {
+    "objectID": "projects/art/playing-with-rob/index.html#edgeprocessor",
+    "href": "projects/art/playing-with-rob/index.html#edgeprocessor",
+    "title": "Playing with Rob",
+    "section": "EdgeProcessor",
+    "text": "EdgeProcessor\nThe program was written in June 2014 and cleaned up a bit in 2019. It was a small private side project to try out some image processing techniques and learn about edge detection. The code is writen in Java (I didn’t know much about Python or cv2 in 2014). The code is rather slow and memory consuming.\nThe algorithm was used by my brother and me in August 2016 in an art project.\n\n\n\n\nHow to run\nPut a picture in the pix folder (e.g. Test.jpg). Run App.class Test.jpg. The generated pictures will be placed in the pix folder. Use small image sizes only due to memory consumption.\nRed dots: start/end point of an edge\nExample\nInput:\n\n\n\nOutput:\n\n\n\nMixed:"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "This are some of my hobby projects.\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nDescription\n\n\n\n\n\n\n\n\n\nJun 19, 2021\n\n\nML watchtrain\n\n\nStreaming ML training progress to a Fitbit\n\n\n\n\n\n \n\n\n\nDec 6, 2019\n\n\nCallipianotech\n\n\nCalliope Mini as a learning epiano\n\n\n\n\n\n\n\nNov 3, 2019\n\n\nCalliobingo\n\n\nBingo game for Calliope Mini\n\n\n\n\n\n \n\n\n\nOct 3, 2018\n\n\nCallirun\n\n\nCalliope jumo n run fun\n\n\n\n\n\n \n\n\n\nSep 11, 2018\n\n\nCalliopris\n\n\nGame of falling blocks on Calliope Mini\n\n\n\n\n\n\n\nJun 1, 2014\n\n\nPlaying with Rob\n\n\nLearning about edge detection algorithms\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2022-01-31-learn_along/index.html",
@@ -67,7 +116,7 @@
     "href": "posts/2022-04-28-ml-pm/index.html#who-are-we",
     "title": "Tackling Projects like a ML Challenge",
     "section": "Who are we?",
-    "text": "Who are we?\nThe dynamics of a team can be described in Tuckman’s [BT65] four stages,\n\nforming, where group members try “to identify the boundaries of both interpersonal and task behaviors”,\nstorming, where interpersonal conflicts arise, hence everyone searches for her/his role in the team,\nnorming, where everyone settles for her/his role in the team and new group ”standards evolve”,\nperforming, where finally ”the group energy is channeled into the task” and the group works efficiently.\n\nBecause everyone in our team was short in time we tried to skip the Storming and Norming stage and go straight to Performing. But Tuckman’s stages seem the work like physical laws, a group can’t circumvent certain stages. Even if formal hierarchies already exist, humans need to build trust first and find their role in the team. This is only possible through human interaction, which takes time. Though, the Storming and Norming phase can be very short if you take on a very standardized role to execute very standardized work. Which wasn’t the case in our small creative (non standardized) project."
+    "text": "Who are we?\nThe dynamics of a team can be described in Tuckman (1965)’s four stages,\n\nforming, where group members try “to identify the boundaries of both interpersonal and task behaviors”,\nstorming, where interpersonal conflicts arise, hence everyone searches for her/his role in the team,\nnorming, where everyone settles for her/his role in the team and new group ”standards evolve”,\nperforming, where finally ”the group energy is channeled into the task” and the group works efficiently.\n\nBecause everyone in our team was short in time we tried to skip the Storming and Norming stage and go straight to Performing. But Tuckman’s stages seem the work like physical laws, a group can’t circumvent certain stages. Even if formal hierarchies already exist, humans need to build trust first and find their role in the team. This is only possible through human interaction, which takes time. Though, the Storming and Norming phase can be very short if you take on a very standardized role to execute very standardized work. Which wasn’t the case in our small creative (non standardized) project."
   },
   {
     "objectID": "posts/2022-04-28-ml-pm/index.html#who-is-it-for",
@@ -245,69 +294,6 @@
     "text": "Other references\nA lot of the coding is derived from various examples of the Altair homepage and from great examples in the coresponding Github Issue tracker answered by https://github.com/jakevdp.\n\n[AA1] https://altair-viz.github.io/gallery/index.html\n[AA2] https://github.com/altair-viz/altair/issues/\n[AG18] A. Gordon, 2018 (published 2018/10/06), Focus: generating an interactive legend in Altair, visited 2021/04/05, https://medium.com/dataexplorations/focus-generating-an-interactive-legend-in-altair-9a92b5714c55\n[FP20] fastpages.fast.ai, 2020 (published 2020/02/20), Fastpages Notebook Blog Post, visited 2021/04/05, https://fastpages.fast.ai/jupyter/2020/02/20/test.html"
   },
   {
-    "objectID": "posts/2021-06-19-watchtrain/watchtrain.html",
-    "href": "posts/2021-06-19-watchtrain/watchtrain.html",
-    "title": "Streaming ML training progress to a smart watch",
-    "section": "",
-    "text": "🏔️\nDuring the Covid winter I hardly had any reason to leave the house. It was clear that I actively had to look after my mental and physical well-being. So, I decided to buy a smart watch (Fitbit Versa 3) and take on the 10000 steps per day challenge. Henceforth I spent much more time outside and in the sunlight moving my body.\n⛅\nWhen I registered my new Fitbit I instantly got attracted by the For Developers link. As you might guess my thoughts started spinning like - Aha, they are providing a SDK! I got to try this out at some point and build an app for the watch. - I wanted this app to be related to ML or at least to data somehow. My first thought was - Would it be possible to use the green heart-rate sensor light as an OCR? - Nope, to complicated for a fun project. - Then I went on with the registration of the watch on the webpage.\n🌤️\nSome month later, on a usual Sunday, I lay resting on the couch after lunch while the kids and my wife were cleaning the table and kitchen (I did the cooking ;-)). A little bored, I thought of my ML-model that was training on Hotel Room classification for a couple of hours upstairs in the office. I wanted to know how it was preceding. Sneaking upstairs would result in half an hour in front of the computer, followed by some trouble with my wife 😒. - May by I should eventually register at Neptune.ai or wandb.ai, then I could preview my trainings from the couch on my cell phone!? … Or may be I now have a new fun project for my new watch 😄 💡! -"
-  },
-  {
-    "objectID": "posts/2021-06-19-watchtrain/watchtrain.html#api-server",
-    "href": "posts/2021-06-19-watchtrain/watchtrain.html#api-server",
-    "title": "Streaming ML training progress to a smart watch",
-    "section": "API-Server",
-    "text": "API-Server\nThe requirements led to the architecture shown in the diagram. In the center of the application is an API-Server to coordinate the training and the watch. The Training, Watch and Web are client applications connected to the API-Server’s Watchtrain-Topic. The Topic contains a connection pool for the Training client (data Producer) and another connection pool for the Web and the Watch clients (data Consumer).\n\n\nThe initial idea was to setup a classical Consumer/Producer (Pub/Sub) pattern. But it ended up a bit different. The Topic holds the data in an object rather than a queue-like state and also does some data processing. The Producer and Consumer can still subscribe at any time, but they are also strongly connected via Websockets. I took the chance to play around with websockets, since it is also available on the watch.\n\nFor each client type there is an Agent that processes the data and messages that are send from the clients. The stats and progress data is saved in the topic. The topic generates the metric chart that is send to the Consumers, since I couldn’t find a charts library in the watch SDK.\nThe Topic-Consumer-Producer-Agent “pattern” with the connection pool handler is set up in a generic way so it’s easy to develop other applications in the same manner and run them on the API-Server.\nAs API-Server I used FastApi which is easy to start with as shown on the tutorial site or in this video.\nThe communications between the components is done with JSON. Messages start with an action-field followed by the training_id and a more or less complex payload. Depending of the action value different functionalities are triggered, such as sending the metric image to the client or converting batch information into a progress bar."
-  },
-  {
-    "objectID": "posts/2021-06-19-watchtrain/watchtrain.html#training",
-    "href": "posts/2021-06-19-watchtrain/watchtrain.html#training",
-    "title": "Streaming ML training progress to a smart watch",
-    "section": "Training",
-    "text": "Training\n\nFastai\nThe easiest way to implement the train logging is by using the Fastai Callback infrastructure. So I built a WebsocketLogger which gets past to the training like this:\nlearn = cnn_learner(dls, resnet18, pretrained = False, metrics=[accuracy, \n                                                                Recall(average='macro'), \n                                                                Precision(average='macro')])\n\nlearn.unfreeze\nlearn.fit_one_cycle(10, lr_max = 5e-3, cbs=[WebsocketLogger('ws://myapiserver:8555/ws/watchtrain/producer/12345')])\nStarting out by looking at the source code of the fastai build-in CSVLoggers and ProgressCallback I learned how to track train data (metrics, epoch and batch progress). A bit challenging was the integration of the websocket client. I preferred a permanent connection rather than many one time (open-send-close) connections. Otherwise a simple REST call would have been more suitable. It is also very important that training must not break when the websocket connection is lost or the API-Server isn’t available anymore.\nThat’s how it is implemented using the websocket-client library:\n\ndef __init__(self, conn, ...):\n    self.conn = conn\n    ...\n    self.heartbeat = False\n    self._ws_connect()\n    ...\n\n...\n# gets called when a websocket is opened\ndef _on_ws_open(self,ws):\n    # ws connection is now ready => unlock\n    self.ws_ready_lock.release()\n    self.heartbeat = True\n    \ndef _ws_connect(self):\n    \n    self.heartbeat = False\n    \n    # aquire lock until websocket is ready to use\n    self.ws_ready_lock = threading.Lock()\n    self.ws_ready_lock.acquire()\n    \n    print('Connecting websocket ...')\n    \n    self.ws = websocket.WebSocketApp(self.conn,\n                                      on_open = self._on_ws_open,\n                                      on_message = self._on_ws_message,\n                                      on_error = self._on_ws_error,\n                                      on_close = self._on_ws_close)\n\n    # run websocket in background\n    thread.start_new_thread(self.ws.run_forever, ())\n    \n    # wait for websocket to be initialized, \n    # if connection is not possible (e.g. APIServer is down) resume after 3 sec, but heartbeat stays FALSE\n    self.ws_ready_lock.acquire(timeout = 3)\n    \n    print('... websocket connected.')\nThe WebSocketApp runs as a local websocket-handler in the background. The Locks are used to make sure the connection gets properly established before the first messages are send. The heartbeat is introduced to keep the training running even if the websocket connection is broken and could not be reconnected via WebSocketApp.\nIf there is no heartbeat anymore _ws_connect() is called again after any epoch. If the API-Server is still not reachable the training continuous after a 3 second waiting time.\n\n\nPytorch\nI skipped the pytorch implementation until I need it. But it is straight forward. Start a WebSocketApp thread in the background. Send the data from inside of the training/validation/inference-loop."
-  },
-  {
-    "objectID": "posts/2021-06-19-watchtrain/watchtrain.html#watch",
-    "href": "posts/2021-06-19-watchtrain/watchtrain.html#watch",
-    "title": "Streaming ML training progress to a smart watch",
-    "section": "Watch",
-    "text": "Watch\n\nThe layout is held pretty simple as shown in the picture. There is a progress bar for the epochs and one for the mini batches (train and valid). In the center is the chart of the metrics. And at the bottom are the latest metric values. The cell phone that belongs to the watch establish a websocket connection to the API-Server and puts EventListeners for incoming messages into place. The incoming messages are uploaded to the watch were they can be displayed."
-  },
-  {
-    "objectID": "posts/2021-06-19-watchtrain/watchtrain.html#fastapi",
-    "href": "posts/2021-06-19-watchtrain/watchtrain.html#fastapi",
-    "title": "Streaming ML training progress to a smart watch",
-    "section": "FastAPI",
-    "text": "FastAPI\nFastAPI is a well-documented and easy to use framework. In the beginning I set it up with HTTPS. There is a tutorial on how to setup FastAPI with Traefik. But since I wanted to run the server at home I had to invest some evenings to figure out, how to set it up by myself. I used mkcert for SSL creation. A docker file to setup an FastAPI-Server at home can now be found here. At the end when I got it working I decided to not use HTTPS for reasons described below, 🤷‍♂️."
-  },
-  {
-    "objectID": "posts/2021-06-19-watchtrain/watchtrain.html#websockets",
-    "href": "posts/2021-06-19-watchtrain/watchtrain.html#websockets",
-    "title": "Streaming ML training progress to a smart watch",
-    "section": "Websockets",
-    "text": "Websockets\nThe different components communicate instantly. The data is pushed to the watch, which is the preferred behavior on the receiving site. With the websocket on the training site it is a bit more complicated to be fail safe and pickup communication when the connection is broken for a longer period of time. I might switch this part to a simple REST-post in a later version. But this way it was a fun exersice nevertheless."
-  },
-  {
-    "objectID": "posts/2021-06-19-watchtrain/watchtrain.html#fitbit-sdk",
-    "href": "posts/2021-06-19-watchtrain/watchtrain.html#fitbit-sdk",
-    "title": "Streaming ML training progress to a smart watch",
-    "section": "Fitbit SDK",
-    "text": "Fitbit SDK\nThe Fitbit SDK is nice. They provide an online IDE which can easily be connected to your devices. The SDK is documented with a few examples. They also host helpful forum.\nI had a bit of a hard time when I tried to load and display the Metrics chart image to the watch. I had to figure out that there are two types of jpeg, progressive and basic. And only one worked. It also was hard to figure out that the the image needs to have a certain size to be displayed. But that’s part of the normal learning path with a new technology.\nAnd than, there was this one thing that really upset me (But as fare as I read in forums it is not the Fitbit SDKs fault!). Android doesn’t allow regular HTTP connection through apps. That’s why I setup the API-Server with HTTPS. But since I generated the certificate on my own, it wasn’t a trusted source and therefore Android didn’t accept it. Then I found some post that showed how to access HTTP from a local net, but only for IP range 192.168.0.x. That meant either building a Reverse Proxy or changing the Subnet of my network. And then finally I needed to deal with the docker net-addresse where the API-Server is running. As suspected, one evening I freaked out - ?#@!, I just want to send a JSON to my cell phone! 30 years of web-development and all we ended up is JavaScript and SSL-certs @!# - That was a good time to go to bed, put the project aside for a few days and celebrate that most of the time I’m into data instead of GUI 😁.\nBesides that I really enjoyed it to build a nice app for my Fitbit."
-  },
-  {
-    "objectID": "posts/2020-01-05-bgml-geotab/index.html",
-    "href": "posts/2020-01-05-bgml-geotab/index.html",
-    "title": "BigQuery-Geotab Intersection Congestion",
-    "section": "",
-    "text": "This blog post contains some of my codings for the 2019 kaggle BigQuery-Geotab competition.\nMy submission scored 1st Place in the categorie BigQuery ML Models built in SQL.\nThe challange was to predict six measures for cars approaching intersections in four US cities.\nMy objective in the competition was to tryout BigQuery (BQ) including the basic ML features. Therefore the notebooks rely as much as possible on BQ. All features are generated in BQ with varying SQL-techniques. The prediction model is also build in BQ.\nAdditional resources can be found in my github repo."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Posts",
-    "section": "",
-    "text": "Art and Diffusion\n\n\n7 min\n\n\n\nArt\n\n\nML\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nAug 30, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTackling Projects like a ML Challenge\n\n\n9 min\n\n\n\nProject Management\n\n\nML\n\n\nBusiness\n\n\n\n\nJohannes Tomasoni\n\n\nApr 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlat to hierarchie\n\n\n0 min\n\n\n\nTabular\n\n\nEDA\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nFeb 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLearning along\n\n\n1 min\n\n\n\nTabular\n\n\nEDA\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nJan 31, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotes about Sequence Modelling\n\n\n3 min\n\n\n\nTime Series\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nNov 22, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModel allocation\n\n\n6 min\n\n\n\nBasics\n\n\nML\n\n\nEconomics\n\n\n\n\nJohannes Tomasoni\n\n\nAug 15, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStreaming ML training progress to a smart watch\n\n\n10 min\n\n\n\nAPI\n\n\nML\n\n\nSide Project\n\n\n\n\nJohannes Tomasoni\n\n\nJun 19, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIdentifying Hotels\n\n\n1 min\n\n\n\nVision\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nMay 28, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBending the space with nonlinearity\n\n\n0 min\n\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nApr 14, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeaths by age group and states in Germany from 2016 to 2021\n\n\n5 min\n\n\n\nEDA\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nApr 6, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAutomatically translate blog posts\n\n\n2 min\n\n\n\nNLP\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 26, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA handful of bricks - from SQL to Pandas\n\n\n25 min\n\n\n\nSQL\n\n\nPandas\n\n\nBigQuery\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 12, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBigQuery-Geotab Intersection Congestion\n\n\n🏆\n\n\n0 min\n\n\n\nSQL\n\n\nBigQuery\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nJan 5, 2020\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "posts/2021-06-19-watchtrain/index.html",
     "href": "posts/2021-06-19-watchtrain/index.html",
     "title": "Streaming ML training progress to a smart watch",
@@ -355,5 +341,19 @@
     "title": "Streaming ML training progress to a smart watch",
     "section": "Fitbit SDK",
     "text": "Fitbit SDK\nThe Fitbit SDK is nice. They provide an online IDE which can easily be connected to your devices. The SDK is documented with a few examples. They also host helpful forum.\nI had a bit of a hard time when I tried to load and display the Metrics chart image to the watch. I had to figure out that there are two types of jpeg, progressive and basic. And only one worked. It also was hard to figure out that the the image needs to have a certain size to be displayed. But that’s part of the normal learning path with a new technology.\nAnd than, there was this one thing that really upset me (But as fare as I read in forums it is not the Fitbit SDKs fault!). Android doesn’t allow regular HTTP connection through apps. That’s why I setup the API-Server with HTTPS. But since I generated the certificate on my own, it wasn’t a trusted source and therefore Android didn’t accept it. Then I found some post that showed how to access HTTP from a local net, but only for IP range 192.168.0.x. That meant either building a Reverse Proxy or changing the Subnet of my network. And then finally I needed to deal with the docker net-addresse where the API-Server is running. As suspected, one evening I freaked out - ?#@!, I just want to send a JSON to my cell phone! 30 years of web-development and all we ended up is JavaScript and SSL-certs @!# - That was a good time to go to bed, put the project aside for a few days and celebrate that most of the time I’m into data instead of GUI 😁.\nBesides that I really enjoyed it to build a nice app for my Fitbit."
+  },
+  {
+    "objectID": "posts/2020-01-05-bgml-geotab/index.html",
+    "href": "posts/2020-01-05-bgml-geotab/index.html",
+    "title": "BigQuery-Geotab Intersection Congestion",
+    "section": "",
+    "text": "This blog post contains some of my codings for the 2019 kaggle BigQuery-Geotab competition.\nMy submission scored 1st Place in the categorie BigQuery ML Models built in SQL.\nThe challange was to predict six measures for cars approaching intersections in four US cities.\nMy objective in the competition was to tryout BigQuery (BQ) including the basic ML features. Therefore the notebooks rely as much as possible on BQ. All features are generated in BQ with varying SQL-techniques. The prediction model is also build in BQ.\nAdditional resources can be found in my github repo."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Posts",
+    "section": "",
+    "text": "Art and Diffusion\n\n\n7 min\n\n\n\nArt\n\n\nML\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nAug 30, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTackling Projects like a ML Challenge\n\n\n9 min\n\n\n\nProject Management\n\n\nML\n\n\nBusiness\n\n\n\n\nJohannes Tomasoni\n\n\nApr 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlat to hierarchie\n\n\n0 min\n\n\n\nTabular\n\n\nEDA\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nFeb 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLearning along\n\n\n1 min\n\n\n\nTabular\n\n\nEDA\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nJan 31, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotes about Sequence Modelling\n\n\n3 min\n\n\n\nTime Series\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nNov 22, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModel allocation\n\n\n6 min\n\n\n\nBasics\n\n\nML\n\n\nEconomics\n\n\n\n\nJohannes Tomasoni\n\n\nAug 15, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStreaming ML training progress to a smart watch\n\n\n10 min\n\n\n\nAPI\n\n\nML\n\n\nSide Project\n\n\n\n\nJohannes Tomasoni\n\n\nJun 19, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIdentifying Hotels\n\n\n1 min\n\n\n\nVision\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nMay 28, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBending the space with nonlinearity\n\n\n0 min\n\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nApr 14, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeaths by age group and states in Germany from 2016 to 2021\n\n\n5 min\n\n\n\nEDA\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nApr 6, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAutomatically translate blog posts\n\n\n2 min\n\n\n\nNLP\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 26, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA handful of bricks - from SQL to Pandas\n\n\n25 min\n\n\n\nSQL\n\n\nPandas\n\n\nBigQuery\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 12, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBigQuery-Geotab Intersection Congestion\n\n\n🏆\n\n\n0 min\n\n\n\nSQL\n\n\nBigQuery\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nJan 5, 2020\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]

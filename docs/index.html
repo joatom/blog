@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-blog-listings .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
@@ -73,12 +73,13 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-image','listing-date','listing-title','listing-author','listing-reading-time','listing-categories','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 6,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-blog-listings'] = new List('listing-blog-listings', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -95,6 +96,10 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
+<link rel="alternate" type="application/rss+xml" title="AI curious" href="index.xml"><meta property="og:title" content="AI curious - Posts">
+<meta property="og:site-name" content="AI curious">
+<meta name="twitter:title" content="AI curious - Posts">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -112,6 +117,16 @@ ul.task-list li input[type="checkbox"] {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./projects.html">
+ <span class="menu-text">Projects</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./about.html">
@@ -124,6 +139,11 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://twitter.com/JohannesTomason"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="./index.xml"><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -142,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(13)</span></div><div class="category" data-category="API">API <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Art">Art <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Basics">Basics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="BigQuery">BigQuery <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Business">Business <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Competition">Competition <span class="quarto-category-count">(3)</span></div><div class="category" data-category="EDA">EDA <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Economics">Economics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ML">ML <span class="quarto-category-count">(12)</span></div><div class="category" data-category="NLP">NLP <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Pandas">Pandas <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Project Management">Project Management <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SQL">SQL <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Side Project">Side Project <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Society">Society <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Tabular">Tabular <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Time Series">Time Series <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Vision">Vision <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-unnumbered"><div class="category" data-category="API">API</div><div class="category" data-category="Art">Art</div><div class="category" data-category="Basics">Basics</div><div class="category" data-category="BigQuery">BigQuery</div><div class="category" data-category="Business">Business</div><div class="category" data-category="Competition">Competition</div><div class="category" data-category="EDA">EDA</div><div class="category" data-category="Economics">Economics</div><div class="category" data-category="ML">ML</div><div class="category" data-category="NLP">NLP</div><div class="category" data-category="Pandas">Pandas</div><div class="category" data-category="Project Management">Project Management</div><div class="category" data-category="SQL">SQL</div><div class="category" data-category="Side Project">Side Project</div><div class="category" data-category="Society">Society</div><div class="category" data-category="Tabular">Tabular</div><div class="category" data-category="Time Series">Time Series</div><div class="category" data-category="Vision">Vision</div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -167,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="quarto-listing quarto-listing-container-grid" id="listing-blog-listings">
 <div class="list grid quarto-listing-cols-3">
 <div class="g-col-1" data-index="0" data-categories="Art,ML,Society" data-listing-date-sort="1661810400000" data-listing-file-modified-sort="1667462480055" data-listing-reading-time-sort="7.04">
 <a href="./posts/2022-08-30-art_diffusion/index.html" class="quarto-grid-link">
@@ -205,7 +225,7 @@ Aug 30, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Project Management,ML,Business" data-listing-date-sort="1651096800000" data-listing-file-modified-sort="1667462468815" data-listing-reading-time-sort="9.24">
+<div class="g-col-1" data-index="1" data-categories="Project Management,ML,Business" data-listing-date-sort="1651096800000" data-listing-file-modified-sort="1667664586262" data-listing-reading-time-sort="9.155">
 <a href="./posts/2022-04-28-ml-pm/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -392,7 +412,7 @@ Aug 15, 2021
 <a href="./posts/2021-06-19-watchtrain/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/2021-06-19-watchtrain/logo_watchtrain2.png" class="thumbnail-image card-img" style="height: 150px;">
+<img data-src="./posts/2021-06-19-watchtrain/logo_watchtrain2.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -428,7 +448,7 @@ Jun 19, 2021
 <a href="./posts/2021-05-28-hotel/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/2021-05-28-hotel/logo_hotel.png" class="thumbnail-image card-img" style="height: 150px;">
+<img data-src="./posts/2021-05-28-hotel/logo_hotel.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -460,11 +480,11 @@ May 28, 2021
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="8" data-categories="Basics,ML" data-listing-date-sort="1618351200000" data-listing-file-modified-sort="1667462372323" data-listing-reading-time-sort="0.225">
+<div class="g-col-1" data-index="8" data-categories="Basics,ML" data-listing-date-sort="1618351200000" data-listing-file-modified-sort="1667658689182" data-listing-reading-time-sort="0.225">
 <a href="./posts/2021-04-14-nonlinearity/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/2021-04-14-nonlinearity/nonlinearity.png" class="thumbnail-image card-img" style="height: 150px;">
+<img data-src="./posts/2021-04-14-nonlinearity/nonlinearity.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -497,7 +517,7 @@ Apr 14, 2021
 <a href="./posts/2021-04-06-mortality-germany/2021-04-06-mortality-germany.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/2021-04-06-mortality-germany/mortality_germany.png" class="thumbnail-image card-img" style="height: 150px;">
+<img data-src="./posts/2021-04-06-mortality-germany/mortality_germany.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -530,7 +550,7 @@ Apr 6, 2021
 <a href="./posts/2020-12-26-blog-translator/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/2020-12-26-blog-translator/logo_blog_translator.png" class="thumbnail-image card-img" style="height: 150px;">
+<img data-src="./posts/2020-12-26-blog-translator/logo_blog_translator.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -563,7 +583,7 @@ Dec 26, 2020
 <a href="./posts/2020-12-12-a-handful-of-bricks-from-sql-to-pandas/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/2020-12-12-a-handful-of-bricks-from-sql-to-pandas/logo_sql2pandas.jpg" class="thumbnail-image card-img" style="height: 150px;">
+<img data-src="./posts/2020-12-12-a-handful-of-bricks-from-sql-to-pandas/logo_sql2pandas.jpg" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -602,7 +622,7 @@ Dec 12, 2020
 <a href="./posts/2020-01-05-bgml-geotab/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/2020-01-05-bgml-geotab/logo_bqml.png" class="thumbnail-image card-img" style="height: 150px;">
+<img data-src="./posts/2020-01-05-bgml-geotab/logo_bqml.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -644,6 +664,9 @@ Jan 5, 2020
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="blog-listings-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -894,6 +917,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Johannes Tomasoni</div>
+  </div>
+</footer>
 
 
 

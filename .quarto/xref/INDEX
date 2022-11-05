@@ -61,5 +61,29 @@
   },
   "posts/2021-06-19-watchtrain/index.qmd": {
     "index.html": "3c23be8f"
+  },
+  "404.qmd": {
+    "404.html": "10ec0ba1"
+  },
+  "projects.qmd": {
+    "projects.html": "9c88451a"
+  },
+  "projects/calliope_mini/calliobingo/index.qmd": {
+    "index.html": "1d0ddd90"
+  },
+  "projects/calliope_mini/calliopris/index.qmd": {
+    "index.html": "b81f92af"
+  },
+  "projects/calliope_mini/callirun/index.qmd": {
+    "index.html": "953241d0"
+  },
+  "projects/calliope_mini/callipianotech/index.qmd": {
+    "index.html": "d9216649"
+  },
+  "projects/fitbit/watchtrain/index.qmd": {
+    "index.html": "22559d91"
+  },
+  "projects/art/playing-with-rob/index.qmd": {
+    "index.html": "fe8925a1"
   }
 }
