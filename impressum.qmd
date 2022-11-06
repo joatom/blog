@@ -1,0 +1,14 @@
+---
+title: Impressum
+sidebar: false
+title-block-banner: true
+from: markdown+emoji
+---
+[:us:](imprint.qmd) [:de:](impressum.qmd)
+
+# Kontakt
+<p align="left">![](cntct.png)</p>
+
+# Verantwortlicher i.S.d. § 18 Abs. 2 MStV:
+
+Johannes Tomasoni

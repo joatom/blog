@@ -1,0 +1,14 @@
+---
+title: Datenschutzerklärung
+sidebar: false
+title-block-banner: true
+from: markdown+emoji
+---
+[:us:](privacy.qmd) [:de:](datenschutz.qmd)
+
+# Website- und Blog-Kommentare
+Die Kommentare werden mit Hilfe des [utteranc](https://utteranc.es/)-github-plug-ins als *Issues* in meinem öffentlichen Github-Repository https://github.com/joatom/blog gespeichert. Die Kommentar sind für jeden zugänglich. Falls ich einen deiner Kommentare löschen soll, lass es mich wissen und ich werde ihn schnellst möglich entfernen.
+
+# Datensammlung- und verarbeitung
+Die Seite wird auf [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) gehosted. Beim Besuch der Seite wird deine IP-Adresse erfasst und aus Sicherheitsgründen gespeichert, unabhängig ob Du gerade bei Github eingeloggt bist oder nicht. Weitere Inforamtionen zu GitHub's Sicherungsverfahren findest Du unter [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement). Zusätzliche Information zur Datenverarbeitung sind hier beschrieben: https://docs.github.com/en/site-policy/privacy-policies.
+Ich habe keine Einfluss auf die Datenerfassung durch den Host und kann die Daten nicht einsehen.

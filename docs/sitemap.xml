@@ -2,90 +2,106 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://joatom.github.io/blog/about.html</loc>
-    <lastmod>2022-11-05T16:33:50.770Z</lastmod>
+    <lastmod>2022-11-06T21:26:54.754Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/projects/fitbit/watchtrain/index.html</loc>
-    <lastmod>2022-11-05T16:33:51.158Z</lastmod>
+    <lastmod>2022-11-06T21:26:55.146Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/projects/calliope_mini/calliopris/index.html</loc>
-    <lastmod>2022-11-05T16:33:51.514Z</lastmod>
+    <lastmod>2022-11-06T21:26:55.490Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/projects/calliope_mini/callirun/index.html</loc>
-    <lastmod>2022-11-05T16:33:51.866Z</lastmod>
+    <lastmod>2022-11-06T21:26:55.806Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/projects/calliope_mini/callipianotech/index.html</loc>
-    <lastmod>2022-11-05T16:33:52.186Z</lastmod>
+    <lastmod>2022-11-06T21:26:56.154Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/projects/calliope_mini/calliobingo/index.html</loc>
-    <lastmod>2022-11-05T16:33:52.714Z</lastmod>
+    <lastmod>2022-11-06T21:26:56.742Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/projects/art/playing-with-rob/index.html</loc>
-    <lastmod>2022-11-05T16:33:53.030Z</lastmod>
+    <lastmod>2022-11-06T21:26:57.102Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/projects.html</loc>
-    <lastmod>2022-11-05T16:33:53.686Z</lastmod>
+    <lastmod>2022-11-06T21:26:57.782Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2022-01-31-learn_along/index.html</loc>
-    <lastmod>2022-11-05T16:33:54.030Z</lastmod>
+    <lastmod>2022-11-06T21:26:58.118Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2020-12-12-a-handful-of-bricks-from-sql-to-pandas/index.html</loc>
-    <lastmod>2022-11-05T16:33:55.174Z</lastmod>
+    <lastmod>2022-11-06T21:26:59.274Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2022-08-30-art_diffusion/index.html</loc>
-    <lastmod>2022-11-05T16:33:55.614Z</lastmod>
+    <lastmod>2022-11-06T21:26:59.742Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2021-04-14-nonlinearity/index.html</loc>
-    <lastmod>2022-11-05T16:33:55.934Z</lastmod>
+    <lastmod>2022-11-06T21:27:00.106Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2021-05-28-hotel/index.html</loc>
-    <lastmod>2022-11-05T16:33:56.270Z</lastmod>
+    <lastmod>2022-11-06T21:27:00.458Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2020-12-26-blog-translator/index.html</loc>
-    <lastmod>2022-11-05T16:33:57.014Z</lastmod>
+    <lastmod>2022-11-06T21:27:01.226Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2022-04-28-ml-pm/index.html</loc>
-    <lastmod>2022-11-05T16:33:57.562Z</lastmod>
+    <lastmod>2022-11-06T21:27:01.726Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2021-11-22-vpp-seq/2021-11-22-vpp-seq.html</loc>
-    <lastmod>2022-11-05T16:33:58.102Z</lastmod>
+    <lastmod>2022-11-06T21:27:02.274Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2021-08-15-model-allocation/2021-08-15-model-allocation.html</loc>
-    <lastmod>2022-11-05T16:33:58.710Z</lastmod>
+    <lastmod>2022-11-06T21:27:02.850Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2022-02-28-relationship/index.html</loc>
-    <lastmod>2022-11-05T16:33:59.026Z</lastmod>
+    <lastmod>2022-11-06T21:27:03.202Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2021-04-06-mortality-germany/2021-04-06-mortality-germany.html</loc>
-    <lastmod>2022-11-05T16:33:59.590Z</lastmod>
+    <lastmod>2022-11-06T21:27:03.778Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2021-06-19-watchtrain/index.html</loc>
-    <lastmod>2022-11-05T16:34:00.694Z</lastmod>
+    <lastmod>2022-11-06T21:27:05.074Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/posts/2020-01-05-bgml-geotab/index.html</loc>
-    <lastmod>2022-11-05T16:34:01.006Z</lastmod>
+    <lastmod>2022-11-06T21:27:05.426Z</lastmod>
   </url>
   <url>
     <loc>https://joatom.github.io/blog/index.html</loc>
-    <lastmod>2022-11-05T16:34:01.534Z</lastmod>
+    <lastmod>2022-11-06T21:27:05.954Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joatom.github.io/blog/impressum.html</loc>
+    <lastmod>2022-11-06T21:27:06.262Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joatom.github.io/blog/privacy.html</loc>
+    <lastmod>2022-11-06T21:27:06.578Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joatom.github.io/blog/imprint.html</loc>
+    <lastmod>2022-11-06T21:27:06.890Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joatom.github.io/blog/datenschutz.html</loc>
+    <lastmod>2022-11-06T21:27:07.218Z</lastmod>
   </url>
 </urlset>

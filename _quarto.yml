@@ -20,6 +20,8 @@ website:
         href: https://github.com/joatom
       - icon: twitter
         href: https://twitter.com/JohannesTomason
+      - icon: linkedin
+        href: https://de.linkedin.com/in/jtomasoni
       - icon: rss
         href: index.xml
   sidebar:
@@ -45,7 +47,19 @@ website:
           contents:
           - projects/fitbit/watchtrain/index.qmd
 
-  page-footer: "Copyright 2022, Johannes Tomasoni" 
+  #cookie-consent:
+  #  type: express
+  #  style: interstitial
+  #  palette: dark
+
+  page-footer: 
+    left:
+      - text: "Copyright 2022, Johannes Tomasoni" 
+    center:
+      - text: "Imprint"
+        href: imprint.qmd
+      - text: "Privacy Policy"
+        href: privacy.qmd
 
 bibliography: references.bib
 

@@ -85,5 +85,17 @@
   },
   "projects/art/playing-with-rob/index.qmd": {
     "index.html": "fe8925a1"
+  },
+  "impressum.qmd": {
+    "impressum.html": "29ca045f"
+  },
+  "privacy.qmd": {
+    "privacy.html": "978312cd"
+  },
+  "imprint.qmd": {
+    "imprint.html": "d44d477c"
+  },
+  "datenschutz.qmd": {
+    "datenschutz.html": "a6faa839"
   }
 }

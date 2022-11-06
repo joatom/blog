@@ -1,0 +1,14 @@
+---
+title: Privacy Policy
+sidebar: false
+title-block-banner: true
+from: markdown+emoji
+---
+[:us:](privacy.qmd) [:de:](datenschutz.qmd)
+
+# Website and Blog Comments
+The comments are stored by the [utteranc](https://utteranc.es/) github plug-in as issues in my public github repo https://github.com/joatom/blog. The comments are accessable by everybody. If you want me to delete a comment you wrote, please reach out to me and I will remove it as soon as possible.
+
+# Data collection
+This site is hosted on [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages). Your IP address is logged and stored for security purposes, regardless of whether you have signed into GitHub or not. For more information about GitHub's security practices, see [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement). More details on processing terms can be found at https://docs.github.com/en/site-policy/privacy-policies.
+I can't influence the data collection by the host and I don't have access to the data.

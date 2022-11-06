@@ -1,0 +1,13 @@
+---
+title: Imprint
+sidebar: false
+title-block-banner: true
+from: markdown+emoji
+---
+[:us:](imprint.qmd) [:de:](impressum.qmd)
+
+# Contact
+<p align="left">![](cntct.png)</p>
+
+# Responsible for content
+Johannes Tomasoni
