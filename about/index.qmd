@@ -14,6 +14,8 @@ about:
     - icon: github
       text: Github
       href: https://github.com/joatom
+    - text: Kaggle
+      href: https://www.kaggle.com/joatom
 
 ---
 
@@ -21,7 +23,7 @@ Hi there!
 
 This is my hobby blog. It contains personal notes from my ML learning journey, code snippets, personal notes and blog posts of various topics.
 
-I’m happy when you leave a comment on blog posts you like.
+I’m happy when you leave a comment on articles you like.
 
 Cheers,
 

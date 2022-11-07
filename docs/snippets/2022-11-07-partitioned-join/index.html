@@ -248,6 +248,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<section id="about" class="level1">
+<h1>About</h1>
+<p>Filling gaps for undefined value combinations can be tricky. It can either be implemented with a CROSS JOINS or a PARTITIONED JOIN. The advantage of a PARTITIONED JOIN is reduced complexity, due to fewer joins, and enhanced execution plan.</p>
+<p>As example I explore a harvest of apples and Grapes and fill the list with zero for days where a fruit hasn’t been collected.</p>
+</section>
+<section id="implementation" class="level1">
+<h1>Implementation</h1>
 <p>This query contains the harvest of three fruits over five days.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> f.name <span class="kw">AS</span> fruit, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       h.<span class="dt">date</span>, </span>
@@ -422,6 +429,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -255,11 +255,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>This posts describes the steps to create a customized aggregation function in Oracle.</p>
+<section id="about" class="level1 page-columns page-full">
+<h1>About</h1>
+<p>This article describes the steps to create a customized aggregation function in Oracle.</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p><span class="math display">\[Recall = \frac{TP}{TP+FN}\]</span></p>
 </div></div><p>As example <em>Recall</em> is implemented.</p>
+</section>
+<section id="implementation" class="level1 page-columns page-full">
+<h1>Implementation</h1>
 <p>Define a type for the input values, if it isn’t a native Oracle type (NUMBER, VARCHAR2, …) or if the aggragation function will take more than one input value.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">TYPE</span> y_pair <span class="kw">FORCE</span> <span class="kw">AS</span> <span class="dt">OBJECT</span> (</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  y_true <span class="dt">NUMBER</span>, </span>
@@ -538,6 +543,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+</section>
 <section id="resources" class="level1">
 <h1>Resources</h1>
 <p>More details can be found in the Oracle documentation:</p>

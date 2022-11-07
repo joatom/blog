@@ -20,6 +20,13 @@
 
 
 
+<section id="about" class="level1">
+<h1>About</h1>
+<p>Filling gaps for undefined value combinations can be tricky. It can either be implemented with a CROSS JOINS or a PARTITIONED JOIN. The advantage of a PARTITIONED JOIN is reduced complexity, due to fewer joins, and enhanced execution plan.</p>
+<p>As example I explore a harvest of apples and Grapes and fill the list with zero for days where a fruit hasn’t been collected.</p>
+</section>
+<section id="implementation" class="level1">
+<h1>Implementation</h1>
 <p>This query contains the harvest of three fruits over five days.</p>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;">SELECT</span> f.name <span class="kw" style="color: #003B4F;">AS</span> fruit, </span>
 <span id="cb1-2">       h.<span class="dt" style="color: #AD0000;">date</span>, </span>
@@ -194,6 +201,7 @@
 </table>
 
 
+</section>
 
  ]]></description>
   <category>SQL</category>
@@ -210,11 +218,16 @@
 
 
 
-<p>This posts describes the steps to create a customized aggregation function in Oracle.</p>
+<section id="about" class="level1 page-columns page-full">
+<h1>About</h1>
+<p>This article describes the steps to create a customized aggregation function in Oracle.</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p><img src="https://latex.codecogs.com/png.latex?Recall%20=%20%5Cfrac%7BTP%7D%7BTP+FN%7D"></p>
 </div></div><p>As example <em>Recall</em> is implemented.</p>
+</section>
+<section id="implementation" class="level1 page-columns page-full">
+<h1>Implementation</h1>
 <p>Define a type for the input values, if it isn’t a native Oracle type (NUMBER, VARCHAR2, …) or if the aggragation function will take more than one input value.</p>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;">CREATE</span> <span class="kw" style="color: #003B4F;">OR</span> <span class="kw" style="color: #003B4F;">REPLACE</span> <span class="kw" style="color: #003B4F;">TYPE</span> y_pair <span class="kw" style="color: #003B4F;">FORCE</span> <span class="kw" style="color: #003B4F;">AS</span> <span class="dt" style="color: #AD0000;">OBJECT</span> (</span>
 <span id="cb1-2">  y_true <span class="dt" style="color: #AD0000;">NUMBER</span>, </span>
@@ -493,6 +506,7 @@
 </tr>
 </tbody>
 </table>
+</section>
 <section id="resources" class="level1">
 <h1>Resources</h1>
 <p>More details can be found in the Oracle documentation:</p>

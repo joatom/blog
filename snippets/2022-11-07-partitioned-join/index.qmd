@@ -11,7 +11,12 @@ date: "2022-11-07"
 from: markdown+emoji
 author: Johannes Tomasoni
 ---
+# About
+Filling gaps for undefined value combinations can be tricky. It can either be implemented with a CROSS JOINS or a PARTITIONED JOIN. The advantage of a PARTITIONED JOIN is reduced complexity, due to fewer joins, and enhanced execution plan.
 
+As example I explore a harvest of apples and Grapes and fill the list with zero for days where a fruit hasn't been collected.
+
+# Implementation
 This query contains the harvest of three fruits over five days.
 
 ```sql

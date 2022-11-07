@@ -11,7 +11,7 @@ image: logo_bqml.png
 title: "BigQuery-Geotab Intersection Congestion"
 author: "Johannes Tomasoni"
 from: markdown+emoji
-subtitle: ":trophy:"
+subtitle: ":trophy: Winning solution"
 ---
 
 This blog post contains some of my codings for the 2019 kaggle [BigQuery-Geotab competition](https://www.kaggle.com/c/bigquery-geotab-intersection-congestion).
