@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "AI curious"
+  title: "jo@tom"
   site-url: "https://joatom.github.io/blog/"
   description: "AI curios"
   twitter-card: true
@@ -17,7 +17,7 @@ website:
       - text: "Snippets"
         file: snippets.qmd
     right:
-      - about.qmd
+      - about/index.qmd
       - icon: github
         href: https://github.com/joatom
       - icon: twitter
@@ -59,9 +59,9 @@ website:
       - text: "Copyright 2022, Johannes Tomasoni" 
     center:
       - text: "Imprint"
-        href: imprint.qmd
+        href: legal/imprint.qmd
       - text: "Privacy Policy"
-        href: privacy.qmd
+        href: legal/privacy.qmd
 
 bibliography: references.bib
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>AI curious - Snippets</title>
+<title>jo@tom - Snippets</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-blog-listings .list');
+    const listingTargetEl = window.document.querySelector('#listing-snippet-listings .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-blog-listings'] = new List('listing-blog-listings', options);
+    window['quarto-listings']['listing-snippet-listings'] = new List('listing-snippet-listings', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -95,9 +95,11 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="AI curious" href="snippets.xml"><meta property="og:title" content="AI curious - Snippets">
-<meta property="og:site-name" content="AI curious">
-<meta name="twitter:title" content="AI curious - Snippets">
+<link rel="alternate" type="application/rss+xml" title="jo@tom" href="snippets.xml"><meta property="og:title" content="jo@tom - Snippets">
+<meta property="og:description" content="This is a collection of helpful code snippets. I might need to look them up in the future.">
+<meta property="og:site-name" content="jo@tom">
+<meta name="twitter:title" content="jo@tom - Snippets">
+<meta name="twitter:description" content="This is a collection of helpful code snippets. I might need to look them up in the future.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -109,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">AI curious</span>
+    <span class="navbar-title">jo@tom</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -132,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="./about/index.html">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -170,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-cloud"><div class="category" data-category="Oracle"><span class="quarto-category-count category-cloud-10">Oracle</span></div><div class="category" data-category="SQL"><span class="quarto-category-count category-cloud-10">SQL</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-cloud"><div class="category" data-category="ML"><span class="quarto-category-count category-cloud-5">ML</span></div><div class="category" data-category="Metric"><span class="quarto-category-count category-cloud-5">Metric</span></div><div class="category" data-category="Oracle"><span class="quarto-category-count category-cloud-10">Oracle</span></div><div class="category" data-category="SQL"><span class="quarto-category-count category-cloud-10">SQL</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -191,11 +193,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-blog-listings">
+<p>This is a collection of helpful code snippets. I might need to look them up in the future.</p>
+<div id="listing-snippet-listings" class="quarto-listing quarto-listing-container-table">
 <div class="listing-actions-group">
     <div class="input-group input-group-sm quarto-listing-filter">
       <span class="input-group-text"><i class="bi bi-search"></i></span>
@@ -218,9 +217,9 @@ Categories
 </tr>
 </thead>
 <tbody class="list">
-<tr data-index="0" data-categories="SQL,Oracle" data-listing-date-sort="1667775600000" data-listing-file-modified-sort="1667807733189" data-listing-reading-time-sort="0.885" data-listing-title-sort="Partitioned Joins" data-listing-filename-sort="index.qmd">
+<tr data-index="0" data-categories="SQL,Oracle" data-listing-date-sort="1667775600000" data-listing-file-modified-sort="1667854016391" data-listing-reading-time-sort="0.885" data-listing-title-sort="Partitioned Join" data-listing-filename-sort="index.qmd">
 <td class="listing-title">
-<a href="./snippets/2022-11-07-partitioned-join/index.html" class="title">Partitioned Joins</a>
+<a href="./snippets/2022-11-07-partitioned-join/index.html" class="title">Partitioned Join</a>
 </td>
 <td class="listing-description">
 Filling gaps without cross join
@@ -229,13 +228,29 @@ Filling gaps without cross join
 SQL,Oracle
 </td>
 </tr>
+<tr data-index="1" data-categories="SQL,Oracle,ML,Metric" data-listing-date-sort="1667775600000" data-listing-file-modified-sort="1667857418380" data-listing-reading-time-sort="5.89" data-listing-title-sort="User defined aggregation function" data-listing-filename-sort="index.qmd">
+<td class="listing-title">
+<a href="./snippets/2022-11-07-udaf/index.html" class="title">User defined aggregation function</a>
+</td>
+<td class="listing-description">
+Buildung a customized <em>Recall</em> function
+</td>
+<td class="listing-categories">
+SQL,Oracle,ML,Metric
+</td>
+</tr>
 </tbody>
 
 </table>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div>
+
+
+
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -497,10 +512,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       <div class="nav-footer-center">
         <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="./imprint.html">Imprint</a>
+    <a class="nav-link" href="./legal/imprint.html">Imprint</a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="./privacy.html">Privacy Policy</a>
+    <a class="nav-link" href="./legal/privacy.html">Privacy Policy</a>
   </li>  
 </ul>
       </div>

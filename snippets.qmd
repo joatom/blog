@@ -1,7 +1,7 @@
 ---
 title: "Snippets"
 listing:
-  id: "blog-listings"
+  id: "snippet-listings"
   contents: snippets
   sort: "date desc"
   type: table
@@ -16,3 +16,7 @@ from: markdown+emoji
 title-block-banner: false
 sidebar: false
 ---
+This is a collection of helpful code snippets. I might need to look them up in the future.
+
+:::{#snippet-listings}
+:::

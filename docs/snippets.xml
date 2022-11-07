@@ -5,14 +5,14 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>AI curious</title>
+<title>jo@tom</title>
 <link>https://joatom.github.io/blog/snippets.html</link>
 <atom:link href="https://joatom.github.io/blog/snippets.xml" rel="self" type="application/rss+xml"/>
 <description>AI curios</description>
 <generator>quarto-1.2.256</generator>
 <lastBuildDate>Sun, 06 Nov 2022 23:00:00 GMT</lastBuildDate>
 <item>
-  <title>Partitioned Joins</title>
+  <title>Partitioned Join</title>
   <dc:creator>Johannes Tomasoni</dc:creator>
   <link>https://joatom.github.io/blog/snippets/2022-11-07-partitioned-join/index.html</link>
   <description><![CDATA[ 
@@ -199,6 +199,317 @@
   <category>SQL</category>
   <category>Oracle</category>
   <guid>https://joatom.github.io/blog/snippets/2022-11-07-partitioned-join/index.html</guid>
+  <pubDate>Sun, 06 Nov 2022 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>User defined aggregation function</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/snippets/2022-11-07-udaf/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>This posts describes the steps to create a customized aggregation function in Oracle.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><img src="https://latex.codecogs.com/png.latex?Recall%20=%20%5Cfrac%7BTP%7D%7BTP+FN%7D"></p>
+</div></div><p>As example <em>Recall</em> is implemented.</p>
+<p>Define a type for the input values, if it isn’t a native Oracle type (NUMBER, VARCHAR2, …) or if the aggragation function will take more than one input value.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;">CREATE</span> <span class="kw" style="color: #003B4F;">OR</span> <span class="kw" style="color: #003B4F;">REPLACE</span> <span class="kw" style="color: #003B4F;">TYPE</span> y_pair <span class="kw" style="color: #003B4F;">FORCE</span> <span class="kw" style="color: #003B4F;">AS</span> <span class="dt" style="color: #AD0000;">OBJECT</span> (</span>
+<span id="cb1-2">  y_true <span class="dt" style="color: #AD0000;">NUMBER</span>, </span>
+<span id="cb1-3">  y_pred <span class="dt" style="color: #AD0000;">NUMBER</span>, </span>
+<span id="cb1-4">  threshold <span class="dt" style="color: #AD0000;">NUMBER</span> <span class="kw" style="color: #003B4F;">DEFAULT</span> <span class="fl" style="color: #AD0000;">0.5</span></span>
+<span id="cb1-5">);</span>
+<span id="cb1-6"><span class="op" style="color: #5E5E5E;">/</span></span></code></pre></div>
+<p>Implement logic of user defined function in a oracle object type.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><span class="co" style="color: #5E5E5E;">-- Create type header</span></span>
+<span id="cb2-2"><span class="kw" style="color: #003B4F;">CREATE</span> <span class="kw" style="color: #003B4F;">OR</span> <span class="kw" style="color: #003B4F;">REPLACE</span> <span class="kw" style="color: #003B4F;">TYPE</span> RecallImpl <span class="kw" style="color: #003B4F;">AS</span> <span class="dt" style="color: #AD0000;">OBJECT</span>(</span>
+<span id="cb2-3">  <span class="co" style="color: #5E5E5E;">-- define object variables</span></span>
+<span id="cb2-4">  tp <span class="dt" style="color: #AD0000;">NUMBER</span>, <span class="co" style="color: #5E5E5E;">-- number of true positives</span></span>
+<span id="cb2-5">  fn <span class="dt" style="color: #AD0000;">NUMBER</span>, <span class="co" style="color: #5E5E5E;">-- number of false negatives</span></span>
+<span id="cb2-6"></span>
+<span id="cb2-7">  <span class="co" style="color: #5E5E5E;">-- Interface for Oracle userdefined functions. </span></span>
+<span id="cb2-8">  <span class="co" style="color: #5E5E5E;">-- Init, iterate and terminate are mandatory</span></span>
+<span id="cb2-9">  <span class="kw" style="color: #003B4F;">STATIC</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateInitialize(sctx <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span>,</span>
+<span id="cb2-10">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateIterate(self <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl, <span class="fu" style="color: #4758AB;">value</span> <span class="kw" style="color: #003B4F;">IN</span> y_pair) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span>,</span>
+<span id="cb2-11">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateDelete(self <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl, <span class="fu" style="color: #4758AB;">value</span> <span class="kw" style="color: #003B4F;">IN</span> y_pair) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span>,</span>
+<span id="cb2-12">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateTerminate(self <span class="kw" style="color: #003B4F;">IN</span> RecallImpl, recall <span class="kw" style="color: #003B4F;">OUT</span> <span class="dt" style="color: #AD0000;">NUMBER</span>, flags <span class="kw" style="color: #003B4F;">IN</span> <span class="dt" style="color: #AD0000;">NUMBER</span>) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span>,</span>
+<span id="cb2-13">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateMerge(self <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl, ctx2 <span class="kw" style="color: #003B4F;">IN</span> RecallImpl) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span></span>
+<span id="cb2-14">);</span>
+<span id="cb2-15"><span class="op" style="color: #5E5E5E;">/</span></span></code></pre></div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><span class="co" style="color: #5E5E5E;">-- Create type body</span></span>
+<span id="cb3-2"><span class="kw" style="color: #003B4F;">CREATE</span> <span class="kw" style="color: #003B4F;">OR</span> <span class="kw" style="color: #003B4F;">REPLACE</span> <span class="kw" style="color: #003B4F;">TYPE</span> <span class="kw" style="color: #003B4F;">BODY</span> RecallImpl <span class="kw" style="color: #003B4F;">IS</span> </span>
+<span id="cb3-3">  </span>
+<span id="cb3-4"></span>
+<span id="cb3-5">  <span class="kw" style="color: #003B4F;">STATIC</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateInitialize(sctx <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl) </span>
+<span id="cb3-6">                                                        <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span> <span class="kw" style="color: #003B4F;">IS</span> </span>
+<span id="cb3-7">  <span class="cf" style="color: #003B4F;">BEGIN</span></span>
+<span id="cb3-8"></span>
+<span id="cb3-9">    <span class="co" style="color: #5E5E5E;">-- initialize tp and fn with 0</span></span>
+<span id="cb3-10">    sctx <span class="op" style="color: #5E5E5E;">:=</span> RecallImpl(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">0</span>);</span>
+<span id="cb3-11">  </span>
+<span id="cb3-12">    <span class="kw" style="color: #003B4F;">RETURN</span> ODCIConst.Success;</span>
+<span id="cb3-13">  <span class="cf" style="color: #003B4F;">END</span>;</span>
+<span id="cb3-14"></span>
+<span id="cb3-15"></span>
+<span id="cb3-16">  <span class="co" style="color: #5E5E5E;">-- Increase tp and fn count is condition is satisfied</span></span>
+<span id="cb3-17">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateIterate(self <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl, </span>
+<span id="cb3-18">                                       <span class="fu" style="color: #4758AB;">value</span> <span class="kw" style="color: #003B4F;">IN</span> y_pair) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span> <span class="kw" style="color: #003B4F;">IS</span></span>
+<span id="cb3-19">  <span class="cf" style="color: #003B4F;">BEGIN</span></span>
+<span id="cb3-20"></span>
+<span id="cb3-21">    <span class="cf" style="color: #003B4F;">IF</span> <span class="fu" style="color: #4758AB;">value</span>.y_true <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">1</span> <span class="cf" style="color: #003B4F;">THEN</span></span>
+<span id="cb3-22">      <span class="co" style="color: #5E5E5E;">-- increase true positive count</span></span>
+<span id="cb3-23">      <span class="cf" style="color: #003B4F;">IF</span> <span class="fu" style="color: #4758AB;">value</span>.y_pred <span class="op" style="color: #5E5E5E;">&gt;=</span> <span class="fu" style="color: #4758AB;">value</span>.y_true <span class="op" style="color: #5E5E5E;">-</span> <span class="fu" style="color: #4758AB;">value</span>.threshold <span class="cf" style="color: #003B4F;">THEN</span></span>
+<span id="cb3-24">        self.tp <span class="op" style="color: #5E5E5E;">:=</span> self.tp <span class="op" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>;</span>
+<span id="cb3-25">      <span class="cf" style="color: #003B4F;">END</span> <span class="cf" style="color: #003B4F;">IF</span>;</span>
+<span id="cb3-26">      </span>
+<span id="cb3-27">      <span class="co" style="color: #5E5E5E;">-- increase false negative count</span></span>
+<span id="cb3-28">      <span class="cf" style="color: #003B4F;">IF</span> <span class="fu" style="color: #4758AB;">value</span>.y_pred <span class="op" style="color: #5E5E5E;">&lt;</span> <span class="fu" style="color: #4758AB;">value</span>.y_true <span class="op" style="color: #5E5E5E;">-</span> <span class="fu" style="color: #4758AB;">value</span>.threshold <span class="cf" style="color: #003B4F;">THEN</span></span>
+<span id="cb3-29">        self.fn <span class="op" style="color: #5E5E5E;">:=</span> self.fn <span class="op" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>;</span>
+<span id="cb3-30">      <span class="cf" style="color: #003B4F;">END</span> <span class="cf" style="color: #003B4F;">IF</span>;</span>
+<span id="cb3-31">    <span class="cf" style="color: #003B4F;">END</span> <span class="cf" style="color: #003B4F;">IF</span>;</span>
+<span id="cb3-32">    </span>
+<span id="cb3-33">    <span class="kw" style="color: #003B4F;">RETURN</span> ODCIConst.Success;</span>
+<span id="cb3-34">  <span class="cf" style="color: #003B4F;">END</span>;</span>
+<span id="cb3-35"></span>
+<span id="cb3-36"></span>
+<span id="cb3-37">  <span class="co" style="color: #5E5E5E;">-- In case of aggregation in window function RECALL_CAF(...)OVER(ORDER BY...) </span></span>
+<span id="cb3-38">  <span class="co" style="color: #5E5E5E;">-- the entry leaving the window needs to decrease tp and fn count </span></span>
+<span id="cb3-39">  <span class="co" style="color: #5E5E5E;">-- if condition is satisfied</span></span>
+<span id="cb3-40">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateDelete(self <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl, </span>
+<span id="cb3-41">                                      <span class="fu" style="color: #4758AB;">value</span> <span class="kw" style="color: #003B4F;">IN</span> y_pair) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span> <span class="kw" style="color: #003B4F;">IS</span></span>
+<span id="cb3-42">  <span class="cf" style="color: #003B4F;">BEGIN</span></span>
+<span id="cb3-43"></span>
+<span id="cb3-44">    <span class="cf" style="color: #003B4F;">IF</span> <span class="fu" style="color: #4758AB;">value</span>.y_true <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">1</span> <span class="cf" style="color: #003B4F;">THEN</span></span>
+<span id="cb3-45">      <span class="co" style="color: #5E5E5E;">-- decrease true positive count</span></span>
+<span id="cb3-46">      <span class="cf" style="color: #003B4F;">IF</span> <span class="fu" style="color: #4758AB;">value</span>.y_pred <span class="op" style="color: #5E5E5E;">&gt;=</span> <span class="fu" style="color: #4758AB;">value</span>.y_true <span class="op" style="color: #5E5E5E;">-</span> <span class="fu" style="color: #4758AB;">value</span>.threshold <span class="cf" style="color: #003B4F;">THEN</span></span>
+<span id="cb3-47">        self.tp <span class="op" style="color: #5E5E5E;">:=</span> self.tp <span class="op" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>;</span>
+<span id="cb3-48">      <span class="cf" style="color: #003B4F;">END</span> <span class="cf" style="color: #003B4F;">IF</span>;</span>
+<span id="cb3-49">      </span>
+<span id="cb3-50">      <span class="co" style="color: #5E5E5E;">-- decrease false negative count</span></span>
+<span id="cb3-51">      <span class="cf" style="color: #003B4F;">IF</span> <span class="fu" style="color: #4758AB;">value</span>.y_pred <span class="op" style="color: #5E5E5E;">&lt;</span> <span class="fu" style="color: #4758AB;">value</span>.y_true <span class="op" style="color: #5E5E5E;">-</span> <span class="fu" style="color: #4758AB;">value</span>.threshold <span class="cf" style="color: #003B4F;">THEN</span></span>
+<span id="cb3-52">        self.fn <span class="op" style="color: #5E5E5E;">:=</span> self.fn <span class="op" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>;</span>
+<span id="cb3-53">      <span class="cf" style="color: #003B4F;">END</span> <span class="cf" style="color: #003B4F;">IF</span>;</span>
+<span id="cb3-54">    <span class="cf" style="color: #003B4F;">END</span> <span class="cf" style="color: #003B4F;">IF</span>;</span>
+<span id="cb3-55"></span>
+<span id="cb3-56">    <span class="kw" style="color: #003B4F;">RETURN</span> ODCIConst.Success;</span>
+<span id="cb3-57">  <span class="cf" style="color: #003B4F;">END</span>;</span>
+<span id="cb3-58"></span>
+<span id="cb3-59"></span>
+<span id="cb3-60">  <span class="co" style="color: #5E5E5E;">-- Calculate *Recall* from tp and fn count</span></span>
+<span id="cb3-61">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateTerminate(self <span class="kw" style="color: #003B4F;">IN</span> RecallImpl, </span>
+<span id="cb3-62">                                         recall <span class="kw" style="color: #003B4F;">OUT</span> <span class="dt" style="color: #AD0000;">NUMBER</span>, </span>
+<span id="cb3-63">                                         flags <span class="kw" style="color: #003B4F;">IN</span> <span class="dt" style="color: #AD0000;">NUMBER</span>) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span> <span class="kw" style="color: #003B4F;">IS</span></span>
+<span id="cb3-64">    v_recall <span class="dt" style="color: #AD0000;">number</span>;</span>
+<span id="cb3-65">  <span class="cf" style="color: #003B4F;">BEGIN</span></span>
+<span id="cb3-66"></span>
+<span id="cb3-67">    recall <span class="op" style="color: #5E5E5E;">:=</span> self.tp <span class="op" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">nullif</span>(self.tp <span class="op" style="color: #5E5E5E;">+</span> self.fn, <span class="dv" style="color: #AD0000;">0</span>);</span>
+<span id="cb3-68"></span>
+<span id="cb3-69">    <span class="kw" style="color: #003B4F;">RETURN</span> ODCIConst.Success;</span>
+<span id="cb3-70">  <span class="cf" style="color: #003B4F;">BEGIN</span>;</span>
+<span id="cb3-71"></span>
+<span id="cb3-72"></span>
+<span id="cb3-73">  <span class="co" style="color: #5E5E5E;">-- In case of parallel execution combine tp and fn counts </span></span>
+<span id="cb3-74">  <span class="co" style="color: #5E5E5E;">-- from parallel threads</span></span>
+<span id="cb3-75">  <span class="kw" style="color: #003B4F;">MEMBER</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> ODCIAggregateMerge(self <span class="kw" style="color: #003B4F;">IN</span> <span class="kw" style="color: #003B4F;">OUT</span> RecallImpl, </span>
+<span id="cb3-76">                                     ctx2 <span class="kw" style="color: #003B4F;">IN</span> RecallImpl) <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span> <span class="kw" style="color: #003B4F;">IS</span></span>
+<span id="cb3-77">  <span class="cf" style="color: #003B4F;">BEGIN</span></span>
+<span id="cb3-78"></span>
+<span id="cb3-79">    self.tp <span class="op" style="color: #5E5E5E;">:=</span> self.tp <span class="op" style="color: #5E5E5E;">+</span> ctx2.tp;</span>
+<span id="cb3-80">    self.fn <span class="op" style="color: #5E5E5E;">:=</span> self.fn <span class="op" style="color: #5E5E5E;">+</span> ctx2.fn;</span>
+<span id="cb3-81">  </span>
+<span id="cb3-82">    <span class="kw" style="color: #003B4F;">RETURN</span> ODCIConst.Success;</span>
+<span id="cb3-83">  <span class="cf" style="color: #003B4F;">END</span>;</span>
+<span id="cb3-84"></span>
+<span id="cb3-85"></span>
+<span id="cb3-86"><span class="cf" style="color: #003B4F;">END</span>;</span>
+<span id="cb3-87"><span class="op" style="color: #5E5E5E;">/</span></span></code></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><em>Parallel aggregation of data</em>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<p>
+</p><pre class="mermaid mermaid-js" data-tooltip-selector="#mermaid-tooltip-1">flowchart TB
+  A[Init] --&gt; B1[Iter /\nDel]
+  B1 --&gt; B1
+  A --&gt; B2[Iter /\nDel]
+  B2 --&gt; B2
+  B1 --&gt; C[Merge]
+  B2 --&gt; C[Merge]
+  C --&gt; D[Terminate]
+</pre>
+<div id="mermaid-tooltip-1" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
+</div></div><p>Define function that uses the implemented logic.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><span class="kw" style="color: #003B4F;">CREATE</span> <span class="kw" style="color: #003B4F;">OR</span> <span class="kw" style="color: #003B4F;">REPLACE</span> <span class="kw" style="color: #003B4F;">FUNCTION</span> recall_caf(<span class="fu" style="color: #4758AB;">value</span> y_pair) </span>
+<span id="cb4-2">                    <span class="kw" style="color: #003B4F;">RETURN</span> <span class="dt" style="color: #AD0000;">NUMBER</span> PARALLEL_ENABLED AGGREGATION <span class="kw" style="color: #003B4F;">USING</span> RecallImpl;</span>
+<span id="cb4-3"><span class="op" style="color: #5E5E5E;">/</span></span></code></pre></div>
+<p>The function can now be used as a aggregation function including analytical and window features.</p>
+<p><em>Example:</em> Recall per kfold and two thresholds.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><span class="kw" style="color: #003B4F;">SELECT</span> </span>
+<span id="cb5-2">  r.kfold,</span>
+<span id="cb5-3">  recall_caf(y_pair(y_true <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_true, </span>
+<span id="cb5-4">                    y_pred <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_oof)) recall_0_5,</span>
+<span id="cb5-5">  recall_caf(y_pair(y_true <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_true, </span>
+<span id="cb5-6">                    y_pred <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_oof, </span>
+<span id="cb5-7">                    threshold <span class="op" style="color: #5E5E5E;">=&gt;</span> <span class="fl" style="color: #AD0000;">0.7</span>)) recall_0_7</span>
+<span id="cb5-8">  <span class="kw" style="color: #003B4F;">FROM</span> oof_results r</span>
+<span id="cb5-9"><span class="kw" style="color: #003B4F;">GROUP</span> <span class="kw" style="color: #003B4F;">BY</span> r.kfold;</span></code></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>KFOLD</th>
+<th>RECALL_0_5</th>
+<th>RECALL_0_7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.72</td>
+<td>0.81</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.781</td>
+<td>0.841</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.754</td>
+<td>0.81</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0.79</td>
+<td>0.838</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>0.71</td>
+<td>0.72</td>
+</tr>
+</tbody>
+</table>
+<p>or in detail:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><span class="kw" style="color: #003B4F;">SELECT</span> </span>
+<span id="cb6-2">  r.kfold,</span>
+<span id="cb6-3">  r.y_true,</span>
+<span id="cb6-4">  r.y_oof,</span>
+<span id="cb6-5">  recall_caf(y_pair(y_true <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_true, </span>
+<span id="cb6-6">                    y_pred <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_oof)) <span class="kw" style="color: #003B4F;">OVER</span> (<span class="kw" style="color: #003B4F;">PARTITION</span> <span class="kw" style="color: #003B4F;">BY</span> r.kfold) recall_0_5,</span>
+<span id="cb6-7">  recall_caf(y_pair(y_true <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_true, </span>
+<span id="cb6-8">                    y_pred <span class="op" style="color: #5E5E5E;">=&gt;</span> r.y_oof, </span>
+<span id="cb6-9">                    threshold <span class="op" style="color: #5E5E5E;">=&gt;</span> <span class="fl" style="color: #AD0000;">0.7</span>)) <span class="kw" style="color: #003B4F;">OVER</span> (<span class="kw" style="color: #003B4F;">PARTITION</span> <span class="kw" style="color: #003B4F;">BY</span> r.kfold) recall_0_7</span>
+<span id="cb6-10"><span class="kw" style="color: #003B4F;">FROM</span> oof_results r;</span></code></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>KFOLD</th>
+<th>Y_TRUE</th>
+<th>Y_OOF</th>
+<th>RECALL_0_5</th>
+<th>RECALL_0_7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0.9768</td>
+<td>0.72</td>
+<td>0.81</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0.56</td>
+<td>0.72</td>
+<td>0.81</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0.121</td>
+<td>0.72</td>
+<td>0.81</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>0.433</td>
+<td>0.72</td>
+<td>0.81</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0.6768</td>
+<td>0.72</td>
+<td>0.81</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0</td>
+<td>0.0068</td>
+<td>0.754</td>
+<td>0.87</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1</td>
+<td>0.877</td>
+<td>0.754</td>
+<td>0.87</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0</td>
+<td>0.1021</td>
+<td>0.754</td>
+<td>0.87</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<section id="resources" class="level1">
+<h1>Resources</h1>
+<p>More details can be found in the Oracle documentation:</p>
+<ul>
+<li>https://docs.oracle.com/cd/B10501_01/appdev.920/a96595/dci11agg.htm</li>
+<li>https://docs.oracle.com/cd/B12037_01/appdev.101/b10800/dciaggref.htm</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>SQL</category>
+  <category>Oracle</category>
+  <category>ML</category>
+  <category>Metric</category>
+  <guid>https://joatom.github.io/blog/snippets/2022-11-07-udaf/index.html</guid>
   <pubDate>Sun, 06 Nov 2022 23:00:00 GMT</pubDate>
 </item>
 </channel>

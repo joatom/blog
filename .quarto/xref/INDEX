@@ -103,5 +103,32 @@
   },
   "snippets/2022-11-07-partitioned-join/index.qmd": {
     "index.html": "f546d6ee"
+  },
+  "snippets/2022-11-07-udaf/index.qmd": {
+    "index.html": "2c4756a2"
+  },
+  "about/index.qmd": {
+    "index.html": "8a56802e"
+  },
+  "footer/privacy.qmd": {
+    "privacy.html": "f7fbdec1"
+  },
+  "footer/imprint.qmd": {
+    "imprint.html": "a1ec0b1c"
+  },
+  "footer/datenschutz.qmd": {
+    "datenschutz.html": "f117a02f"
+  },
+  "legal/impressum.qmd": {
+    "impressum.html": "f471ea07"
+  },
+  "legal/privacy.qmd": {
+    "privacy.html": "8a7f7603"
+  },
+  "legal/imprint.qmd": {
+    "imprint.html": "03b7d009"
+  },
+  "legal/datenschutz.qmd": {
+    "datenschutz.html": "e9d2e414"
   }
 }

@@ -1,7 +1,7 @@
 ---
 toc: false
 layout: post
-title: Partitioned Joins
+title: Partitioned Join
 description: Filling gaps without cross join
 categories: [SQL, Oracle]
 comments:
@@ -9,7 +9,6 @@ comments:
     repo: joatom/blog
 date: "2022-11-07"
 from: markdown+emoji
-#format: gfm
 author: Johannes Tomasoni
 ---
 

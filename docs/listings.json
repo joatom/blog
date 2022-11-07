@@ -2,7 +2,8 @@
   {
     "listing": "/snippets.html",
     "items": [
-      "/snippets/2022-11-07-partitioned-join/index.html"
+      "/snippets/2022-11-07-partitioned-join/index.html",
+      "/snippets/2022-11-07-udaf/index.html"
     ]
   },
   {
