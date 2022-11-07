@@ -1,0 +1,78 @@
+---
+toc: false
+layout: post
+title: Partitioned Joins
+description: Filling gaps without cross join
+categories: [SQL, Oracle]
+comments:
+  utterances:
+    repo: joatom/blog
+date: "2022-11-07"
+from: markdown+emoji
+#format: gfm
+author: Johannes Tomasoni
+---
+
+This query contains the harvest of three fruits over five days.
+
+```sql
+SELECT f.name AS fruit, 
+       h.date, 
+       h.amount
+  FROM fruit f,
+       harvest h
+ WHERE h.fruit_id = f.fruit_id
+ ORDER BY 1, 2;
+```
+
+|FRUIT|DATE|AMOUNT|
+|--|--|--|
+|Grape (red)|2022-09-01|5|
+|Grape (red)|2022-09-03|6|
+|Grape (red)|2022-09-05|5|
+|Grape (white)|2022-09-01|6|
+|Grape (white)|2022-09-03|4|
+|Grape (white)|2022-09-04|9|
+|Grape (white)|2022-09-05|8|
+|Apple (red)|2022-09-01|4|
+|Apple (red)|2022-09-04|2|
+|Apple (red)|2022-09-05|5|
+
+A **PARTITIONED OUTER JOIN** can be used to includes the dates without harvest for each fruit:
+
+```sql
+WITH baskets as (
+  SELECT f.name AS fruit, 
+         h.date, 
+         h.amount
+    FROM fruit f,
+         harvest h
+  WHERE h.fruit_id = f.fruit_id
+)
+SELECT b.fruit,
+       t.date,
+       nvl(b.amount, 0) amount
+  FROM baskets b
+PARTITION BY (b.fruit)
+ RIGHT OUTER JOIN time t
+    ON (t.date = b.date)
+ORDER BY 1, 2;
+```
+
+|FRUIT|DATE|AMOUNT|
+|--|--|--|
+|Grape (red)|2022-09-01|5|
+|**Grape (red)**|**2022-09-02**|**0**|
+|Grape (red)|2022-09-03|6|
+|**Grape (red)**|**2022-09-04**|**0**|
+|Grape (red)|2022-09-05|5|
+|Grape (white)|2022-09-01|6|
+|**Grape (white)**|**2022-09-02**|**0**|
+|Grape (white)|2022-09-03|4|
+|Grape (white)|2022-09-04|9|
+|Grape (white)|2022-09-05|8|
+|Apple (red)|2022-09-01|4|
+|**Apple (red)**|**2022-09-02**|**0**|
+|**Apple (red)**|**2022-09-03**|**0**|
+|Apple (red)|2022-09-04|2|
+|Apple (red)|2022-09-05|5|

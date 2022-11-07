@@ -97,5 +97,11 @@
   },
   "datenschutz.qmd": {
     "datenschutz.html": "a6faa839"
+  },
+  "snippets.qmd": {
+    "snippets.html": "59f2dd5b"
+  },
+  "snippets/2022-11-07-partitioned-join/index.qmd": {
+    "index.html": "f546d6ee"
   }
 }

@@ -1,5 +1,8 @@
 {
   "listingMap": {
+    "snippets.qmd": [
+      "snippets"
+    ],
     "projects.qmd": [
       "projects"
     ],

@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/snippets.html",
+    "items": [
+      "/snippets/2022-11-07-partitioned-join/index.html"
+    ]
+  },
+  {
     "listing": "/projects.html",
     "items": [
       "/projects/fitbit/watchtrain/index.html",
