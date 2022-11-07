@@ -49,6 +49,13 @@
     "text": "EdgeProcessor\nThe program was written in June 2014 and cleaned up a bit in 2019. It was a small private side project to try out some image processing techniques and learn about edge detection. The code is writen in Java (I didn’t know much about Python or cv2 in 2014). The code is rather slow and memory consuming.\nThe algorithm was used by my brother and me in August 2016 in an art project.\n\n\n\n\nHow to run\nPut a picture in the pix folder (e.g. Test.jpg). Run App.class Test.jpg. The generated pictures will be placed in the pix folder. Use small image sizes only due to memory consumption.\nRed dots: start/end point of an edge\nExample\nInput:\n\n\n\nOutput:\n\n\n\nMixed:"
   },
   {
+    "objectID": "snippets.html",
+    "href": "snippets.html",
+    "title": "Snippets",
+    "section": "",
+    "text": "Title\n\n\nDescription\n\n\nCategories\n\n\n\n\n\n\nPartitioned Joins\n\n\nFilling gaps without cross join\n\n\nSQL,Oracle\n\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "projects.html",
     "href": "projects.html",
     "title": "Projects",
@@ -383,13 +390,6 @@
     "title": "Datenschutzerklärung",
     "section": "",
     "text": "🇺🇸 🇩🇪\n\nWebsite- und Blog-Kommentare\nDie Kommentare werden mit Hilfe des utteranc-github-plug-ins als Issues in meinem öffentlichen Github-Repository https://github.com/joatom/blog gespeichert. Die Kommentar sind für jeden zugänglich. Falls ich einen deiner Kommentare löschen soll, lass es mich wissen und ich werde ihn schnellst möglich entfernen.\n\n\nDatensammlung- und verarbeitung\nDie Seite wird auf GitHub Pages gehosted. Beim Besuch der Seite wird deine IP-Adresse erfasst und aus Sicherheitsgründen gespeichert, unabhängig ob Du gerade bei Github eingeloggt bist oder nicht. Weitere Inforamtionen zu GitHub’s Sicherungsverfahren findest Du unter GitHub Privacy Statement. Zusätzliche Information zur Datenverarbeitung sind hier beschrieben: https://docs.github.com/en/site-policy/privacy-policies. Ich habe keine Einfluss auf die Datenerfassung durch den Host und kann die Daten nicht einsehen."
-  },
-  {
-    "objectID": "snippets.html",
-    "href": "snippets.html",
-    "title": "Snippets",
-    "section": "",
-    "text": "Title\n\n\nDescription\n\n\nCategories\n\n\n\n\n\n\nPartitioned Joins\n\n\nFilling gaps without cross join\n\n\nSQL,Oracle\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "snippets/2022-11-07-partitioned-join/index.html",
