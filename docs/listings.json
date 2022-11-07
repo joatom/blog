@@ -27,5 +27,11 @@
       "/posts/2020-12-12-a-handful-of-bricks-from-sql-to-pandas/index.html",
       "/posts/2020-01-05-bgml-geotab/index.html"
     ]
+  },
+  {
+    "listing": "/snippets.html",
+    "items": [
+      "/snippets/2022-11-07-partitioned-join/index.html"
+    ]
   }
 ]

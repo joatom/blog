@@ -1,0 +1,18 @@
+---
+title: "Snippets"
+listing:
+  id: "blog-listings"
+  contents: snippets
+  sort: "date desc"
+  type: table
+  categories: cloud
+  sort-ui: false
+  filter-ui: true
+  fields: [title, description, categories]
+  feed: true
+  page-size: 10
+page-layout: full
+from: markdown+emoji
+title-block-banner: false
+sidebar: false
+---
