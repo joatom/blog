@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Johannes Tomasoni">
-<meta name="dcterms.date" content="2022-11-07">
-<meta name="description" content="Filling gaps without cross join">
+<meta name="dcterms.date" content="2022-11-09">
+<meta name="description" content="How to rotate tables 🚦 🚥">
 
-<title>jo@tom - Partitioned Join</title>
+<title>jo@tom - Un/pivot</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,11 +129,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="jo@tom - Partitioned Join">
-<meta property="og:description" content="Filling gaps without cross join">
+<meta property="og:title" content="jo@tom - Un/pivot">
+<meta property="og:description" content="How to rotate tables :vertical_traffic_light: :traffic_light:">
 <meta property="og:site-name" content="jo@tom">
-<meta name="twitter:title" content="jo@tom - Partitioned Join">
-<meta name="twitter:description" content="Filling gaps without cross join">
+<meta name="twitter:title" content="jo@tom - Un/pivot">
+<meta name="twitter:description" content="How to rotate tables :vertical_traffic_light: :traffic_light:">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -204,10 +204,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Partitioned Join</h1>
+      <h1 class="title">Un/pivot</h1>
                   <div>
         <div class="description">
-          Filling gaps without cross join
+          How to rotate tables <span class="emoji" data-emoji="vertical_traffic_light">🚦</span> <span class="emoji" data-emoji="traffic_light">🚥</span>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -230,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 7, 2022</p>
+        <p class="date">November 9, 2022</p>
       </div>
     </div>
     
@@ -248,185 +248,362 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="about" class="level1">
-<h1>About</h1>
-<p>Filling gaps for undefined value combinations can be tricky. It can either be implemented with a CROSS JOINS or a PARTITIONED JOIN. The advantage of a PARTITIONED JOIN is reduced complexity, due to fewer joins, and enhanced execution plan.</p>
-<p>As example I explore a harvest of apples and Grapes and fill the list with zero for days where a fruit hasn’t been collected.</p>
+<section id="pivot" class="level1">
+<h1>Pivot</h1>
+<table class="table">
+<caption>HARVEST AMOUNT</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th>FRUIT</th>
+<th style="text-align: center;">AMOUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Grape_red</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-01</td>
+<td>Grape_red</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Grape_white</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td>2022-09-01</td>
+<td>Apple_red</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td>2022-09-03</td>
+<td>Grape_red</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td>Grape_white</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td>Grape_white</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td>Apple_red</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td>2022-09-05</td>
+<td>Grape_red</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
+<td>Grape_white</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td>2022-09-05</td>
+<td>Apple_red</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">PIVOT clause</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">AGG-CASE block</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amount</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>PIVOT(<span class="fu">SUM</span>(amount) <span class="kw">AS</span> amt </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">FOR</span> fruit <span class="kw">IN</span> (<span class="st">'Grape_red'</span> <span class="kw">AS</span> grape_red, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Grape_white'</span> <span class="kw">AS</span> grape_white, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Apple_red'</span> <span class="kw">AS</span> apple_red);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> h.<span class="dt">date</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> h.fruit <span class="op">=</span> <span class="st">'Grape_red'</span> <span class="cf">THEN</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                    h.amount </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                <span class="cf">ELSE</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">0</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">END</span>) <span class="kw">AS</span> grape_red_amt,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> h.fruit <span class="op">=</span> <span class="st">'Grape_white'</span> <span class="cf">THEN</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                    h.amount </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">ELSE</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">0</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">END</span>) <span class="kw">AS</span> grape_white_amt,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> h.fruit <span class="op">=</span> <span class="st">'Apple_red'</span> <span class="cf">THEN</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                    h.amount </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                <span class="cf">ELSE</span> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">0</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">END</span>) <span class="kw">AS</span> apple_red_amt,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amount h</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> h.<span class="dt">date</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<caption>Pivoted table</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th style="text-align: center;">GRAPE_RED_AMT</th>
+<th style="text-align: center;">GRAPE_WHITE_AMT</th>
+<th style="text-align: center;">APPLE_RED_AMT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-09-01</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<section id="multiple-columns" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-columns">Multiple columns</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amount</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>PIVOT(<span class="fu">sum</span>(amount) <span class="kw">as</span> amt, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">max</span>(amount) <span class="kw">as</span> max_amt </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">FOR</span> fruit <span class="kw">IN</span> (<span class="st">'Grape_red'</span>, <span class="st">'Grape_white'</span>, <span class="st">'Apple_red'</span>);</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="implementation" class="level1">
-<h1>Implementation</h1>
-<p>This query contains the harvest of three fruits over five days.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> f.name <span class="kw">AS</span> fruit, </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       h.<span class="dt">date</span>, </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       h.amount</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> fruit f,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>       harvest h</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> h.fruit_id <span class="op">=</span> f.fruit_id</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dv">1</span>, <span class="dv">2</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="unpivot" class="level1">
+<h1>Unpivot</h1>
 <table class="table">
+<caption>HARVEST AMOUNT</caption>
 <thead>
 <tr class="header">
-<th>FRUIT</th>
 <th>DATE</th>
-<th style="text-align: center;">AMOUNT</th>
+<th style="text-align: center;">GRAPE_RED</th>
+<th style="text-align: center;">GRAPE_WHITE</th>
+<th style="text-align: center;">APPLE_RED</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Grape (red)</td>
 <td>2022-09-01</td>
 <td style="text-align: center;">5</td>
-</tr>
-<tr class="even">
-<td>Grape (red)</td>
-<td>2022-09-03</td>
 <td style="text-align: center;">6</td>
-</tr>
-<tr class="odd">
-<td>Grape (red)</td>
-<td>2022-09-05</td>
-<td style="text-align: center;">5</td>
-</tr>
-<tr class="even">
-<td>Grape (white)</td>
-<td>2022-09-01</td>
-<td style="text-align: center;">6</td>
-</tr>
-<tr class="odd">
-<td>Grape (white)</td>
-<td>2022-09-03</td>
 <td style="text-align: center;">4</td>
 </tr>
 <tr class="even">
-<td>Grape (white)</td>
+<td>2022-09-03</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
 <td>2022-09-04</td>
+<td style="text-align: center;"></td>
 <td style="text-align: center;">9</td>
-</tr>
-<tr class="odd">
-<td>Grape (white)</td>
-<td>2022-09-05</td>
-<td style="text-align: center;">8</td>
-</tr>
-<tr class="even">
-<td>Apple (red)</td>
-<td>2022-09-01</td>
-<td style="text-align: center;">4</td>
-</tr>
-<tr class="odd">
-<td>Apple (red)</td>
-<td>2022-09-04</td>
 <td style="text-align: center;">2</td>
 </tr>
 <tr class="even">
-<td>Apple (red)</td>
-<td>2022-09-05</td>
+<td>2022-09-04</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8</td>
 <td style="text-align: center;">5</td>
 </tr>
 </tbody>
 </table>
-<p>A <strong>PARTITIONED OUTER JOIN</strong> can be used to includes the dates without harvest for each fruit:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> baskets <span class="kw">as</span> (</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> f.name <span class="kw">AS</span> fruit, </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         h.<span class="dt">date</span>, </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         h.amount</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> fruit f,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         harvest h</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">WHERE</span> h.fruit_id <span class="op">=</span> f.fruit_id</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> b.fruit,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>       t.<span class="dt">date</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">nvl</span>(b.amount, <span class="dv">0</span>) amount</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> baskets b</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">PARTITION</span> <span class="kw">BY</span> (b.fruit)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a> <span class="kw">RIGHT</span> <span class="kw">OUTER</span> <span class="kw">JOIN</span> <span class="dt">time</span> t</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> (t.<span class="dt">date</span> <span class="op">=</span> b.<span class="dt">date</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dv">1</span>, <span class="dv">2</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amount</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>UNPIVOT(amount <span class="cf">FOR</span> fruit <span class="kw">IN</span> (grape_red <span class="kw">AS</span> <span class="st">'Grape (red)'</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                             grape_white <span class="kw">AS</span> <span class="st">'Grape (red)'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                             apple_red <span class="kw">AS</span> <span class="st">'Grape (red)'</span>);</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <table class="table">
+<caption>Unpivoted table</caption>
 <thead>
 <tr class="header">
-<th>FRUIT</th>
 <th>DATE</th>
+<th>FRUIT</th>
 <th style="text-align: center;">AMOUNT</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Grape (red)</td>
 <td>2022-09-01</td>
+<td>Grape (red)</td>
 <td style="text-align: center;">5</td>
 </tr>
 <tr class="even">
-<td><strong>Grape (red)</strong></td>
-<td><strong>2022-09-02</strong></td>
-<td style="text-align: center;"><strong>0</strong></td>
-</tr>
-<tr class="odd">
-<td>Grape (red)</td>
-<td>2022-09-03</td>
-<td style="text-align: center;">6</td>
-</tr>
-<tr class="even">
-<td><strong>Grape (red)</strong></td>
-<td><strong>2022-09-04</strong></td>
-<td style="text-align: center;"><strong>0</strong></td>
-</tr>
-<tr class="odd">
-<td>Grape (red)</td>
-<td>2022-09-05</td>
-<td style="text-align: center;">5</td>
-</tr>
-<tr class="even">
-<td>Grape (white)</td>
 <td>2022-09-01</td>
+<td>Grape (white)</td>
 <td style="text-align: center;">6</td>
 </tr>
 <tr class="odd">
-<td><strong>Grape (white)</strong></td>
-<td><strong>2022-09-02</strong></td>
-<td style="text-align: center;"><strong>0</strong></td>
-</tr>
-<tr class="even">
-<td>Grape (white)</td>
-<td>2022-09-03</td>
+<td>2022-09-01</td>
+<td>Apple (red)</td>
 <td style="text-align: center;">4</td>
 </tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">6</td>
+</tr>
 <tr class="odd">
+<td>2022-09-03</td>
 <td>Grape (white)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
 <td>2022-09-04</td>
+<td>Grape (white)</td>
 <td style="text-align: center;">9</td>
 </tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td>Apple (red)</td>
+<td style="text-align: center;">2</td>
+</tr>
 <tr class="even">
-<td>Grape (white)</td>
 <td>2022-09-05</td>
-<td style="text-align: center;">8</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">5</td>
 </tr>
 <tr class="odd">
+<td>2022-09-05</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
 <td>Apple (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amount</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>UNPIVOT INCLUDE <span class="kw">NULLS</span>(amount <span class="cf">FOR</span> fruit <span class="kw">IN</span> (grape_red <span class="kw">AS</span> <span class="st">'Grape (red)'</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                           grape_white <span class="kw">AS</span> <span class="st">'Grape (red)'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                           apple_red <span class="kw">AS</span> <span class="st">'Grape (red)'</span>);</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<caption>Unpivoted table including NULLS</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th>FRUIT</th>
+<th style="text-align: center;">AMOUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>2022-09-01</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>2022-09-01</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Apple (red)</td>
 <td style="text-align: center;">4</td>
 </tr>
 <tr class="even">
-<td><strong>Apple (red)</strong></td>
-<td><strong>2022-09-02</strong></td>
-<td style="text-align: center;"><strong>0</strong></td>
+<td>2022-09-03</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">6</td>
 </tr>
 <tr class="odd">
-<td><strong>Apple (red)</strong></td>
+<td>2022-09-03</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
 <td><strong>2022-09-03</strong></td>
-<td style="text-align: center;"><strong>0</strong></td>
-</tr>
-<tr class="even">
-<td>Apple (red)</td>
-<td>2022-09-04</td>
-<td style="text-align: center;">2</td>
+<td><strong>Apple (red)</strong></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
+<td><strong>2022-09-04</strong></td>
+<td><strong>Grape (red)</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
 <td>Apple (red)</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
 <td>2022-09-05</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td>2022-09-05</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
+<td>Apple (red)</td>
 <td style="text-align: center;">5</td>
 </tr>
 </tbody>
 </table>
+<section id="multiple-columns-1" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-columns-1">Multiple columns</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amt_qlt</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>UNPIVOT((amount, quality) </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">FOR</span> fruit <span class="kw">IN</span> ((grape_red_amt, grape_red_qlt) <span class="kw">AS</span> <span class="st">'Grape (red)'</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                      (grape_white_amt, grape_white_qlt) <span class="kw">AS</span> <span class="st">'Grape (red)'</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                      (apple_red_amt, apple_red_qlt) <span class="kw">AS</span> <span class="st">'Grape (red)'</span>);</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="resources" class="level1">
+<h1>Resources</h1>
+<p>Some more detailed articles about the topic:</p>
+<ul>
+<li>https://oracle-base.com/articles/11g/pivot-and-unpivot-operators-11gr1</li>
+<li>https://www.oracletutorial.com/oracle-basics/oracle-unpivot/</li>
+<li>https://www.oracletutorial.com/oracle-basics/oracle-pivot/</li>
+<li>http://www.oracle-developer.net/display.php?id=506</li>
+<li>https://www.oracle.com/de/technical-resources/articles/database/sql-11g-pivot.html</li>
+</ul>
 
 
 </section>

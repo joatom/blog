@@ -30,7 +30,7 @@ SELECT f.name AS fruit,
 ```
 
 |FRUIT|DATE|AMOUNT|
-|--|--|--|
+|--|--|:--:|
 |Grape (red)|2022-09-01|5|
 |Grape (red)|2022-09-03|6|
 |Grape (red)|2022-09-05|5|
@@ -64,7 +64,7 @@ ORDER BY 1, 2;
 ```
 
 |FRUIT|DATE|AMOUNT|
-|--|--|--|
+|--|--|:--:|
 |Grape (red)|2022-09-01|5|
 |**Grape (red)**|**2022-09-02**|**0**|
 |Grape (red)|2022-09-03|6|

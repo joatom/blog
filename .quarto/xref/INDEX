@@ -130,5 +130,8 @@
   },
   "legal/datenschutz.qmd": {
     "datenschutz.html": "e9d2e414"
+  },
+  "snippets/2022-11-09-unpivot/index.qmd": {
+    "index.html": "5b1dd435"
   }
 }

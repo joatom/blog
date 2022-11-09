@@ -16,7 +16,7 @@ from: markdown+emoji
 title-block-banner: false
 sidebar: false
 ---
-This is a collection of helpful code snippets. I might need to look them up in the future.
+This is a collection of helpful code snippets.
 
 :::{#snippet-listings}
 :::

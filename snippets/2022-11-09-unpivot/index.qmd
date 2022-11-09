@@ -1,0 +1,162 @@
+---
+toc: false
+layout: post
+title: Un/pivot
+description: "How to rotate tables :vertical_traffic_light: :traffic_light: "
+categories: [SQL, Oracle]
+comments:
+  utterances:
+    repo: joatom/blog
+date: "2022-11-09"
+from: markdown+emoji
+author: Johannes Tomasoni
+---
+# Pivot
+|DATE|FRUIT|AMOUNT|
+|--|--|:--:|
+|2022-09-01|Grape_red|4|
+|2022-09-01|Grape_red|1|
+|2022-09-01|Grape_white|6|
+|2022-09-01|Apple_red|4|
+|2022-09-03|Grape_red|6|
+|2022-09-03|Grape_white|4|
+|2022-09-04|Grape_white|9|
+|2022-09-04|Apple_red|2|
+|2022-09-05|Grape_red|5|
+|2022-09-05|Grape_white|8|
+|2022-09-05|Apple_red|5|
+
+: HARVEST AMOUNT
+
+::: {.panel-tabset}
+## PIVOT clause
+```sql
+SELECT *
+  FROM harvest_amount
+PIVOT(SUM(amount) AS amt 
+      FOR fruit IN ('Grape_red' AS grape_red, 
+                    'Grape_white' AS grape_white, 
+                    'Apple_red' AS apple_red);
+);
+```
+
+## AGG-CASE block
+```sql
+SELECT h.date,
+       SUM(CASE WHEN h.fruit = 'Grape_red' THEN 
+                    h.amount 
+                ELSE 
+                    0 
+            END) AS grape_red_amt,
+       SUM(CASE WHEN h.fruit = 'Grape_white' THEN 
+                    h.amount 
+                ELSE 
+                    0 
+            END) AS grape_white_amt,
+       SUM(CASE WHEN h.fruit = 'Apple_red' THEN 
+                    h.amount 
+                ELSE 
+                    0 
+            END) AS apple_red_amt,
+  FROM harvest_amount h
+ GROUP BY h.date;
+```
+:::
+
+|DATE|GRAPE_RED_AMT|GRAPE_WHITE_AMT|APPLE_RED_AMT|
+|--|:--:|:--:|:--:|
+|2022-09-01|5|6|4|
+|2022-09-03|6|4||
+|2022-09-04||9|2|
+|2022-09-04|5|8|5|
+
+: Pivoted table
+
+## Multiple columns
+
+```sql
+SELECT *
+  FROM harvest_amount
+PIVOT(sum(amount) as amt, 
+      max(amount) as max_amt 
+      FOR fruit IN ('Grape_red', 'Grape_white', 'Apple_red');
+);
+```
+
+# Unpivot
+|DATE|GRAPE_RED|GRAPE_WHITE|APPLE_RED|
+|--|:--:|:--:|:--:|
+|2022-09-01|5|6|4|
+|2022-09-03|6|4||
+|2022-09-04||9|2|
+|2022-09-04|5|8|5|
+
+: HARVEST AMOUNT
+
+```sql
+SELECT *
+  FROM harvest_amount
+UNPIVOT(amount FOR fruit IN (grape_red AS 'Grape (red)',
+                             grape_white AS 'Grape (red)'
+                             apple_red AS 'Grape (red)');
+);
+```
+|DATE|FRUIT|AMOUNT|
+|--|--|:--:|
+|2022-09-01|Grape (red)|5|
+|2022-09-01|Grape (white)|6|
+|2022-09-01|Apple (red)|4|
+|2022-09-03|Grape (red)|6|
+|2022-09-03|Grape (white)|4|
+|2022-09-04|Grape (white)|9|
+|2022-09-04|Apple (red)|2|
+|2022-09-05|Grape (red)|5|
+|2022-09-05|Grape (white)|8|
+|2022-09-05|Apple (red)|5|
+
+: Unpivoted table
+
+```sql
+SELECT *
+  FROM harvest_amount
+UNPIVOT INCLUDE NULLS(amount FOR fruit IN (grape_red AS 'Grape (red)',
+                                           grape_white AS 'Grape (red)'
+                                           apple_red AS 'Grape (red)');
+);
+```
+|DATE|FRUIT|AMOUNT|
+|--|--|:--:|
+|2022-09-01|Grape (red)|5|
+|2022-09-01|Grape (white)|6|
+|2022-09-01|Apple (red)|4|
+|2022-09-03|Grape (red)|6|
+|2022-09-03|Grape (white)|4|
+|**2022-09-03**|**Apple (red)**||
+|**2022-09-04**|**Grape (red)**||
+|2022-09-04|Grape (white)|9|
+|2022-09-04|Apple (red)|2|
+|2022-09-05|Grape (red)|5|
+|2022-09-05|Grape (white)|8|
+|2022-09-05|Apple (red)|5|
+
+: Unpivoted table including NULLS
+
+## Multiple columns
+```sql
+SELECT *
+  FROM harvest_amt_qlt
+UNPIVOT((amount, quality) 
+        FOR fruit IN ((grape_red_amt, grape_red_qlt) AS 'Grape (red)',
+                      (grape_white_amt, grape_white_qlt) AS 'Grape (red)'
+                      (apple_red_amt, apple_red_qlt) AS 'Grape (red)');
+);
+```
+
+# Resources
+Some more detailed articles about the topic:
+
+- https://oracle-base.com/articles/11g/pivot-and-unpivot-operators-11gr1
+- https://www.oracletutorial.com/oracle-basics/oracle-unpivot/
+- https://www.oracletutorial.com/oracle-basics/oracle-pivot/
+- http://www.oracle-developer.net/display.php?id=506
+- https://www.oracle.com/de/technical-resources/articles/database/sql-11g-pivot.html

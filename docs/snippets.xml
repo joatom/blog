@@ -10,7 +10,382 @@
 <atom:link href="https://joatom.github.io/blog/snippets.xml" rel="self" type="application/rss+xml"/>
 <description>AI curios</description>
 <generator>quarto-1.2.256</generator>
-<lastBuildDate>Sun, 06 Nov 2022 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 08 Nov 2022 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Un/pivot</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/snippets/2022-11-09-unpivot/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="pivot" class="level1">
+<h1>Pivot</h1>
+<table class="table">
+<caption>HARVEST AMOUNT</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th>FRUIT</th>
+<th style="text-align: center;">AMOUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Grape_red</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-01</td>
+<td>Grape_red</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Grape_white</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td>2022-09-01</td>
+<td>Apple_red</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td>2022-09-03</td>
+<td>Grape_red</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td>Grape_white</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td>Grape_white</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td>Apple_red</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td>2022-09-05</td>
+<td>Grape_red</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
+<td>Grape_white</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td>2022-09-05</td>
+<td>Apple_red</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true">PIVOT clause</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false">AGG-CASE block</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;">SELECT</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb1-2">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amount</span>
+<span id="cb1-3">PIVOT(<span class="fu" style="color: #4758AB;">SUM</span>(amount) <span class="kw" style="color: #003B4F;">AS</span> amt </span>
+<span id="cb1-4">      <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (<span class="st" style="color: #20794D;">'Grape_red'</span> <span class="kw" style="color: #003B4F;">AS</span> grape_red, </span>
+<span id="cb1-5">                    <span class="st" style="color: #20794D;">'Grape_white'</span> <span class="kw" style="color: #003B4F;">AS</span> grape_white, </span>
+<span id="cb1-6">                    <span class="st" style="color: #20794D;">'Apple_red'</span> <span class="kw" style="color: #003B4F;">AS</span> apple_red);</span>
+<span id="cb1-7">);</span></code></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><span class="kw" style="color: #003B4F;">SELECT</span> h.<span class="dt" style="color: #AD0000;">date</span>,</span>
+<span id="cb2-2">       <span class="fu" style="color: #4758AB;">SUM</span>(<span class="cf" style="color: #003B4F;">CASE</span> <span class="cf" style="color: #003B4F;">WHEN</span> h.fruit <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'Grape_red'</span> <span class="cf" style="color: #003B4F;">THEN</span> </span>
+<span id="cb2-3">                    h.amount </span>
+<span id="cb2-4">                <span class="cf" style="color: #003B4F;">ELSE</span> </span>
+<span id="cb2-5">                    <span class="dv" style="color: #AD0000;">0</span> </span>
+<span id="cb2-6">            <span class="cf" style="color: #003B4F;">END</span>) <span class="kw" style="color: #003B4F;">AS</span> grape_red_amt,</span>
+<span id="cb2-7">       <span class="fu" style="color: #4758AB;">SUM</span>(<span class="cf" style="color: #003B4F;">CASE</span> <span class="cf" style="color: #003B4F;">WHEN</span> h.fruit <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'Grape_white'</span> <span class="cf" style="color: #003B4F;">THEN</span> </span>
+<span id="cb2-8">                    h.amount </span>
+<span id="cb2-9">                <span class="cf" style="color: #003B4F;">ELSE</span> </span>
+<span id="cb2-10">                    <span class="dv" style="color: #AD0000;">0</span> </span>
+<span id="cb2-11">            <span class="cf" style="color: #003B4F;">END</span>) <span class="kw" style="color: #003B4F;">AS</span> grape_white_amt,</span>
+<span id="cb2-12">       <span class="fu" style="color: #4758AB;">SUM</span>(<span class="cf" style="color: #003B4F;">CASE</span> <span class="cf" style="color: #003B4F;">WHEN</span> h.fruit <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'Apple_red'</span> <span class="cf" style="color: #003B4F;">THEN</span> </span>
+<span id="cb2-13">                    h.amount </span>
+<span id="cb2-14">                <span class="cf" style="color: #003B4F;">ELSE</span> </span>
+<span id="cb2-15">                    <span class="dv" style="color: #AD0000;">0</span> </span>
+<span id="cb2-16">            <span class="cf" style="color: #003B4F;">END</span>) <span class="kw" style="color: #003B4F;">AS</span> apple_red_amt,</span>
+<span id="cb2-17">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amount h</span>
+<span id="cb2-18"> <span class="kw" style="color: #003B4F;">GROUP</span> <span class="kw" style="color: #003B4F;">BY</span> h.<span class="dt" style="color: #AD0000;">date</span>;</span></code></pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<caption>Pivoted table</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th style="text-align: center;">GRAPE_RED_AMT</th>
+<th style="text-align: center;">GRAPE_WHITE_AMT</th>
+<th style="text-align: center;">APPLE_RED_AMT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-09-01</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<section id="multiple-columns" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-columns">Multiple columns</h2>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><span class="kw" style="color: #003B4F;">SELECT</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb3-2">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amount</span>
+<span id="cb3-3">PIVOT(<span class="fu" style="color: #4758AB;">sum</span>(amount) <span class="kw" style="color: #003B4F;">as</span> amt, </span>
+<span id="cb3-4">      <span class="fu" style="color: #4758AB;">max</span>(amount) <span class="kw" style="color: #003B4F;">as</span> max_amt </span>
+<span id="cb3-5">      <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (<span class="st" style="color: #20794D;">'Grape_red'</span>, <span class="st" style="color: #20794D;">'Grape_white'</span>, <span class="st" style="color: #20794D;">'Apple_red'</span>);</span>
+<span id="cb3-6">);</span></code></pre></div>
+</section>
+</section>
+<section id="unpivot" class="level1">
+<h1>Unpivot</h1>
+<table class="table">
+<caption>HARVEST AMOUNT</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th style="text-align: center;">GRAPE_RED</th>
+<th style="text-align: center;">GRAPE_WHITE</th>
+<th style="text-align: center;">APPLE_RED</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-09-01</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><span class="kw" style="color: #003B4F;">SELECT</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb4-2">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amount</span>
+<span id="cb4-3">UNPIVOT(amount <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (grape_red <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span>,</span>
+<span id="cb4-4">                             grape_white <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span></span>
+<span id="cb4-5">                             apple_red <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span>);</span>
+<span id="cb4-6">);</span></code></pre></div>
+<table class="table">
+<caption>Unpivoted table</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th>FRUIT</th>
+<th style="text-align: center;">AMOUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>2022-09-01</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Apple (red)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td>2022-09-03</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td>Apple (red)</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td>2022-09-05</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
+<td>Apple (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><span class="kw" style="color: #003B4F;">SELECT</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb5-2">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amount</span>
+<span id="cb5-3">UNPIVOT INCLUDE <span class="kw" style="color: #003B4F;">NULLS</span>(amount <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (grape_red <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span>,</span>
+<span id="cb5-4">                                           grape_white <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span></span>
+<span id="cb5-5">                                           apple_red <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span>);</span>
+<span id="cb5-6">);</span></code></pre></div>
+<table class="table">
+<caption>Unpivoted table including NULLS</caption>
+<thead>
+<tr class="header">
+<th>DATE</th>
+<th>FRUIT</th>
+<th style="text-align: center;">AMOUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>2022-09-01</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td>2022-09-01</td>
+<td>Apple (red)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td>2022-09-03</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td>2022-09-03</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td><strong>2022-09-03</strong></td>
+<td><strong>Apple (red)</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><strong>2022-09-04</strong></td>
+<td><strong>Grape (red)</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>2022-09-04</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="odd">
+<td>2022-09-04</td>
+<td>Apple (red)</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
+<td>Grape (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td>2022-09-05</td>
+<td>Grape (white)</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td>2022-09-05</td>
+<td>Apple (red)</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<section id="multiple-columns-1" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-columns-1">Multiple columns</h2>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><span class="kw" style="color: #003B4F;">SELECT</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb6-2">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amt_qlt</span>
+<span id="cb6-3">UNPIVOT((amount, quality) </span>
+<span id="cb6-4">        <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> ((grape_red_amt, grape_red_qlt) <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span>,</span>
+<span id="cb6-5">                      (grape_white_amt, grape_white_qlt) <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span></span>
+<span id="cb6-6">                      (apple_red_amt, apple_red_qlt) <span class="kw" style="color: #003B4F;">AS</span> <span class="st" style="color: #20794D;">'Grape (red)'</span>);</span>
+<span id="cb6-7">);</span></code></pre></div>
+</section>
+</section>
+<section id="resources" class="level1">
+<h1>Resources</h1>
+<p>Some more detailed articles about the topic:</p>
+<ul>
+<li>https://oracle-base.com/articles/11g/pivot-and-unpivot-operators-11gr1</li>
+<li>https://www.oracletutorial.com/oracle-basics/oracle-unpivot/</li>
+<li>https://www.oracletutorial.com/oracle-basics/oracle-pivot/</li>
+<li>http://www.oracle-developer.net/display.php?id=506</li>
+<li>https://www.oracle.com/de/technical-resources/articles/database/sql-11g-pivot.html</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>SQL</category>
+  <category>Oracle</category>
+  <guid>https://joatom.github.io/blog/snippets/2022-11-09-unpivot/index.html</guid>
+  <pubDate>Tue, 08 Nov 2022 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Partitioned Join</title>
   <dc:creator>Johannes Tomasoni</dc:creator>
@@ -40,59 +415,59 @@
 <tr class="header">
 <th>FRUIT</th>
 <th>DATE</th>
-<th>AMOUNT</th>
+<th style="text-align: center;">AMOUNT</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Grape (red)</td>
 <td>2022-09-01</td>
-<td>5</td>
+<td style="text-align: center;">5</td>
 </tr>
 <tr class="even">
 <td>Grape (red)</td>
 <td>2022-09-03</td>
-<td>6</td>
+<td style="text-align: center;">6</td>
 </tr>
 <tr class="odd">
 <td>Grape (red)</td>
 <td>2022-09-05</td>
-<td>5</td>
+<td style="text-align: center;">5</td>
 </tr>
 <tr class="even">
 <td>Grape (white)</td>
 <td>2022-09-01</td>
-<td>6</td>
+<td style="text-align: center;">6</td>
 </tr>
 <tr class="odd">
 <td>Grape (white)</td>
 <td>2022-09-03</td>
-<td>4</td>
+<td style="text-align: center;">4</td>
 </tr>
 <tr class="even">
 <td>Grape (white)</td>
 <td>2022-09-04</td>
-<td>9</td>
+<td style="text-align: center;">9</td>
 </tr>
 <tr class="odd">
 <td>Grape (white)</td>
 <td>2022-09-05</td>
-<td>8</td>
+<td style="text-align: center;">8</td>
 </tr>
 <tr class="even">
 <td>Apple (red)</td>
 <td>2022-09-01</td>
-<td>4</td>
+<td style="text-align: center;">4</td>
 </tr>
 <tr class="odd">
 <td>Apple (red)</td>
 <td>2022-09-04</td>
-<td>2</td>
+<td style="text-align: center;">2</td>
 </tr>
 <tr class="even">
 <td>Apple (red)</td>
 <td>2022-09-05</td>
-<td>5</td>
+<td style="text-align: center;">5</td>
 </tr>
 </tbody>
 </table>
@@ -118,84 +493,84 @@
 <tr class="header">
 <th>FRUIT</th>
 <th>DATE</th>
-<th>AMOUNT</th>
+<th style="text-align: center;">AMOUNT</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Grape (red)</td>
 <td>2022-09-01</td>
-<td>5</td>
+<td style="text-align: center;">5</td>
 </tr>
 <tr class="even">
 <td><strong>Grape (red)</strong></td>
 <td><strong>2022-09-02</strong></td>
-<td><strong>0</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
 </tr>
 <tr class="odd">
 <td>Grape (red)</td>
 <td>2022-09-03</td>
-<td>6</td>
+<td style="text-align: center;">6</td>
 </tr>
 <tr class="even">
 <td><strong>Grape (red)</strong></td>
 <td><strong>2022-09-04</strong></td>
-<td><strong>0</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
 </tr>
 <tr class="odd">
 <td>Grape (red)</td>
 <td>2022-09-05</td>
-<td>5</td>
+<td style="text-align: center;">5</td>
 </tr>
 <tr class="even">
 <td>Grape (white)</td>
 <td>2022-09-01</td>
-<td>6</td>
+<td style="text-align: center;">6</td>
 </tr>
 <tr class="odd">
 <td><strong>Grape (white)</strong></td>
 <td><strong>2022-09-02</strong></td>
-<td><strong>0</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
 </tr>
 <tr class="even">
 <td>Grape (white)</td>
 <td>2022-09-03</td>
-<td>4</td>
+<td style="text-align: center;">4</td>
 </tr>
 <tr class="odd">
 <td>Grape (white)</td>
 <td>2022-09-04</td>
-<td>9</td>
+<td style="text-align: center;">9</td>
 </tr>
 <tr class="even">
 <td>Grape (white)</td>
 <td>2022-09-05</td>
-<td>8</td>
+<td style="text-align: center;">8</td>
 </tr>
 <tr class="odd">
 <td>Apple (red)</td>
 <td>2022-09-01</td>
-<td>4</td>
+<td style="text-align: center;">4</td>
 </tr>
 <tr class="even">
 <td><strong>Apple (red)</strong></td>
 <td><strong>2022-09-02</strong></td>
-<td><strong>0</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
 </tr>
 <tr class="odd">
 <td><strong>Apple (red)</strong></td>
 <td><strong>2022-09-03</strong></td>
-<td><strong>0</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
 </tr>
 <tr class="even">
 <td>Apple (red)</td>
 <td>2022-09-04</td>
-<td>2</td>
+<td style="text-align: center;">2</td>
 </tr>
 <tr class="odd">
 <td>Apple (red)</td>
 <td>2022-09-05</td>
-<td>5</td>
+<td style="text-align: center;">5</td>
 </tr>
 </tbody>
 </table>
@@ -380,35 +755,35 @@
 <thead>
 <tr class="header">
 <th>KFOLD</th>
-<th>RECALL_0_5</th>
-<th>RECALL_0_7</th>
+<th style="text-align: center;">RECALL_0_5</th>
+<th style="text-align: center;">RECALL_0_7</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>0</td>
-<td>0.72</td>
-<td>0.81</td>
+<td style="text-align: center;">0.72</td>
+<td style="text-align: center;">0.81</td>
 </tr>
 <tr class="even">
 <td>1</td>
-<td>0.781</td>
-<td>0.841</td>
+<td style="text-align: center;">0.781</td>
+<td style="text-align: center;">0.841</td>
 </tr>
 <tr class="odd">
 <td>2</td>
-<td>0.754</td>
-<td>0.81</td>
+<td style="text-align: center;">0.754</td>
+<td style="text-align: center;">0.81</td>
 </tr>
 <tr class="even">
 <td>3</td>
-<td>0.79</td>
-<td>0.838</td>
+<td style="text-align: center;">0.79</td>
+<td style="text-align: center;">0.838</td>
 </tr>
 <tr class="odd">
 <td>4</td>
-<td>0.71</td>
-<td>0.72</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.72</td>
 </tr>
 </tbody>
 </table>
@@ -427,82 +802,82 @@
 <thead>
 <tr class="header">
 <th>KFOLD</th>
-<th>Y_TRUE</th>
-<th>Y_OOF</th>
-<th>RECALL_0_5</th>
-<th>RECALL_0_7</th>
+<th style="text-align: center;">Y_TRUE</th>
+<th style="text-align: center;">Y_OOF</th>
+<th style="text-align: center;">RECALL_0_5</th>
+<th style="text-align: center;">RECALL_0_7</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>0</td>
-<td>1</td>
-<td>0.9768</td>
-<td>0.72</td>
-<td>0.81</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.9768</td>
+<td style="text-align: center;">0.72</td>
+<td style="text-align: center;">0.81</td>
 </tr>
 <tr class="even">
 <td>0</td>
-<td>0</td>
-<td>0.56</td>
-<td>0.72</td>
-<td>0.81</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.56</td>
+<td style="text-align: center;">0.72</td>
+<td style="text-align: center;">0.81</td>
 </tr>
 <tr class="odd">
 <td>0</td>
-<td>0</td>
-<td>0.121</td>
-<td>0.72</td>
-<td>0.81</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.121</td>
+<td style="text-align: center;">0.72</td>
+<td style="text-align: center;">0.81</td>
 </tr>
 <tr class="even">
 <td>0</td>
-<td>1</td>
-<td>0.433</td>
-<td>0.72</td>
-<td>0.81</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.433</td>
+<td style="text-align: center;">0.72</td>
+<td style="text-align: center;">0.81</td>
 </tr>
 <tr class="odd">
 <td>0</td>
-<td>1</td>
-<td>0.6768</td>
-<td>0.72</td>
-<td>0.81</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.6768</td>
+<td style="text-align: center;">0.72</td>
+<td style="text-align: center;">0.81</td>
 </tr>
 <tr class="even">
 <td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>0</td>
-<td>0.0068</td>
-<td>0.754</td>
-<td>0.87</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>1</td>
-<td>0.877</td>
-<td>0.754</td>
-<td>0.87</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
 </tr>
 <tr class="odd">
 <td>2</td>
-<td>0</td>
-<td>0.1021</td>
-<td>0.754</td>
-<td>0.87</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0068</td>
+<td style="text-align: center;">0.754</td>
+<td style="text-align: center;">0.87</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.877</td>
+<td style="text-align: center;">0.754</td>
+<td style="text-align: center;">0.87</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.1021</td>
+<td style="text-align: center;">0.754</td>
+<td style="text-align: center;">0.87</td>
 </tr>
 <tr class="even">
 <td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
 </tr>
 </tbody>
 </table>
