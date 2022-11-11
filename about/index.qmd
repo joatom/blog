@@ -8,6 +8,9 @@ about:
     - icon: twitter
       text: Twitter
       href: https://twitter.com/JohannesTomason
+    - icon: mastodon
+      text: Mastodon
+      href: https://sigmoid.social/\@jtomasoni
     - icon: linkedin
       text: LinkedIn
       href: https://de.linkedin.com/in/jtomasoni

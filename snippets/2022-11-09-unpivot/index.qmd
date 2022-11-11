@@ -2,7 +2,7 @@
 toc: false
 layout: post
 title: Un/pivot
-description: "How to rotate tables :vertical_traffic_light: :traffic_light: "
+description: "How to rotate tables :vertical_traffic_light: :traffic_light: with sql"
 categories: [SQL, Oracle]
 comments:
   utterances:
@@ -33,10 +33,10 @@ author: Johannes Tomasoni
 ```sql
 SELECT *
   FROM harvest_amount
-PIVOT(SUM(amount) AS amt 
-      FOR fruit IN ('Grape_red' AS grape_red, 
-                    'Grape_white' AS grape_white, 
-                    'Apple_red' AS apple_red);
+ PIVOT(SUM(amount) AS amt 
+       FOR fruit IN ('Grape_red' AS grape_red, 
+                     'Grape_white' AS grape_white, 
+                     'Apple_red' AS apple_red);
 );
 ```
 
@@ -77,9 +77,9 @@ SELECT h.date,
 ```sql
 SELECT *
   FROM harvest_amount
-PIVOT(sum(amount) as amt, 
-      max(amount) as max_amt 
-      FOR fruit IN ('Grape_red', 'Grape_white', 'Apple_red');
+ PIVOT(sum(amount) as amt, 
+       max(amount) as max_amt 
+       FOR fruit IN ('Grape_red', 'Grape_white', 'Apple_red');
 );
 ```
 

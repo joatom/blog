@@ -10,7 +10,295 @@
 <atom:link href="https://joatom.github.io/blog/snippets.xml" rel="self" type="application/rss+xml"/>
 <description>AI curios</description>
 <generator>quarto-1.2.256</generator>
-<lastBuildDate>Tue, 08 Nov 2022 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 10 Nov 2022 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Melt &amp; pivot</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/snippets/2022-11-11-melt/2022-11-11-melt.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>date</th>
+      <th>fruit</th>
+      <th>amount</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2022-09-01</td>
+      <td>apple (red)</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2022-09-01</td>
+      <td>grape (red)</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2022-09-01</td>
+      <td>grape (white)</td>
+      <td>6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2022-09-03</td>
+      <td>grape (red)</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2022-09-03</td>
+      <td>grape (white)</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2022-09-04</td>
+      <td>apple (red)</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2022-09-04</td>
+      <td>grape (white)</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2022-09-05</td>
+      <td>apple (red)</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2022-09-05</td>
+      <td>grape (red)</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2022-09-05</td>
+      <td>grape (white)</td>
+      <td>8</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="pivot" class="level1">
+<h1>Pivot</h1>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">data_pv <span class="op" style="color: #5E5E5E;">=</span> data.pivot(index<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'date'</span>, columns<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'fruit'</span>, </span>
+<span id="cb1-2">                     values<span class="op" style="color: #5E5E5E;">=</span>[<span class="st" style="color: #20794D;">'amount'</span>,<span class="st" style="color: #20794D;">'quality'</span>]).reset_index()</span>
+<span id="cb1-3">data_pv</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>date</th>
+      <th colspan="3" halign="left">amount</th>
+      <th colspan="3" halign="left">quality</th>
+    </tr>
+    <tr>
+      <th>fruit</th>
+      <th></th>
+      <th>apple (red)</th>
+      <th>grape (red)</th>
+      <th>grape (white)</th>
+      <th>apple (red)</th>
+      <th>grape (red)</th>
+      <th>grape (white)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2022-09-01</td>
+      <td>4.0</td>
+      <td>5.0</td>
+      <td>6.0</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2022-09-03</td>
+      <td>NaN</td>
+      <td>6.0</td>
+      <td>4.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2022-09-04</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>9.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2022-09-05</td>
+      <td>5.0</td>
+      <td>5.0</td>
+      <td>8.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="melt-unpivot" class="level1">
+<h1>Melt (Unpivot)</h1>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">data_pv.columns <span class="op" style="color: #5E5E5E;">=</span> [<span class="st" style="color: #20794D;">'date'</span>, <span class="st" style="color: #20794D;">'apple (red)_amt'</span>, <span class="st" style="color: #20794D;">'grape (red)_amt'</span>,</span>
+<span id="cb2-2">                   <span class="st" style="color: #20794D;">'grape (white)_amt'</span>,<span class="st" style="color: #20794D;">'apple (red)_qlt'</span>,</span>
+<span id="cb2-3">                   <span class="st" style="color: #20794D;">'grape (red)_qlt'</span>,<span class="st" style="color: #20794D;">'grape (white)_qlt'</span>]</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">data_pv.melt(id_vars<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'date'</span>, value_vars<span class="op" style="color: #5E5E5E;">=</span>[<span class="st" style="color: #20794D;">'apple (red)_amt'</span>, </span>
+<span id="cb3-2">                                         <span class="st" style="color: #20794D;">'grape (red)_amt'</span>,</span>
+<span id="cb3-3">                                         <span class="st" style="color: #20794D;">'grape (white)_amt'</span>])</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>date</th>
+      <th>variable</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2022-09-01</td>
+      <td>apple (red)_amt</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2022-09-03</td>
+      <td>apple (red)_amt</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2022-09-04</td>
+      <td>apple (red)_amt</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2022-09-05</td>
+      <td>apple (red)_amt</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2022-09-01</td>
+      <td>grape (red)_amt</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2022-09-03</td>
+      <td>grape (red)_amt</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2022-09-04</td>
+      <td>grape (red)_amt</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2022-09-05</td>
+      <td>grape (red)_amt</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2022-09-01</td>
+      <td>grape (white)_amt</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2022-09-03</td>
+      <td>grape (white)_amt</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2022-09-04</td>
+      <td>grape (white)_amt</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2022-09-05</td>
+      <td>grape (white)_amt</td>
+      <td>8.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>Pandas</category>
+  <category>Python</category>
+  <guid>https://joatom.github.io/blog/snippets/2022-11-11-melt/2022-11-11-melt.html</guid>
+  <pubDate>Thu, 10 Nov 2022 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Un/pivot</title>
   <dc:creator>Johannes Tomasoni</dc:creator>
@@ -95,10 +383,10 @@
 <div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;">SELECT</span> <span class="op" style="color: #5E5E5E;">*</span></span>
 <span id="cb1-2">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amount</span>
-<span id="cb1-3">PIVOT(<span class="fu" style="color: #4758AB;">SUM</span>(amount) <span class="kw" style="color: #003B4F;">AS</span> amt </span>
-<span id="cb1-4">      <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (<span class="st" style="color: #20794D;">'Grape_red'</span> <span class="kw" style="color: #003B4F;">AS</span> grape_red, </span>
-<span id="cb1-5">                    <span class="st" style="color: #20794D;">'Grape_white'</span> <span class="kw" style="color: #003B4F;">AS</span> grape_white, </span>
-<span id="cb1-6">                    <span class="st" style="color: #20794D;">'Apple_red'</span> <span class="kw" style="color: #003B4F;">AS</span> apple_red);</span>
+<span id="cb1-3"> PIVOT(<span class="fu" style="color: #4758AB;">SUM</span>(amount) <span class="kw" style="color: #003B4F;">AS</span> amt </span>
+<span id="cb1-4">       <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (<span class="st" style="color: #20794D;">'Grape_red'</span> <span class="kw" style="color: #003B4F;">AS</span> grape_red, </span>
+<span id="cb1-5">                     <span class="st" style="color: #20794D;">'Grape_white'</span> <span class="kw" style="color: #003B4F;">AS</span> grape_white, </span>
+<span id="cb1-6">                     <span class="st" style="color: #20794D;">'Apple_red'</span> <span class="kw" style="color: #003B4F;">AS</span> apple_red);</span>
 <span id="cb1-7">);</span></code></pre></div>
 </div>
 <div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
@@ -164,9 +452,9 @@
 <h2 class="anchored" data-anchor-id="multiple-columns">Multiple columns</h2>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><span class="kw" style="color: #003B4F;">SELECT</span> <span class="op" style="color: #5E5E5E;">*</span></span>
 <span id="cb3-2">  <span class="kw" style="color: #003B4F;">FROM</span> harvest_amount</span>
-<span id="cb3-3">PIVOT(<span class="fu" style="color: #4758AB;">sum</span>(amount) <span class="kw" style="color: #003B4F;">as</span> amt, </span>
-<span id="cb3-4">      <span class="fu" style="color: #4758AB;">max</span>(amount) <span class="kw" style="color: #003B4F;">as</span> max_amt </span>
-<span id="cb3-5">      <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (<span class="st" style="color: #20794D;">'Grape_red'</span>, <span class="st" style="color: #20794D;">'Grape_white'</span>, <span class="st" style="color: #20794D;">'Apple_red'</span>);</span>
+<span id="cb3-3"> PIVOT(<span class="fu" style="color: #4758AB;">sum</span>(amount) <span class="kw" style="color: #003B4F;">as</span> amt, </span>
+<span id="cb3-4">       <span class="fu" style="color: #4758AB;">max</span>(amount) <span class="kw" style="color: #003B4F;">as</span> max_amt </span>
+<span id="cb3-5">       <span class="cf" style="color: #003B4F;">FOR</span> fruit <span class="kw" style="color: #003B4F;">IN</span> (<span class="st" style="color: #20794D;">'Grape_red'</span>, <span class="st" style="color: #20794D;">'Grape_white'</span>, <span class="st" style="color: #20794D;">'Apple_red'</span>);</span>
 <span id="cb3-6">);</span></code></pre></div>
 </section>
 </section>

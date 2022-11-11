@@ -8,7 +8,7 @@
 
 <meta name="author" content="Johannes Tomasoni">
 <meta name="dcterms.date" content="2022-11-09">
-<meta name="description" content="How to rotate tables 🚦 🚥">
+<meta name="description" content="How to rotate tables 🚦 🚥 with sql">
 
 <title>jo@tom - Un/pivot</title>
 <style>
@@ -130,10 +130,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="jo@tom - Un/pivot">
-<meta property="og:description" content="How to rotate tables :vertical_traffic_light: :traffic_light:">
+<meta property="og:description" content="How to rotate tables :vertical_traffic_light: :traffic_light: with sql">
 <meta property="og:site-name" content="jo@tom">
 <meta name="twitter:title" content="jo@tom - Un/pivot">
-<meta name="twitter:description" content="How to rotate tables :vertical_traffic_light: :traffic_light:">
+<meta name="twitter:description" content="How to rotate tables :vertical_traffic_light: :traffic_light: with sql">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -182,6 +182,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
+    <a class="nav-link" href="https://sigmoid.social/\@jtomasoni"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
     <a class="nav-link" href="https://de.linkedin.com/in/jtomasoni"><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
@@ -207,7 +212,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <h1 class="title">Un/pivot</h1>
                   <div>
         <div class="description">
-          How to rotate tables <span class="emoji" data-emoji="vertical_traffic_light">🚦</span> <span class="emoji" data-emoji="traffic_light">🚥</span>
+          How to rotate tables <span class="emoji" data-emoji="vertical_traffic_light">🚦</span> <span class="emoji" data-emoji="traffic_light">🚥</span> with sql
         </div>
       </div>
                           <div class="quarto-categories">
@@ -323,10 +328,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amount</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>PIVOT(<span class="fu">SUM</span>(amount) <span class="kw">AS</span> amt </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">FOR</span> fruit <span class="kw">IN</span> (<span class="st">'Grape_red'</span> <span class="kw">AS</span> grape_red, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Grape_white'</span> <span class="kw">AS</span> grape_white, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Apple_red'</span> <span class="kw">AS</span> apple_red);</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> PIVOT(<span class="fu">SUM</span>(amount) <span class="kw">AS</span> amt </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       <span class="cf">FOR</span> fruit <span class="kw">IN</span> (<span class="st">'Grape_red'</span> <span class="kw">AS</span> grape_red, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'Grape_white'</span> <span class="kw">AS</span> grape_white, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'Apple_red'</span> <span class="kw">AS</span> apple_red);</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
@@ -392,9 +397,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="multiple-columns">Multiple columns</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> harvest_amount</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>PIVOT(<span class="fu">sum</span>(amount) <span class="kw">as</span> amt, </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">max</span>(amount) <span class="kw">as</span> max_amt </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">FOR</span> fruit <span class="kw">IN</span> (<span class="st">'Grape_red'</span>, <span class="st">'Grape_white'</span>, <span class="st">'Apple_red'</span>);</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> PIVOT(<span class="fu">sum</span>(amount) <span class="kw">as</span> amt, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">max</span>(amount) <span class="kw">as</span> max_amt </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="cf">FOR</span> fruit <span class="kw">IN</span> (<span class="st">'Grape_red'</span>, <span class="st">'Grape_white'</span>, <span class="st">'Apple_red'</span>);</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>

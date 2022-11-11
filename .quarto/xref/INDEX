@@ -133,5 +133,11 @@
   },
   "snippets/2022-11-09-unpivot/index.qmd": {
     "index.html": "5b1dd435"
+  },
+  "snippets/2022-11-11-melt/2022-11-11-melt.ipynb": {
+    "2022-11-11-melt.html": "a83329f4"
+  },
+  "snippets/2022-11-11-melt/index.qmd": {
+    "index.html": "45ee07e1"
   }
 }
