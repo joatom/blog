@@ -142,5 +142,17 @@
   },
   "posts/2022-11-13-repay-vs-invest/index.ipynb": {
     "index.html": "e66c8043"
+  },
+  "snippets/2022-11-20-recursive-sql/index.ipynb": {
+    "index.html": "21c848b4"
+  },
+  "snippets/2022-11-20-pandas-styles/index.ipynb": {
+    "index.html": "71cc8d65"
+  },
+  "assets/resources/notebooks/2022-11-13-repay-vs-invest.ipynb": {
+    "2022-11-13-repay-vs-invest.html": "5a1253e1"
+  },
+  "posts/2022-11-13-repay-vs-invest/index-de.ipynb": {
+    "index-de.html": "db92cca8"
   }
 }

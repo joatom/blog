@@ -2,6 +2,8 @@
   {
     "listing": "/snippets.html",
     "items": [
+      "/snippets/2022-11-20-pandas-styles/index.html",
+      "/snippets/2022-11-20-recursive-sql/index.html",
       "/snippets/2022-11-11-melt/2022-11-11-melt.html",
       "/snippets/2022-11-09-unpivot/index.html",
       "/snippets/2022-11-07-partitioned-join/index.html",
@@ -22,6 +24,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-11-13-repay-vs-invest/index.html",
       "/posts/2022-08-30-art_diffusion/index.html",
       "/posts/2022-04-28-ml-pm/index.html",
       "/posts/2022-02-28-relationship/index.html",
