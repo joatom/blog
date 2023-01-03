@@ -10,7 +10,302 @@
 <atom:link href="https://joatom.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>AI curios</description>
 <generator>quarto-1.2.256</generator>
-<lastBuildDate>Mon, 28 Nov 2022 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 02 Jan 2023 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Fill’er up!</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Disclaimer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This blog post is not a financial advice! This is a toy example. This blog post is full of unrealistic assumptions. All numbers are made up. Reach out to a professional financial advisor you trust, if you need financial advise. And most important, take a spreadsheet and do the math yourself with your numbers and your assumptions.</p>
+</div>
+</div>
+<section id="a-not-that-funny-joke" class="level1">
+<h1>A (not that) funny joke</h1>
+<p>Once upon a time, in the last century, a teacher of mine was complaining about the latest increase of the gasoline price. The old man was finishing his complains with a misogynistic joke:</p>
+<p><span class="emoji" data-emoji="boar">🐗</span>: <em>The gas price went up a gain. It doesn’t matter for my wife, though. She always refuels for 10 bugs. Hahaha.</em></p>
+<p>Besides he shouldn’t have talked like this about his wife, the idea of always spending the same amount of money on the gas station to avoid price raises seamed to be pretty funny. I since used a variation of this da(e)d joke every now and then, like <em>“I always refuel for 10 bugs, lol.”</em> and you certainly have heard this joke often, too.</p>
+<p align="center">
+<img src="https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/gas_station.jpeg" alt="Image generated with Stable Diffusion v2 (@Rombach_2022_CVPR): Gas station at night as pixel graphics." width="50%">
+</p>
+<p style="font-size:12pt" align="center">
+Image generated with Stable Diffusion v2 (Rombach et al.&nbsp;(2022)) <br> <i>“Gas station at night as pixel graphics.”</i>
+</p>
+<p>Now, 25 years later …</p>
+<p>I was driving with my wife to a party and she realized that I’ve filled up the car after shopping in the afternoon. She was very happy that she wouldn’t need to stop at the gas station during the upcoming week. I told here proudly that the price for gas was low and I saved 30 ct per liter compared to four weeks ago. Once again I quietly had to think about this old joke. Suddenly, when I was just about to grin, I was struck by a though: <em>“Is it possible that the person, who is always refueling for exactly 10 bugs, is right and the other person, that is laughing about this strategy, is actually the idiot?!”</em>.</p>
+<p>This thought come up because the night before I’ve watched some YouTube videos about investment strategies. One example was to follow a saving plan and put the same amount of money into ETFs on a regular basis, say 100 Euro every month. In the interview a question come up: <em>What would happen when the market goes down and the portfolio looses value?</em> The answer was pretty simple: <em>If you invest regularly then you hit the market when it goes up the one day and when it goes down the other day.</em> So the volatility doesn’t matter that much on the long run. This intuitively made sense to me: The regular investments smooth out the volatility. Since you can’t predict the stock prices, it’s hard to <strong>time</strong> the market (predicting when buying is cheap over a short period of time).</p>
+<p>So, I left the party with two thoughts to investigate on:</p>
+<ul>
+<li><ol type="1">
+<li>What is a suitable refueling strategy?</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Is my intuition about the constant ETF investment reasonable?</li>
+</ol></li>
+</ul>
+<p>The first question is tackled in this blog post. The second one I examined in <a href="../2023-01-03-one-dime-at-a-time/index.html">another blog post</a>.</p>
+</section>
+<section id="refueling-strategies" class="level1 page-columns page-full">
+<h1>Refueling Strategies</h1>
+<p>These are the average prices for Fuel in Germany from January 2021 to November 2022 from <span class="citation" data-cites="destatis_2022">Statistisches Bundesamt (Destatis) (2022)</span>.</p>
+<div class="cell" data-tags="[]" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<p><img src="https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/index_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>2021 was a pretty normal year, fuel prices slightly increased, with some noisy up and downs. 2022 was really crazy with high raises and steep dives of the fuel price.</p>
+<p>Since our car is using Diesel I’ll do the following simulations for Diesel. Our car is driving approximately <em>12,000 km</em> per year and has a consumption of <em>6.4 liters per 100 km</em>. In our example we assume we drive the same distance with the same consumption on everyday of the year.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>12,000 km/year</p>
+<p>0.064 l/km</p>
+<p>2.104 l/day</p>
+</div></div><p>We’ll compare three different refueling strategies:</p>
+<ul>
+<li><p><strong>Strategy 1: Fixed payment:</strong></p>
+<p>We refuel for exactly <em>€ 45</em> when tank has <em>less than 10 liters</em>. The tank has a capacity of 55 liters, hence fuel for € 45 fits when we refuel. This refers to the “joke” strategy.</p></li>
+<li><p><strong>Strategy 2: Regularly, fixed amount of fuel:</strong></p>
+<p>In this strategy we refill <em>every 15 days</em> the same amount of fuel regardless of the price. That’s viable, because we are consuming the same amount of fuel everyday.</p></li>
+<li><p><strong>Strategy 3: Fill on lowest price:</strong></p>
+<p>We have a magic crystal ball and know every price in advance. So we (partially) refuel always on the <em>lowest price</em> in a 20 day window.</p></li>
+</ul>
+<div class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<p><img src="https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/index_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The chart shows the price of the consumed fuel on every day for each of the strategy. For example, when we refuel with strategy 2 on January 16th for € 1.24/l we’ll consume Diesel worth € 1.24/l for the next 15 days.</p>
+<p>Obviously, strategy 3 always has the lowest price. The average price and the yearly consumption for the three strategies are:</p>
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
+<ul>
+<li>Strategy 1: € 1.3812/l =&gt; € 1,061/year</li>
+<li>Strategy 2: € 1.3829/l =&gt; € 1,062/year</li>
+<li>Strategy 3: € 1.3628/l =&gt; € 1,047/year</li>
+</ul>
+<p>Which leads to a total saving of € 14.10/year if we could predict the cheapest price for the next 20 days compared to strategy 1 and € 15.38/year compared to strategy 2.</p>
+<p>That doesn’t sound much, but it’s still a saving of approximately 1.33% or additional fuel for a 159 km drive.</p>
+<p>When we look a bit closer at the chart, we see that the <em>best price strategy</em> line is very fine grained and the other two strategies are more bumpy with long flat plateaus. This indicates, that to accomplish the best price strategy, we need to hit the gas station more often. Here are the number of pit stops needed for the three strategies:</p>
+<ul>
+<li>Strategy 1: 24 stops</li>
+<li>Strategy 2: 24 stops</li>
+<li>Strategy 3: 54 stops</li>
+</ul>
+<p>This is a total different picture. To achieve a saving of € 14.10/year I would not only need the magic crystal ball, but I would also need to make 30 more stops at the gas station per year. Let’s say one stop takes 10 minutes (waiting in line, refueling, paying), that would result in an additional 5.00 hours per year spending at the gas station.</p>
+<p>During this additional 5.00 hours I can walk with my daughter at 4km/h her daily 2x2km march to kindergarten 5 times. Which is 20.0 km or a Diesel saving of € 1.8 in strategy 1 and if I take insurance, taxes, regular maintenance and car depreciation into account it’s a saving of € 7.2 (with 0.36 ct/km in 2021).</p>
+</div>
+</div>
+<p>Now, that we have a picture of 2021 and can decide on our personal preference and clairvoyant abilities to abondon or to go for Strategy 3, we still don’t have a clear picture of Strategy 1 and 2. In 2021 they look pretty similar with the given parameters. But it’s also clear, that we would have to make more gas station stops, if we’d either lower the fixed paying amount of strategy 1 or if we’d shorten the refilling interval of strategy 2.</p>
+<p>Let’s see what happens when the prices go crazy like in 2022.</p>
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<p><img src="https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/index_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="10">
+<p>These are the numbers for 2022:</p>
+<ul>
+<li>Strategy 1: € 1.9517/l =&gt; € 1,499/year =&gt; 33 stops</li>
+<li>Strategy 2: € 1.9481/l =&gt; € 1,496/year =&gt; 24 stops</li>
+<li>Strategy 3: € 1.8818/l =&gt; € 1,445/year =&gt; 111 stops</li>
+</ul>
+<p>Which result in savings and additional hours spent at the gas station as shown below:</p>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<p><img src="https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/index_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>In 2022 strategy 2 is superior to strategy 1. The higher number of gas station stops results from not adjusting the fixed payment amount to the higher prices.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>The old joke is worn out.</p>
+<ol type="A">
+<li>No one can predict the prices precisely.</li>
+<li>Waiting at the gas station for a € 3-4/hours “salary” doesn’t make sense, if you can effort a car in Germany.</li>
+</ol>
+<p>After comparing the three strategies with the data from 2021 and 2022 I personally prefer strategy number 2. Which leads me to these life hacks:</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Life hacks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Default to not taking the car, instead
+<ul>
+<li>commute by walking, train, bus, bike, stay at home, share rides,</li>
+<li>go shopping by walking, train, bus, bike, shop online,</li>
+<li>go to kindergarten/School by walking, train, bus, bike.</li>
+</ul></li>
+<li>Don’t bother about the fuel price.</li>
+<li>Refuel the entire tank.</li>
+<li>Refuel early if you fear traffic jams in winter. A diesel fueled car is basically a moving heating. A diesel car only uses about half of the fuel provided energy to actually move the car (<span class="citation" data-cites="tuev_nord_2023"><span>“Wirkungsgrade von <span>Elektroautos</span> <span></span> <span>TÜV</span> <span>NORD</span> <span>Mobilität</span>”</span> (2023)</span>). And even less if we don’t press the pedal all the way down. The rest results in heat. And if we leave the heating on, while waiting in traffic jam in winter, we can watch the tank go empty, quickly.</li>
+</ul>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Rombach_2022_CVPR" class="csl-entry">
+Rombach, Robin, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. 2022. <span>“High-Resolution Image Synthesis with Latent Diffusion Models.”</span> In <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</em>, 10684–95. <a href="https://huggingface.co/stabilityai/stable-diffusion-2">https://huggingface.co/stabilityai/stable-diffusion-2</a>.
+</div>
+<div id="ref-destatis_2022" class="csl-entry">
+Statistisches Bundesamt (Destatis). 2022. <span>“Kraftstoffpreise an Öffentlichen <span>Tankstellen</span>.”</span> <a href="https://www.dashboard-deutschland.de/indicator/tile_1667921381760?1671822853">https://www.dashboard-deutschland.de/indicator/tile_1667921381760?1671822853</a>.
+</div>
+<div id="ref-tuev_nord_2023" class="csl-entry">
+<span>“Wirkungsgrade von <span>Elektroautos</span> <span></span> <span>TÜV</span> <span>NORD</span> <span>Mobilität</span>.”</span> 2023. <a href="https://www.tuev-nord.de/de/privatkunden/verkehr/auto-motorrad-caravan/elektromobilitaet/wirkungsgrad/">https://www.tuev-nord.de/de/privatkunden/verkehr/auto-motorrad-caravan/elektromobilitaet/wirkungsgrad/</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Life hack</category>
+  <category>Finance</category>
+  <guid>https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/index.html</guid>
+  <pubDate>Mon, 02 Jan 2023 23:00:00 GMT</pubDate>
+  <media:content url="https://joatom.github.io/blog/posts/2023-01-03-fill-her-up/gas_station.jpeg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>One dime at a time?</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/posts/2023-01-03-one-dime-at-a-time/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Disclaimer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This blog post is not a financial advice! This is a toy example. This blog post is full of unrealistic assumptions. All numbers are made up. Reach out to a professional financial advisor you trust, if you need financial advise. And most important, take a spreadsheet and do the math yourself with your numbers and your assumptions.</p>
+</div>
+</div>
+<p align="center">
+<img src="https://joatom.github.io/blog/posts/2023-01-03-one-dime-at-a-time/sparschwein.jpg" alt="" width="50%" style="border-radius: 50%;">
+</p>
+<section id="one-dime-at-a-time" class="level1">
+<h1>One dime at a time?</h1>
+<p>One night I’ve watched some YouTube videos about investment strategies. One example was to follow a saving plan and put the same amount of money into ETFs on a regular basis, say 100 Euro every month. In the interview a question come up: <em>What would happen when the market goes down and the portfolio looses value?</em> The answer was pretty simple: <em>If you invest regularly then you hit the market when it goes up the one day and when it goes down the other day.</em> So the volatility doesn’t matter that much on the long run. This intuitively made sense to me: The regular investments smooth out the volatility. And since you can’t predict the stock prices, it’s hard to <strong>time</strong> the market (predicting when buying is cheap over a short period of time).</p>
+<p>Is my intuition about the constant investments reasonable? Let’s find out in this blog post.</p>
+<p>By the way, this question made me also think about a proper refueling strategy witch I covered in <a href="../2023-01-03-fill-her-up/index.html">another blog post</a>.</p>
+</section>
+<section id="a-fictional-asset" class="level1">
+<h1>A fictional asset</h1>
+<div class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<p>We will simulate some numbers for a fictional assets price time series. The prices will increase on the long run, but will have some volatility. Here is how our simulation looks like for 200 time slots:</p>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<p><img src="https://joatom.github.io/blog/posts/2023-01-03-one-dime-at-a-time/index_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The <span style="color:lightblue">trend line</span> indicates the general price increase on the long run. The <span style="color:green">green dot</span> marks the lowest price and the <span style="color:red">red dot</span> the highest price in the time range.</p>
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="5">
+<p>With an investment of € 20,000 at the lowest price at t=20 and selling at the highest price at t=197 the return is 18.96% and yields € 3,792.</p>
+</div>
+</div>
+</section>
+<section id="two-investment-strategies" class="level1 page-columns page-full">
+<h1>Two investment strategies</h1>
+<p>Since we don’t know in advance when the price will be lowest and highest, we consider two investment strategies and see how they play out.</p>
+<div class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="6">
+<p>In both strategies we start out with € 20,000 cash.</p>
+<ul>
+<li><p><strong>Strategy 1: One-time investment</strong></p>
+<p>The entire amount of money is investment at once. We will look how this plays out at various points in time.</p></li>
+<li><p><strong>Strategy 2: Continuous investment</strong></p>
+<p>The cash is split equally over the period of time and at every step the same amount of money is invested.</p>
+<p>$ investment_t = 20,000 / 200 = 100.00 $</p></li>
+</ul>
+<p>Let’s see how many shares we can buy with both strategies:</p>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<p><img src="https://joatom.github.io/blog/posts/2023-01-03-one-dime-at-a-time/index_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><span style="color:blue"><strong>Blue dots:</strong></span> <img src="https://latex.codecogs.com/png.latex?%0Aonetime(t)%20=%20%5Cfrac%7Bcash%7D%7Bprice_t%7D%0A"></p>
+<p><strong>Black line:</strong> <img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Acont(t)%20&amp;=%20%5Csum%5Et_i%7B%20%5Cfrac%7Bcash/t%7D%7Bprice_i%7D%7D%20%5C%5C%0A%20%20%20%20%20%20%20%20&amp;=%20%5Cfrac%7Bcash%7D%7Bt%7D%20%5Csum%5Et_i%7B%20%5Cfrac%7B1%7D%7Bprice_i%7D%7D%0A%5Cend%7Baligned%7D%0A"></p>
+<p><span style="color:lightblue"><strong>Light blue line:</strong></span> <img src="https://latex.codecogs.com/png.latex?%0Acontmax(t)%20=%20cont(n)%0A"></p>
+</div></div><p>The <span style="color:blue"><strong>blue dots</strong></span> mark the number of shares that can be purchased when the entire money is invested at once at the given time <em>t</em>.</p>
+<p>The <strong>black line</strong> indicates the number of shares that can be bought when the entire investment is equally spread from <em>t=0</em> up to a given <em>t</em>.</p>
+<p>The <span style="color:lightblue"><strong>light blue line</strong></span> highlights the number of shares of the last entry of the black line, hence the cash is equally invested over the entire period of time.</p>
+<p>A <span style="color:green"><strong>green line</strong></span> marks the one-time investment that always reach a higher number of shares compared to the continuous investment, regardless of the holding duration.</p>
+<p>A <span style="color:red"><strong>red lines</strong></span> indicates the one-time investment that can never reach the number of shares of the continuous investment at any time in <img src="https://latex.codecogs.com/png.latex?0%3Ct%3C=n">.</p>
+<p>An <span style="color:orange"><strong>orange line</strong></span> marks the one-time investment that has fewer number of shares as the continuous investment at the given time, if the entire cash has been equally distributed to the given <em>t</em>. However, if the continuous investments are spread for a wider period of time, the one-time investment will be superior to the continuous investment at a later point in time.</p>
+<p>With our dummy data the strategy to put a big investment at once is good if the investment can stay invested untouched for a long period of time. If the money needs to shortly be withdrawn from the investment the continuous strategy is preferable, regarding number of shares. The tipping point between the strategies is close to <img src="https://latex.codecogs.com/png.latex?t/2">.</p>
+<p>Let’s see, how the amount of shares result in value at <img src="https://latex.codecogs.com/png.latex?t=n">,</p>
+<div class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<p><img src="https://joatom.github.io/blog/posts/2023-01-03-one-dime-at-a-time/index_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><span style="color:blue"><strong>Blue line:</strong></span> <img src="https://latex.codecogs.com/png.latex?%0Acash(t)=cash%0A"></p>
+<p><strong>Black line:</strong> <img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0Acont(t)%20&amp;=%20inv_%7Bacc_t%7D+cash_%7Bremaining_t%7D%20%5C%5C%0A%20%20%20%20%20%20%20%20&amp;=%20p_n*%5Cfrac%7Bcash%7D%7Bn%7D%5Csum%5Et_i%7B%5Cfrac%7B1%7D%7Bp_i%7D%7D%20+%20cash*(1-%5Cfrac%7Bt%7D%7Bn%7D)%0A%5Cend%7Baligned%7D%0A"></p>
+<p><span style="color:lightblue"><strong>Light blue line:</strong></span> <img src="https://latex.codecogs.com/png.latex?%0Acontmax(t)%20=%20cont(n)%0A"></p>
+<p><strong>Dots:</strong> <img src="https://latex.codecogs.com/png.latex?%0Aonetime(t)%20=%20p_n*%5Cfrac%7Bcash%7D%7Bp_t%7D%0A"></p>
+</div></div><p>The <span style="color:blue"><strong>blue line</strong></span> is our net worth if we don’t invest and keep cash for the entire period of time.</p>
+<p>The <strong>black line</strong> indicates the net worth in a continuous investment strategy. At time <em>t</em> the number of shares that are accumulated sofar are multiplied by the price at the end of the time period. Also, the remaining cash at time <em>t</em> is added to the investment value.</p>
+<p>The <span style="color:lightblue"><strong>light blue</strong></span> line highlights the net worth of the continuous investment at the end of the period of time.</p>
+<p>The <strong>dots</strong> indicate the value of a one-time purchase at the end of the period of time.</p>
+<p>A <span style="color:red"><strong>red dot</strong></span> one-time investment is always worse than the continuous strategy.</p>
+<p>A <span style="color:green"><strong>green dot</strong></span> one-time investment results in a higher net value at the end of the period compared to the continuous investment.</p>
+<p>An <span style="color:orange"><strong>orange dot</strong></span> one-time investment is superior to the continuous investment for a certain period of time. But if the continuous strategy will go on till the end, the orange dot will result in a smaller net worth.</p>
+<p>The <span style="color:lightblue"><strong>light blue</strong></span> and <strong>black line</strong> are highly volatile, when we change the duration, since it depends only on the last price. If the period gets shortened the area of the <span style="color:green"><strong>green</strong></span>, <span style="color:orange"><strong>orange</strong></span> and <span style="color:red"><strong>red dots</strong></span> will change accordingly. One idea to reduce volatility the selling can be spread over many periods, like the continuous strategy to accumulate shares.</p>
+<p>Again, the strategy to invest all at once is preferable, if the investments won’t be sold for a long time. If the investment needs to be sold at any time a continuous strategy is preferable with this dummy data.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>This example only describes a fictional scenario where the prices go up on the long run. We also haven’t thought at what point(s) in time to sell the shares to actually get the best out of the investment.</p>
+<p>From a personal view a continuous strategy seams appealing. This also makes sense considering a continuous income stream (such as salary) which would make this strategy applicable.</p>
+<p>And as said in the beginning, that’s not a financial advise. So please make up your mind with your own calculations.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Finance</category>
+  <guid>https://joatom.github.io/blog/posts/2023-01-03-one-dime-at-a-time/index.html</guid>
+  <pubDate>Mon, 02 Jan 2023 23:00:00 GMT</pubDate>
+  <media:content url="https://joatom.github.io/blog/posts/2023-01-03-one-dime-at-a-time/sparschwein.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Ingredients for successful projects</title>
   <dc:creator>Johannes Tomasoni</dc:creator>
