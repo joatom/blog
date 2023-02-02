@@ -10,7 +10,72 @@
 <atom:link href="https://joatom.github.io/blog/snippets.xml" rel="self" type="application/rss+xml"/>
 <description>AI curios</description>
 <generator>quarto-1.2.256</generator>
-<lastBuildDate>Sat, 19 Nov 2022 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 01 Feb 2023 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Numeric Dataset</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/snippets/2023-02-02-num_dataset/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="about" class="level1">
+<h1>About</h1>
+<p>A basic Dataset for numeric features from a Pandas dataframe. If there is enough memory the dataframe can be converted into a FloatTensor to speed up data access.</p>
+<p>Dataframe consists of feature columns and target columns and a kfold column.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;">class</span> NumDataset(torch.utils.data.Dataset):</span>
+<span id="cb1-2">    </span>
+<span id="cb1-3">    <span class="kw" style="color: #003B4F;">def</span> <span class="fu" style="color: #4758AB;">__init__</span>(<span class="va" style="color: #111111;">self</span>, df, features <span class="op" style="color: #5E5E5E;">=</span> [], targets: <span class="bu" style="color: null;">list</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">None</span>, kfolds<span class="op" style="color: #5E5E5E;">=</span>[<span class="dv" style="color: #AD0000;">0</span>]):</span>
+<span id="cb1-4">        </span>
+<span id="cb1-5">        <span class="cf" style="color: #003B4F;">if</span> targets:</span>
+<span id="cb1-6">            <span class="va" style="color: #111111;">self</span>.targets <span class="op" style="color: #5E5E5E;">=</span> torch.FloatTensor(df[df[<span class="st" style="color: #20794D;">'kfold'</span>].isin(kfolds)][targets].values.reshape(<span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>,<span class="bu" style="color: null;">len</span>(targets)))</span>
+<span id="cb1-7">        <span class="cf" style="color: #003B4F;">else</span>:</span>
+<span id="cb1-8">            <span class="va" style="color: #111111;">self</span>.targets <span class="op" style="color: #5E5E5E;">=</span> torch.zeros(<span class="bu" style="color: null;">len</span>(targets))</span>
+<span id="cb1-9">        </span>
+<span id="cb1-10">        <span class="co" style="color: #5E5E5E;"># Convert Dataframe into FloatTensor for speed up</span></span>
+<span id="cb1-11">        <span class="va" style="color: #111111;">self</span>.df <span class="op" style="color: #5E5E5E;">=</span> torch.FloatTensor(df[features].values.reshape(<span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>,<span class="bu" style="color: null;">len</span>(features)))</span>
+<span id="cb1-12">    </span>
+<span id="cb1-13">    <span class="kw" style="color: #003B4F;">def</span> <span class="fu" style="color: #4758AB;">__len__</span>(<span class="va" style="color: #111111;">self</span>):</span>
+<span id="cb1-14">        <span class="cf" style="color: #003B4F;">return</span> <span class="bu" style="color: null;">len</span>(<span class="va" style="color: #111111;">self</span>.df)</span>
+<span id="cb1-15">    </span>
+<span id="cb1-16">    <span class="kw" style="color: #003B4F;">def</span> <span class="fu" style="color: #4758AB;">__getitem__</span>(<span class="va" style="color: #111111;">self</span>, item):</span>
+<span id="cb1-17">        </span>
+<span id="cb1-18">        <span class="cf" style="color: #003B4F;">return</span> <span class="va" style="color: #111111;">self</span>.df[item], <span class="va" style="color: #111111;">self</span>.targets[item]</span>
+<span id="cb1-19">        </span></code></pre></div>
+<p>For dict usage in Module.forward define dataset like this:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">....    </span>
+<span id="cb2-2">    <span class="kw" style="color: #003B4F;">def</span> <span class="fu" style="color: #4758AB;">__getitem__</span>(<span class="va" style="color: #111111;">self</span>, item):</span>
+<span id="cb2-3">        </span>
+<span id="cb2-4">        <span class="cf" style="color: #003B4F;">return</span> {<span class="st" style="color: #20794D;">'data'</span>: <span class="va" style="color: #111111;">self</span>.df[item], <span class="st" style="color: #20794D;">'targets'</span>: <span class="va" style="color: #111111;">self</span>.targets[item]}</span>
+<span id="cb2-5">....</span>
+<span id="cb2-6"></span>
+<span id="cb2-7"><span class="kw" style="color: #003B4F;">class</span> MyModel(nn.Module):</span>
+<span id="cb2-8">  ....</span>
+<span id="cb2-9">  <span class="kw" style="color: #003B4F;">def</span> forward(<span class="va" style="color: #111111;">self</span>, data, targets):</span>
+<span id="cb2-10">    ....</span></code></pre></div>
+<p>DataLoader in Fastai:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">train_ds <span class="op" style="color: #5E5E5E;">=</span> NumDataset(df <span class="op" style="color: #5E5E5E;">=</span> train, features <span class="op" style="color: #5E5E5E;">=</span> FEATURES, targets<span class="op" style="color: #5E5E5E;">=</span>TARGETS, kfolds <span class="op" style="color: #5E5E5E;">=</span> [<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">4</span>])</span>
+<span id="cb3-2">valid_ds <span class="op" style="color: #5E5E5E;">=</span> NumDataset(df <span class="op" style="color: #5E5E5E;">=</span> train, features <span class="op" style="color: #5E5E5E;">=</span> FEATURES, targets<span class="op" style="color: #5E5E5E;">=</span>TARGETS, kfolds <span class="op" style="color: #5E5E5E;">=</span> [<span class="dv" style="color: #AD0000;">0</span>])</span>
+<span id="cb3-3"></span>
+<span id="cb3-4">train_dl <span class="op" style="color: #5E5E5E;">=</span> DataLoader(train_ds, batch_size<span class="op" style="color: #5E5E5E;">=</span> BS_TRAIN, shuffle <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">True</span>, num_workers <span class="op" style="color: #5E5E5E;">=</span> WORKERS) </span>
+<span id="cb3-5">valid_dl <span class="op" style="color: #5E5E5E;">=</span> DataLoader(valid_ds, batch_size<span class="op" style="color: #5E5E5E;">=</span> BS_TEST, shuffle <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">False</span>, num_workers <span class="op" style="color: #5E5E5E;">=</span> WORKERS)</span>
+<span id="cb3-6"></span>
+<span id="cb3-7">data <span class="op" style="color: #5E5E5E;">=</span> DataLoaders(train_dl, valid_dl).cuda() </span></code></pre></div>
+<p>Training in Fastai:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">learn <span class="op" style="color: #5E5E5E;">=</span> Learner(data, MYMODEL, loss_func<span class="op" style="color: #5E5E5E;">=</span>MYLOSS, metrics<span class="op" style="color: #5E5E5E;">=</span>MYMETRICS)</span>
+<span id="cb4-2"></span>
+<span id="cb4-3">learn.fit_one_cycle(<span class="dv" style="color: #AD0000;">1</span>,<span class="fl" style="color: #AD0000;">1e-3</span>)</span></code></pre></div>
+
+
+</section>
+
+ ]]></description>
+  <category>Pytorch</category>
+  <category>ML</category>
+  <guid>https://joatom.github.io/blog/snippets/2023-02-02-num_dataset/index.html</guid>
+  <pubDate>Wed, 01 Feb 2023 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Pandas styles</title>
   <dc:creator>Johannes Tomasoni</dc:creator>
