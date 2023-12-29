@@ -178,5 +178,23 @@
   },
   "snippets/2023-02-02-num_dataset/index.qmd": {
     "index.html": "7bab4566"
+  },
+  "posts/2023-12-29-pr-curve/index.qmd": {
+    "index.html": "082a04c0"
+  },
+  "posts/2023-12-29-pr-curve/interactive-precision-recall-curve.ipynb": {
+    "interactive-precision-recall-curve.html": "0a16abca"
+  },
+  "posts/2023-12-29-pr-curve/temp/index.qmd": {
+    "index.html": "cb5f7720"
+  },
+  "posts/2023-12-29-pr-curve/interactive-precision-recall-curve copy.ipynb": {
+    "interactive-precision-recall-curve copy.html": "4d832680"
+  },
+  "posts/2023-12-29-pr-curve/interactive-precision-recall-curve (1).ipynb": {
+    "interactive-precision-recall-curve (1).html": "96fb3df7"
+  },
+  "posts/2023-12-29-pr-curve/2023-12-29-interactive-precision-recall-curve.ipynb": {
+    "2023-12-29-interactive-precision-recall-curve.html": "530a00a2"
   }
 }
