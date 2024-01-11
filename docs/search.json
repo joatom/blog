@@ -308,6 +308,41 @@
     "text": "Tabular data is often transformed in a flattened manner so it can easily be processed by commen ML frameworks. Sometimes it is usefull to understand the relationships and hierarchies between the columns of a flattend datasource. In this notebook hierarchies are extracted from a flattened csv file."
   },
   {
+    "objectID": "posts/2024-01-10-energy-consumption/index.html",
+    "href": "posts/2024-01-10-energy-consumption/index.html",
+    "title": "Personal Energy Consumption 2023",
+    "section": "",
+    "text": "2023 is over, it’s time to crunch some numbers.\nI’ll share with you the numbers of my families energy consumption and \\(CO_2\\) footprint of 2023. Our household consists of two adults, three kids and a cat.\nIn case you know your numbers and are open about it, feel free to share and compare them in the comment section."
+  },
+  {
+    "objectID": "posts/2024-01-10-energy-consumption/index.html#electricity",
+    "href": "posts/2024-01-10-energy-consumption/index.html#electricity",
+    "title": "Personal Energy Consumption 2023",
+    "section": "Electricity",
+    "text": "Electricity\n\n\n\n\n\n\n\n\n\nConsumption in kWh 1\n2023\n2022\n- / +\n\n\n\n\nHeat pump (hot water & heating)\n1695\n1919\n-224 (12%)*\n\n\nHousehold\n2625\n2999\n-374 (12%)**\n\n\n\nBoth electricity sources are renewable.\n* main savings result from reducing the overall room temperature by 2°C\n** some of the savings result from replacing the old dryer"
+  },
+  {
+    "objectID": "posts/2024-01-10-energy-consumption/index.html#car",
+    "href": "posts/2024-01-10-energy-consumption/index.html#car",
+    "title": "Personal Energy Consumption 2023",
+    "section": "Car",
+    "text": "Car\n\n\n\n\n\n\n\n\n\nConsumption\n2023\n2022\n- / +\n\n\n\n\nDistance in kilometer 2\n10047\n11975\n-1928 (16%)\n\n\nDiesel in liter\n673\n802\n-129 (16%)\n\n\n\\(CO_2\\) emissions of Diesel in t 3\n2.05\n2.44\n-0.39 (16%)\n\n\n\nThe average Diesel consumption ranges from 0.065 to 0.067 l/km.4 The calculations are done with 0.067 l/km."
+  },
+  {
+    "objectID": "posts/2024-01-10-energy-consumption/index.html#household-emission",
+    "href": "posts/2024-01-10-energy-consumption/index.html#household-emission",
+    "title": "Personal Energy Consumption 2023",
+    "section": "Household emission",
+    "text": "Household emission\n\n\n\n\n\n\n\n\n\nCategory\n\\(CO_2\\) emission in t 5\n\\(CO_2\\) emission in t p.P.\nConsumption\n\n\n\n\n    House\n    1.45\n    0.29\n\n\n\n    Heating\n    0.05\n    0.01\n1695 kWh\n\n\n    Electricity\n    0.07\n    0.01\n2625 kWh\n\n\nHousing total\n1.57\n0.31\n\n\n\n    Car\n    0.35\n    0.07\n\n\n\n    Car mileage\n    2.05\n    0.41\n10047 km\n\n\n    Carpool\n    0.16\n    0.03\n1000 km\n\n\n    Public Transportation\n    0.14\n    0.03\n2793 km\n\n\nTransportation total\n2.62\n0.52\n\n\n\nFood\n6.9\n1.38\nreduced meat, preferred local\n\n\nGeneral Consumption\n18.45\n3.69\ndefault estimate\n\n\nPublic Emissions\n5.75\n1.15\ndefault estimate\n\n\nTotal\n35.37\n\n\n\n\nTotal per person\n\n7.07"
+  },
+  {
+    "objectID": "posts/2024-01-10-energy-consumption/index.html#personal-emission",
+    "href": "posts/2024-01-10-energy-consumption/index.html#personal-emission",
+    "title": "Personal Energy Consumption 2023",
+    "section": "Personal emission",
+    "text": "Personal emission\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCategory\n\\(CO_2\\) emission in t 6\nGerman average 7\n- / +\n\n\n\n\nHousing\n0.31\n2.49\n-2.18 (88%)\n\n\nTransportation\n0.92\n2.22\n-1.3 (59%)\n\n\nFood\n1.67\n1.75\n-0.08 (5%)\n\n\nGeneral Consumption\n3.69\n2.73\n+0.96 (35%)\n\n\nPublic Emissions\n1.15\n1.15\n0 (0%)\n\n\nTotal\n7.74\n10.34\n-2.6 (25%)"
+  },
+  {
     "objectID": "posts/2021-04-06-mortality-germany/2021-04-06-mortality-germany.html",
     "href": "posts/2021-04-06-mortality-germany/2021-04-06-mortality-germany.html",
     "title": "Deaths by age group and states in Germany from 2016 to 2021",
@@ -431,7 +466,7 @@
     "href": "index.html",
     "title": "Posts",
     "section": "",
-    "text": "Personal Energy Consumption 2023\n\n\n2 min\n\n\n\nenvironment\n\n\n\n\nJohannes Tomasoni\n\n\nJan 10, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive Precision-Recall Curve\n\n\n0 min\n\n\n\nMetric\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFill’er up!\n\n\n5 min\n\n\n\nLife hack\n\n\nFinance\n\n\n\n\nJohannes Tomasoni\n\n\nJan 3, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOne dime at a time?\n\n\n4 min\n\n\n\nFinance\n\n\n\n\nJohannes Tomasoni\n\n\nJan 3, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIngredients for successful projects\n\n\n14 min\n\n\n\nProject Management\n\n\nBusiness\n\n\n\n\nJohannes Tomasoni\n\n\nNov 29, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPay off Mortgage or Invest\n\n\n3 min\n\n\n\nFinance\n\n\n\n\nJohannes Tomasoni\n\n\nNov 13, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nArt and Diffusion\n\n\n7 min\n\n\n\nArt\n\n\nML\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nAug 30, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTackling Projects like a ML Challenge\n\n\n9 min\n\n\n\nProject Management\n\n\nML\n\n\nBusiness\n\n\n\n\nJohannes Tomasoni\n\n\nApr 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlat to hierarchie\n\n\n0 min\n\n\n\nTabular\n\n\nEDA\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nFeb 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLearning along\n\n\n1 min\n\n\n\nTabular\n\n\nEDA\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nJan 31, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotes about Sequence Modelling\n\n\n3 min\n\n\n\nTime Series\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nNov 22, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModel allocation\n\n\n6 min\n\n\n\nBasics\n\n\nML\n\n\nEconomics\n\n\n\n\nJohannes Tomasoni\n\n\nAug 15, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStreaming ML training progress to a smart watch\n\n\n10 min\n\n\n\nAPI\n\n\nML\n\n\nSide Project\n\n\n\n\nJohannes Tomasoni\n\n\nJun 19, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIdentifying Hotels\n\n\n1 min\n\n\n\nVision\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nMay 28, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBending the space with nonlinearity\n\n\n0 min\n\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nApr 14, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeaths by age group and states in Germany from 2016 to 2021\n\n\n5 min\n\n\n\nEDA\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nApr 6, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAutomatically translate blog posts\n\n\n2 min\n\n\n\nNLP\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 26, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA handful of bricks - from SQL to Pandas\n\n\n25 min\n\n\n\nSQL\n\n\nPandas\n\n\nBigQuery\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 12, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBigQuery-Geotab Intersection Congestion\n\n\n🏆 Winning solution\n\n\n0 min\n\n\n\nSQL\n\n\nBigQuery\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nJan 5, 2020\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Personal Energy Consumption 2023\n\n\n4 min\n\n\n\nEnvironment\n\n\nLife hack\n\n\n\n\nJohannes Tomasoni\n\n\nJan 10, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive Precision-Recall Curve\n\n\n0 min\n\n\n\nMetric\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFill’er up!\n\n\n5 min\n\n\n\nLife hack\n\n\nFinance\n\n\n\n\nJohannes Tomasoni\n\n\nJan 3, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOne dime at a time?\n\n\n4 min\n\n\n\nFinance\n\n\n\n\nJohannes Tomasoni\n\n\nJan 3, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIngredients for successful projects\n\n\n14 min\n\n\n\nProject Management\n\n\nBusiness\n\n\n\n\nJohannes Tomasoni\n\n\nNov 29, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPay off Mortgage or Invest\n\n\n3 min\n\n\n\nFinance\n\n\n\n\nJohannes Tomasoni\n\n\nNov 13, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nArt and Diffusion\n\n\n7 min\n\n\n\nArt\n\n\nML\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nAug 30, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTackling Projects like a ML Challenge\n\n\n9 min\n\n\n\nProject Management\n\n\nML\n\n\nBusiness\n\n\n\n\nJohannes Tomasoni\n\n\nApr 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlat to hierarchie\n\n\n0 min\n\n\n\nTabular\n\n\nEDA\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nFeb 28, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLearning along\n\n\n1 min\n\n\n\nTabular\n\n\nEDA\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nJan 31, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotes about Sequence Modelling\n\n\n3 min\n\n\n\nTime Series\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nNov 22, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModel allocation\n\n\n6 min\n\n\n\nBasics\n\n\nML\n\n\nEconomics\n\n\n\n\nJohannes Tomasoni\n\n\nAug 15, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStreaming ML training progress to a smart watch\n\n\n10 min\n\n\n\nAPI\n\n\nML\n\n\nSide Project\n\n\n\n\nJohannes Tomasoni\n\n\nJun 19, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIdentifying Hotels\n\n\n1 min\n\n\n\nVision\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nMay 28, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBending the space with nonlinearity\n\n\n0 min\n\n\n\nBasics\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nApr 14, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeaths by age group and states in Germany from 2016 to 2021\n\n\n5 min\n\n\n\nEDA\n\n\nSociety\n\n\n\n\nJohannes Tomasoni\n\n\nApr 6, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAutomatically translate blog posts\n\n\n2 min\n\n\n\nNLP\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 26, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA handful of bricks - from SQL to Pandas\n\n\n25 min\n\n\n\nSQL\n\n\nPandas\n\n\nBigQuery\n\n\nML\n\n\n\n\nJohannes Tomasoni\n\n\nDec 12, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBigQuery-Geotab Intersection Congestion\n\n\n🏆 Winning solution\n\n\n0 min\n\n\n\nSQL\n\n\nBigQuery\n\n\nML\n\n\nCompetition\n\n\n\n\nJohannes Tomasoni\n\n\nJan 5, 2020\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about/index.html",
@@ -523,82 +558,5 @@
     "title": "Recursive SQL",
     "section": "Related Blog",
     "text": "Related Blog\n\nPay off Mortgage or Invest"
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html",
-    "href": "posts/2024-01-10-energy-consumption/index.html",
-    "title": "Personal Energy Consumption 2023",
-    "section": "",
-    "text": "2023 is over, time to wrap up some numbers.\nI’d like to share with you the numbers of my families energy consumption and \\(CO_2\\) footprint of 2023. For one reason, it is always interesting to glance at real personal data you usualy don’t get to see and I enjoy when I find others’ personal numbers on the internet and when I can compare myself to it. Secondly, publishing the data will put some pressure on me to further improve the numbers in 2024.\nOur household consists of two adults and three kids."
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#energy-consumption",
-    "href": "posts/2024-01-10-energy-consumption/index.html#energy-consumption",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Energy consumption",
-    "text": "Energy consumption\nThis are direct consumptions of the household that I could track - like an ESG Scope 1 measure.\n\nElectricity\n\n\n\n\n\n\n\n\n\nConsumption in kWh\n2023\n2022\n- / +\n\n\n\n\nHeat pump (hot water & heating)\n1695\n1919\n-224 (12%)*\n\n\nHousehold\n2625\n2999\n-374 (12%)**\n\n\n\nBoth electricity sources are renewable.\n* some of the savings result from reducing the overall room temprature by 2°C\n** some of the savings result from replacing the old dryer\n\n\nCar\n\n\n\n\n\n\n\n\n\nConsumption\n2023\n2022\n- / +\n\n\n\n\nDistance in kilometer\n10047\n11975\n-1928 (16%)\n\n\nDiesel in liter\n673\n802\n-129 (16%)\n\n\n\\(CO_2\\) emissions of Diesel in t\n2.05\n2.44\n-0.39 (16%)\n\n\n\nThe average Diesel consumption ranges between 0.065 and 0.067 l/km. The calculations are done with 0.067 l/km."
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#co_2-footprint",
-    "href": "posts/2024-01-10-energy-consumption/index.html#co_2-footprint",
-    "title": "Personal Energy Consumption 2023",
-    "section": "\\(CO_2\\) footprint",
-    "text": "\\(CO_2\\) footprint\n\nHousehold emission\n\n\n\nCategory\n\\(CO_2\\) emission in t\n\\(CO_2\\) emission in t p.P.\nConsumtion\n\n\n\n\n    House\n    1.45\n    0.29\n\n\n\n    Heating\n    0.05\n    0.01\n1695 kWh\n\n\n    Electricity\n    0.07\n    0.01\n2625 kWh\n\n\nHousing total\n1.57\n0.31\n\n\n\n    Car\n    0.35\n    0.07\n\n\n\n    Car mileage\n    2.05\n    0.41\n10047 km\n\n\n    Carpool\n    0.16\n    0.03\n1000 km\n\n\n    Public Transportation\n    0.14\n    0.03\n2793 km\n\n\nTransportation total\n2.62\n0.52\n\n\n\nFood\n6.9\n1.38\nreduced meet, prefered local\n\n\nGeneral Consumption\n18.45\n3.69\ndefault estimate\n\n\nPublic Emissions\n5.75\n1.15\ndefault estimate\n\n\nTotal\n35.37\n\n\n\n\nTotal per person\n\n7.07\n\n\n\n\n\n\nPersonal emission\n\n\n\n\n\n\n\n\n\nCategory\n\\(CO_2\\) emission in t\nGerman average\n- / +\n\n\n\n\nHousing\n0.31\n2.49\n-2.18 (88%)\n\n\nTransportation\n0.92\n2.22\n-1.3 (59%)\n\n\nFood\n1.67\n1.75\n-0.08 (5%)\n\n\nGeneral Consumption\n3.69\n2.73\n+0.96 (35%)\n\n\nPublic Emissions\n1.15\n1.15\n0 (0%)\n\n\nTotal\n7.74\n10.34\n-2.6 (25%)"
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#energy-consumption-1",
-    "href": "posts/2024-01-10-energy-consumption/index.html#energy-consumption-1",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Energy consumption",
-    "text": "Energy consumption\n\nElectricity: Data is taken from the electricity meters\nTraval distance: Data is taken from car mileage display\nDiesel consumption: Data is taken from car mileage display\n\\(CO_2\\) emissions of Diesel in t: Calculation via “CO2-Rechner Des Umweltbundesamtes” (2024)"
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#co_2-footprint-1",
-    "href": "posts/2024-01-10-energy-consumption/index.html#co_2-footprint-1",
-    "title": "Personal Energy Consumption 2023",
-    "section": "\\(CO_2\\) footprint",
-    "text": "\\(CO_2\\) footprint\n\nEmission is calculated via “CO2-Rechner Des Umweltbundesamtes” (2024).\nDefault values are taken for the categories General Consumption and Public Emissions.\nMilage for Carpool and Public Transportation are approximated.\nCategorie Food is calculated depending in age and diet.\nPersonal emission is either calculated by Houshold emission divided by five (Housing, General Consumption, Public Emissions) or by the actual values (Transportation, Food).\nGerman average is taken from “CO2-Rechner Des Umweltbundesamtes” (2024)."
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#electricity-1",
-    "href": "posts/2024-01-10-energy-consumption/index.html#electricity-1",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Electricity",
-    "text": "Electricity\n\n[BDE)"
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#electricity",
-    "href": "posts/2024-01-10-energy-consumption/index.html#electricity",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Electricity",
-    "text": "Electricity\n\n\n\n\n\n\n\n\n\nConsumption in kWh\n2023\n2022\n- / +\n\n\n\n\nHeat pump (hot water & heating)\n1695\n1919\n-224 (12%)*\n\n\nHousehold\n2625\n2999\n-374 (12%)**\n\n\n\nBoth electricity sources are renewable.\n* some of the savings result from reducing the overall room temprature by 2°C\n** some of the savings result from replacing the old dryer"
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#car",
-    "href": "posts/2024-01-10-energy-consumption/index.html#car",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Car",
-    "text": "Car\n\n\n\n\n\n\n\n\n\nConsumption\n2023\n2022\n- / +\n\n\n\n\nDistance in kilometer\n10047\n11975\n-1928 (16%)\n\n\nDiesel in liter\n673\n802\n-129 (16%)\n\n\n\\(CO_2\\) emissions of Diesel in t\n2.05\n2.44\n-0.39 (16%)\n\n\n\nThe average Diesel consumption ranges between 0.065 and 0.067 l/km. The calculations are done with 0.067 l/km."
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#household-emission",
-    "href": "posts/2024-01-10-energy-consumption/index.html#household-emission",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Household emission",
-    "text": "Household emission\n\n\n\nCategory\n\\(CO_2\\) emission in t\n\\(CO_2\\) emission in t p.P.\nConsumtion\n\n\n\n\n    House\n    1.45\n    0.29\n\n\n\n    Heating\n    0.05\n    0.01\n1695 kWh\n\n\n    Electricity\n    0.07\n    0.01\n2625 kWh\n\n\nHousing total\n1.57\n0.31\n\n\n\n    Car\n    0.35\n    0.07\n\n\n\n    Car mileage\n    2.05\n    0.41\n10047 km\n\n\n    Carpool\n    0.16\n    0.03\n1000 km\n\n\n    Public Transportation\n    0.14\n    0.03\n2793 km\n\n\nTransportation total\n2.62\n0.52\n\n\n\nFood\n6.9\n1.38\nreduced meet, prefered local\n\n\nGeneral Consumption\n18.45\n3.69\ndefault estimate\n\n\nPublic Emissions\n5.75\n1.15\ndefault estimate\n\n\nTotal\n35.37\n\n\n\n\nTotal per person\n\n7.07"
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#personal-emission",
-    "href": "posts/2024-01-10-energy-consumption/index.html#personal-emission",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Personal emission",
-    "text": "Personal emission\n\n\n\n\n\n\n\n\n\nCategory\n\\(CO_2\\) emission in t\nGerman average\n- / +\n\n\n\n\nHousing\n0.31\n2.49\n-2.18 (88%)\n\n\nTransportation\n0.92\n2.22\n-1.3 (59%)\n\n\nFood\n1.67\n1.75\n-0.08 (5%)\n\n\nGeneral Consumption\n3.69\n2.73\n+0.96 (35%)\n\n\nPublic Emissions\n1.15\n1.15\n0 (0%)\n\n\nTotal\n7.74\n10.34\n-2.6 (25%)"
-  },
-  {
-    "objectID": "posts/2024-01-10-energy-consumption/index.html#energy-consumption-2023",
-    "href": "posts/2024-01-10-energy-consumption/index.html#energy-consumption-2023",
-    "title": "Personal Energy Consumption 2023",
-    "section": "Energy consumption 2023",
-    "text": "Energy consumption 2023\nThis are direct consumptions of the household that I could track - like an ESG Scope 1 measure.\n\nElectricity\n\n\n\n\n\n\n\n\n\nConsumption in kWh\n2023\n2022\n- / +\n\n\n\n\nHeat pump (hot water & heating)\n1695\n1919\n-224 (12%)*\n\n\nHousehold\n2625\n2999\n-374 (12%)**\n\n\n\nBoth electricity sources are renewable.\n* some of the savings result from reducing the overall room temprature by 2°C\n** some of the savings result from replacing the old dryer\n\n\nCar\n\n\n\n\n\n\n\n\n\nConsumption\n2023\n2022\n- / +\n\n\n\n\nDistance in kilometer\n10047\n11975\n-1928 (16%)\n\n\nDiesel in liter\n673\n802\n-129 (16%)\n\n\n\\(CO_2\\) emissions of Diesel in t\n2.05\n2.44\n-0.39 (16%)\n\n\n\nThe average Diesel consumption ranges between 0.065 and 0.067 l/km. The calculations are done with 0.067 l/km."
   }
 ]
