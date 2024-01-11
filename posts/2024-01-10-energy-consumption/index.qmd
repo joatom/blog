@@ -1,0 +1,146 @@
+---
+toc: true
+layout: post
+title: Personal Energy Consumption 2023
+categories: [Environment, Life hack]
+image: fire.jpg
+description: Personal Energy Consumption and $CO_2$ Footprint 2023
+comments:
+  utterances:
+    repo: joatom/blog
+date: "2024-01-10"
+from: markdown+emoji
+author: Johannes Tomasoni
+draft: false
+#number-sections: true
+---
+
+# Review of 2023
+2023 is over, it's time to crunch some numbers.
+
+I'll share with you the numbers of my families energy consumption and $CO_2$ footprint of 2023.
+Our household consists of two adults, three kids and a cat.
+
+In case you know your numbers and are open about it, feel free to share and compare them in the comment section. 
+
+<p align="center">
+  <img src="fire.jpg" alt="" width="50%" style="border-radius: 50%;"/>
+</p>
+
+# Energy consumption
+This are the direct consumptions of the household that I was able to track - like an ESG **Scope 1** measure.
+
+## Electricity
+
+| Consumption in kWh [^1]| **2023** |2022 | **<span style="color:green">-</span> / <span style="color:red">+</span>**| 
+| -------- |-----|-----|-----|
+| Heat pump (hot water & heating) | 1695 | 1919 | <span style="color:green">-224 (12%)</span>\*|
+| Household                       | 2625 | 2999 | <span style="color:green">-374 (12%)</span>\*\* |
+Both electricity sources are renewable.
+
+\* main savings result from reducing the overall room temperature by 2°C
+
+\*\* some of the savings result from replacing the old dryer
+
+## Car
+| Consumption | **2023** | 2022 | **<span style="color:green">-</span> / <span style="color:red">+</span>**| 
+| -------- |-----|----|----|
+| Distance in kilometer [^2] | **10047** | 11975 | <span style="color:green">-1928 (16%)</span>|
+| Diesel in liter | **673** | 802 | <span style="color:green">-129 (16%)</span>|
+| $CO_2$ emissions of Diesel in t [^3] | **2.05** | 2.44 | <span style="color:green">-0.39 (16%)</span>|
+
+The average Diesel consumption ranges from 0.065 to 0.067 l/km.[^4] The calculations are done with 0.067 l/km.
+
+# $CO_2$ footprint
+
+The emissions are calculated using @uba_2024, a $CO_2$ calculator provided by the German Government.
+
+## Household emission
+
+| Category | $CO_2$ emission in t [^5]|$CO_2$ emission in t p.P.| Consumption|
+|-----|-----|-----|-----|
+|*\  \  House*|*\  \  1.45*|*\  \  0.29*||
+|*\  \  Heating*|*\  \  0.05*|*\  \  0.01*|1695 kWh|
+|*\  \  Electricity*|*\  \  0.07*|*\  \  0.01*|2625 kWh|
+|Housing total|1.57|0.31||
+|*\  \  Car*|*\  \  0.35*|*\  \  0.07*||
+|*\  \  Car mileage*|*\  \  2.05*|*\  \  0.41*|10047 km|
+|*\  \  Carpool*|*\  \  0.16*|*\  \  0.03*|1000 km|
+|*\  \  Public Transportation*|*\  \  0.14*|*\  \  0.03*|2793 km|
+|Transportation total|2.62|0.52||
+|Food|6.9|1.38| reduced meat, preferred local|
+|General Consumption|18.45|3.69| default estimate|
+|Public Emissions|5.75|1.15| default estimate|
+|**Total**|**35.37**|||
+|**Total per person**|| **7.07**||
+
+## Personal emission
+
+
+```{python}
+#|echo: false
+#| layout-ncol: 1
+
+import pandas as pd
+import seaborn as sns
+import seaborn.objects as so
+import matplotlib.pyplot as plt
+from seaborn import axes_style
+
+cats = ['Housing','Transportation', 'Food', 'General Consumption', 'Public Emission']
+data = pd.DataFrame({'Person':['Me']*5+['German average']*5, 
+                     'Category':cats*2,
+                     '$CO_2$ Emission in t':[.31,.29,1.67,3.69,1.15,2.49,2.22,1.75,2.73,1.15]}).sort_values(by='$CO_2$ Emission in t',ascending=True)
+
+p=(so.Plot(data, x='Person', y= '$CO_2$ Emission in t', color='Category').add(so.Bar(),so.Agg(), so.Stack()).scale(color='flare')
+)
+p.label(x="")
+
+```
+
+| Category | $CO_2$ emission in t [^6]| German average [^7]| **<span style="color:green">-</span> / <span style="color:red">+</span>**| 
+|-----|-----|----|----|
+|Housing|0.31|2.49|<span style="color:green">-2.18 (88%)</span>|
+|Transportation|0.92|2.22|<span style="color:green">-1.3 (59%)</span>|
+|Food|1.67|1.75|<span style="color:green">-0.08 (5%)</span>|
+|General Consumption|3.69|2.73|<span style="color:red">+0.96 (35%)</span>|
+|Public Emissions|1.15|1.15| 0 (0%)|
+|**Total**|**7.74**|**10.34**|**<span style="color:green">-2.6 (25%)</span>**|
+
+# Conclusion
+Options to further reduce my consumption significantly are limited. 
+
+- The biggest contribution is *General Consumption* which is a general estimate depending on our household income. The assumption is: the more you earn the more you consume. 
+- The second biggest block is *Food*. This could be improved by reducing dairy and meat. 
+- The third block *Public Emission* covers infrastructure, industry, etc. and is hard to influence on an individual level.
+- The *Housing* category is already quite low because of good insulation and energy efficient heating. 
+- The *Transportation* category was low because the five of us share one car. We did few traveling and due to a work from home policy I spend few kilometers commuting.
+
+I firmly believe that the only way to improve life or reduce consumption is by implementing habits into your daily life that are not causing much effort, like enjoying a walk to the bakery instead of squeezing into a car. For bigger changes to work, like installing a PV system, there must be an economic incentive, like a quick armortization and low opportunity costs.
+
+:::{.callout-tip}
+## Life hacks
+- Default to not taking the [car](../2023-01-03-fill-her-up/).
+- Watch out for inefficient electrical devices, like an old dryer. In my case it was much cheaper to replace my broken 15 year old dryer with a new energy efficient one instead of repairing it.
+- Don't just buy things because thy are efficient. Buying a new car every three years is probably not very $CO_2$ efficient, no matter how advanced the battery is.
+- Rule of thumb: Electronics and machines are good for efficiency at work. Outside of work they have lots of downsides: they cost lots of money, the lead to high emissions, they often are noisy, mostly they weaken your body.
+
+That said, time to switch of my computer and unfold the drying rack, lol. 
+
+Bye :wink:
+:::
+
+# References
+::: {#refs}
+:::
+
+
+[^1]: The data is taken from the electricity meters.
+[^2]: Data is taken from car mileage display.
+[^3]: $CO_2$ emissions of Diesel is calculated via @uba_2024
+[^4]: Data is taken from car mileage display.
+[^5]: - Default values are taken for the categories *General Consumption* and *Public Emissions*.
+  - Mileage for *Carpool* and *Public Transportation* are approximated.
+  - Category *Food* is calculated depending on age and diet.
+[^6]: Personal emission is either calculated by household emission divided by five (*Housing*, *General Consumption*, *Public Emissions*) or by the actual values (*Transportation*, *Food*).
+[^7]: German average is taken from @uba_2024.
