@@ -10,7 +10,302 @@
 <atom:link href="https://joatom.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>AI curios</description>
 <generator>quarto-1.2.256</generator>
-<lastBuildDate>Thu, 28 Dec 2023 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 09 Jan 2024 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Personal Energy Consumption 2023</title>
+  <dc:creator>Johannes Tomasoni</dc:creator>
+  <link>https://joatom.github.io/blog/posts/2024-01-10-energy-consumption/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="review-of-2023" class="level1">
+<h1>Review of 2023</h1>
+<p>2023 is over, time to wrap up some numbers.</p>
+<p>I’d like to share with you the numbers of my families energy consumption and <img src="https://latex.codecogs.com/png.latex?CO_2"> footprint of 2023. For one reason, it is always interesting to glance at real personal data you usualy don’t get to see and I enjoy when I find others’ personal numbers on the internet and when I can compare myself to it. Secondly, publishing the data will put some pressure on me to further improve the numbers in 2024.</p>
+<p>Our household consists of two adults and three kids.</p>
+</section>
+<section id="energy-consumption" class="level1">
+<h1>Energy consumption</h1>
+<p>This are the direct consumptions of the household that I could track - like an ESG <strong>Scope 1</strong> measure.</p>
+<section id="electricity" class="level2">
+<h2 class="anchored" data-anchor-id="electricity">Electricity</h2>
+<table class="table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Consumption in kWh</th>
+<th><strong>2023</strong></th>
+<th>2022</th>
+<th><strong><span style="color:green">-</span> / <span style="color:red">+</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Heat pump (hot water &amp; heating)</td>
+<td>1695</td>
+<td>1919</td>
+<td><span style="color:green">-224 (12%)</span>*</td>
+</tr>
+<tr class="even">
+<td>Household</td>
+<td>2625</td>
+<td>2999</td>
+<td><span style="color:green">-374 (12%)</span>**</td>
+</tr>
+</tbody>
+</table>
+<p>Both electricity sources are renewable.</p>
+<p>* some of the savings result from reducing the overall room temprature by 2°C</p>
+<p>** some of the savings result from replacing the old dryer</p>
+</section>
+<section id="car" class="level2">
+<h2 class="anchored" data-anchor-id="car">Car</h2>
+<table class="table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Consumption</th>
+<th><strong>2023</strong></th>
+<th>2022</th>
+<th><strong><span style="color:green">-</span> / <span style="color:red">+</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Distance in kilometer</td>
+<td><strong>10047</strong></td>
+<td>11975</td>
+<td><span style="color:green">-1928 (16%)</span></td>
+</tr>
+<tr class="even">
+<td>Diesel in liter</td>
+<td><strong>673</strong></td>
+<td>802</td>
+<td><span style="color:green">-129 (16%)</span></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?CO_2"> emissions of Diesel in t</td>
+<td><strong>2.05</strong></td>
+<td>2.44</td>
+<td><span style="color:green">-0.39 (16%)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The average Diesel consumption ranges between 0.065 and 0.067 l/km. The calculations are done with 0.067 l/km.</p>
+</section>
+</section>
+<section id="co_2-footprint" class="level1">
+<h1><img src="https://latex.codecogs.com/png.latex?CO_2"> footprint</h1>
+<section id="household-emission" class="level2">
+<h2 class="anchored" data-anchor-id="household-emission">Household emission</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th><img src="https://latex.codecogs.com/png.latex?CO_2"> emission in t</th>
+<th><img src="https://latex.codecogs.com/png.latex?CO_2"> emission in t p.P.</th>
+<th>Consumtion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; House</em></td>
+<td><em>&nbsp; &nbsp; 1.45</em></td>
+<td><em>&nbsp; &nbsp; 0.29</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>&nbsp; &nbsp; Heating</em></td>
+<td><em>&nbsp; &nbsp; 0.05</em></td>
+<td><em>&nbsp; &nbsp; 0.01</em></td>
+<td>1695 kWh</td>
+</tr>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; Electricity</em></td>
+<td><em>&nbsp; &nbsp; 0.07</em></td>
+<td><em>&nbsp; &nbsp; 0.01</em></td>
+<td>2625 kWh</td>
+</tr>
+<tr class="even">
+<td>Housing total</td>
+<td>1.57</td>
+<td>0.31</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; Car</em></td>
+<td><em>&nbsp; &nbsp; 0.35</em></td>
+<td><em>&nbsp; &nbsp; 0.07</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>&nbsp; &nbsp; Car mileage</em></td>
+<td><em>&nbsp; &nbsp; 2.05</em></td>
+<td><em>&nbsp; &nbsp; 0.41</em></td>
+<td>10047 km</td>
+</tr>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; Carpool</em></td>
+<td><em>&nbsp; &nbsp; 0.16</em></td>
+<td><em>&nbsp; &nbsp; 0.03</em></td>
+<td>1000 km</td>
+</tr>
+<tr class="even">
+<td><em>&nbsp; &nbsp; Public Transportation</em></td>
+<td><em>&nbsp; &nbsp; 0.14</em></td>
+<td><em>&nbsp; &nbsp; 0.03</em></td>
+<td>2793 km</td>
+</tr>
+<tr class="odd">
+<td>Transportation total</td>
+<td>2.62</td>
+<td>0.52</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Food</td>
+<td>6.9</td>
+<td>1.38</td>
+<td>reduced meet, prefered local</td>
+</tr>
+<tr class="odd">
+<td>General Consumption</td>
+<td>18.45</td>
+<td>3.69</td>
+<td>default estimate</td>
+</tr>
+<tr class="even">
+<td>Public Emissions</td>
+<td>5.75</td>
+<td>1.15</td>
+<td>default estimate</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>35.37</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Total per person</strong></td>
+<td></td>
+<td><strong>7.07</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="personal-emission" class="level2">
+<h2 class="anchored" data-anchor-id="personal-emission">Personal emission</h2>
+<table class="table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th><img src="https://latex.codecogs.com/png.latex?CO_2"> emission in t</th>
+<th>German average</th>
+<th><strong><span style="color:green">-</span> / <span style="color:red">+</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Housing</td>
+<td>0.31</td>
+<td>2.49</td>
+<td><span style="color:green">-2.18 (88%)</span></td>
+</tr>
+<tr class="even">
+<td>Transportation</td>
+<td>0.92</td>
+<td>2.22</td>
+<td><span style="color:green">-1.3 (59%)</span></td>
+</tr>
+<tr class="odd">
+<td>Food</td>
+<td>1.67</td>
+<td>1.75</td>
+<td><span style="color:green">-0.08 (5%)</span></td>
+</tr>
+<tr class="even">
+<td>General Consumption</td>
+<td>3.69</td>
+<td>2.73</td>
+<td><span style="color:red">+0.96 (35%)</span></td>
+</tr>
+<tr class="odd">
+<td>Public Emissions</td>
+<td>1.15</td>
+<td>1.15</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>7.74</strong></td>
+<td><strong>10.34</strong></td>
+<td><span style="color:green">-2.6 (25%)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="methodology-and-data-sources" class="level1">
+<h1>Methodology and Data Sources</h1>
+<p>This section gives some additional information on how I come up with the data.</p>
+<section id="energy-consumption-1" class="level2">
+<h2 class="anchored" data-anchor-id="energy-consumption-1">Energy consumption</h2>
+<ul>
+<li>Electricity: Data is taken from the electricity meters</li>
+<li>Traval distance: Data is taken from car mileage display</li>
+<li>Diesel consumption: Data is taken from car mileage display</li>
+<li><img src="https://latex.codecogs.com/png.latex?CO_2"> emissions of Diesel in t: Calculation via <span class="citation" data-cites="uba_2024"><span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>”</span> (2024)</span></li>
+</ul>
+</section>
+<section id="co_2-footprint-1" class="level2">
+<h2 class="anchored" data-anchor-id="co_2-footprint-1"><img src="https://latex.codecogs.com/png.latex?CO_2"> footprint</h2>
+<ul>
+<li>Emission is calculated via <span class="citation" data-cites="uba_2024"><span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>”</span> (2024)</span>.</li>
+<li>Default values are taken for the categories <em>General Consumption</em> and <em>Public Emissions</em>.</li>
+<li>Milage for <em>Carpool</em> and <em>Public Transportation</em> are approximated.</li>
+<li>Categorie <em>Food</em> is calculated depending in age and diet.</li>
+<li>Personal emission is either calculated by Houshold emission divided by five (<em>Housing</em>, <em>General Consumption</em>, <em>Public Emissions</em>) or by the actual values (<em>Transportation</em>, <em>Food</em>).</li>
+<li>German average is taken from <span class="citation" data-cites="uba_2024"><span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>”</span> (2024)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-uba_2024" class="csl-entry">
+<span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>.”</span> 2024. <a href="https://uba.co2-rechner.de/de_DE/">https://uba.co2-rechner.de/de_DE/</a>.
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>environment</category>
+  <guid>https://joatom.github.io/blog/posts/2024-01-10-energy-consumption/index.html</guid>
+  <pubDate>Tue, 09 Jan 2024 23:00:00 GMT</pubDate>
+  <media:content url="https://joatom.github.io/blog/posts/2024-01-10-energy-consumption/board.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Interactive Precision-Recall Curve</title>
   <dc:creator>Johannes Tomasoni</dc:creator>

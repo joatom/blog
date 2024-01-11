@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Johannes Tomasoni">
-<meta name="dcterms.date" content="2022-02-28">
-<meta name="description" content="Extract hierarchical information from flattened data">
+<meta name="dcterms.date" content="2024-01-10">
+<meta name="description" content="Personal Energy Consumption 2023 and CO_2 Footprint">
 
-<title>jo@tom - Flat to hierarchie</title>
+<title>jo@tom - Personal Energy Consumption 2023</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,25 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
 
@@ -64,23 +83,20 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="jo@tom - Flat to hierarchie">
-<meta property="og:description" content="Extract hierarchical information from flattened data">
-<meta property="og:image" content="https://joatom.github.io/blog/posts/2022-02-28-relationship/relationship.png">
+<meta property="og:title" content="jo@tom - Personal Energy Consumption 2023">
+<meta property="og:description" content="Personal Energy Consumption 2023 and $CO_2$ Footprint">
+<meta property="og:image" content="https://joatom.github.io/blog/posts/2024-01-10-energy-consumption/board.png">
 <meta property="og:site-name" content="jo@tom">
-<meta property="og:image:height" content="514">
-<meta property="og:image:width" content="512">
-<meta name="twitter:title" content="jo@tom - Flat to hierarchie">
-<meta name="twitter:description" content="Extract hierarchical information from flattened data">
-<meta name="twitter:image" content="https://joatom.github.io/blog/posts/2022-02-28-relationship/relationship.png">
-<meta name="twitter:image-height" content="514">
-<meta name="twitter:image-width" content="512">
+<meta name="twitter:title" content="jo@tom - Personal Energy Consumption 2023">
+<meta name="twitter:description" content="Personal Energy Consumption 2023 and $CO_2$ Footprint">
+<meta name="twitter:image" content="https://joatom.github.io/blog/posts/2024-01-10-energy-consumption/board.png">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -152,16 +168,14 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Flat to hierarchie</h1>
+      <h1 class="title">Personal Energy Consumption 2023</h1>
                   <div>
         <div class="description">
-          Extract hierarchical information from flattened data
+          Personal Energy Consumption 2023 and <span class="math inline">\(CO_2\)</span> Footprint
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Tabular</div>
-                <div class="quarto-category">EDA</div>
-                <div class="quarto-category">ML</div>
+                <div class="quarto-category">environment</div>
               </div>
                   </div>
   </div>
@@ -179,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 28, 2022</p>
+        <p class="date">January 10, 2024</p>
       </div>
     </div>
     
@@ -190,21 +204,316 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review-of-2023" id="toc-review-of-2023" class="nav-link active" data-scroll-target="#review-of-2023">Review of 2023</a></li>
+  <li><a href="#energy-consumption" id="toc-energy-consumption" class="nav-link" data-scroll-target="#energy-consumption">Energy consumption</a>
+  <ul class="collapse">
+  <li><a href="#electricity" id="toc-electricity" class="nav-link" data-scroll-target="#electricity">Electricity</a></li>
+  <li><a href="#car" id="toc-car" class="nav-link" data-scroll-target="#car">Car</a></li>
+  </ul></li>
+  <li><a href="#co_2-footprint" id="toc-co_2-footprint" class="nav-link" data-scroll-target="#co_2-footprint"><span class="math inline">\(CO_2\)</span> footprint</a>
+  <ul class="collapse">
+  <li><a href="#household-emission" id="toc-household-emission" class="nav-link" data-scroll-target="#household-emission">Household emission</a></li>
+  <li><a href="#personal-emission" id="toc-personal-emission" class="nav-link" data-scroll-target="#personal-emission">Personal emission</a></li>
+  </ul></li>
+  <li><a href="#methodology-and-data-sources" id="toc-methodology-and-data-sources" class="nav-link" data-scroll-target="#methodology-and-data-sources">Methodology and Data Sources</a>
+  <ul class="collapse">
+  <li><a href="#energy-consumption-1" id="toc-energy-consumption-1" class="nav-link" data-scroll-target="#energy-consumption-1">Energy consumption</a></li>
+  <li><a href="#co_2-footprint-1" id="toc-co_2-footprint-1" class="nav-link" data-scroll-target="#co_2-footprint-1"><span class="math inline">\(CO_2\)</span> footprint</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p align="center">
-<img src="relationship.png" class="img-fluid">
-</p>
-<p>Tabular data is often transformed in a flattened manner so it can easily be processed by commen ML frameworks. Sometimes it is usefull to understand the relationships and hierarchies between the columns of a flattend datasource. In this notebook hierarchies are extracted from a flattened csv file.</p>
-<iframe src="https://www.kaggle.com/embed/joatom/hm-relationship-of-article-columns?kernelSessionId=88452731" height="800" style="margin: 0 auto; width: 100%; max-width: 950px;" frameborder="0" scrolling="auto" title="Relationship of Article columns" allowfullscreen="allowfullscreen">
-</iframe>
+<section id="review-of-2023" class="level1">
+<h1>Review of 2023</h1>
+<p>2023 is over, time to wrap up some numbers.</p>
+<p>I’d like to share with you the numbers of my families energy consumption and <span class="math inline">\(CO_2\)</span> footprint of 2023. For one reason, it is always interesting to glance at real personal data you usualy don’t get to see and I enjoy when I find others’ personal numbers on the internet and when I can compare myself to it. Secondly, publishing the data will put some pressure on me to further improve the numbers in 2024.</p>
+<p>Our household consists of two adults and three kids.</p>
+</section>
+<section id="energy-consumption" class="level1">
+<h1>Energy consumption</h1>
+<p>This are the direct consumptions of the household that I could track - like an ESG <strong>Scope 1</strong> measure.</p>
+<section id="electricity" class="level2">
+<h2 class="anchored" data-anchor-id="electricity">Electricity</h2>
+<table class="table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Consumption in kWh</th>
+<th><strong>2023</strong></th>
+<th>2022</th>
+<th><strong><span style="color:green">-</span> / <span style="color:red">+</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Heat pump (hot water &amp; heating)</td>
+<td>1695</td>
+<td>1919</td>
+<td><span style="color:green">-224 (12%)</span>*</td>
+</tr>
+<tr class="even">
+<td>Household</td>
+<td>2625</td>
+<td>2999</td>
+<td><span style="color:green">-374 (12%)</span>**</td>
+</tr>
+</tbody>
+</table>
+<p>Both electricity sources are renewable.</p>
+<p>* some of the savings result from reducing the overall room temprature by 2°C</p>
+<p>** some of the savings result from replacing the old dryer</p>
+</section>
+<section id="car" class="level2">
+<h2 class="anchored" data-anchor-id="car">Car</h2>
+<table class="table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Consumption</th>
+<th><strong>2023</strong></th>
+<th>2022</th>
+<th><strong><span style="color:green">-</span> / <span style="color:red">+</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Distance in kilometer</td>
+<td><strong>10047</strong></td>
+<td>11975</td>
+<td><span style="color:green">-1928 (16%)</span></td>
+</tr>
+<tr class="even">
+<td>Diesel in liter</td>
+<td><strong>673</strong></td>
+<td>802</td>
+<td><span style="color:green">-129 (16%)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(CO_2\)</span> emissions of Diesel in t</td>
+<td><strong>2.05</strong></td>
+<td>2.44</td>
+<td><span style="color:green">-0.39 (16%)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The average Diesel consumption ranges between 0.065 and 0.067 l/km. The calculations are done with 0.067 l/km.</p>
+</section>
+</section>
+<section id="co_2-footprint" class="level1">
+<h1><span class="math inline">\(CO_2\)</span> footprint</h1>
+<section id="household-emission" class="level2">
+<h2 class="anchored" data-anchor-id="household-emission">Household emission</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th><span class="math inline">\(CO_2\)</span> emission in t</th>
+<th><span class="math inline">\(CO_2\)</span> emission in t p.P.</th>
+<th>Consumtion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; House</em></td>
+<td><em>&nbsp; &nbsp; 1.45</em></td>
+<td><em>&nbsp; &nbsp; 0.29</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>&nbsp; &nbsp; Heating</em></td>
+<td><em>&nbsp; &nbsp; 0.05</em></td>
+<td><em>&nbsp; &nbsp; 0.01</em></td>
+<td>1695 kWh</td>
+</tr>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; Electricity</em></td>
+<td><em>&nbsp; &nbsp; 0.07</em></td>
+<td><em>&nbsp; &nbsp; 0.01</em></td>
+<td>2625 kWh</td>
+</tr>
+<tr class="even">
+<td>Housing total</td>
+<td>1.57</td>
+<td>0.31</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; Car</em></td>
+<td><em>&nbsp; &nbsp; 0.35</em></td>
+<td><em>&nbsp; &nbsp; 0.07</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>&nbsp; &nbsp; Car mileage</em></td>
+<td><em>&nbsp; &nbsp; 2.05</em></td>
+<td><em>&nbsp; &nbsp; 0.41</em></td>
+<td>10047 km</td>
+</tr>
+<tr class="odd">
+<td><em>&nbsp; &nbsp; Carpool</em></td>
+<td><em>&nbsp; &nbsp; 0.16</em></td>
+<td><em>&nbsp; &nbsp; 0.03</em></td>
+<td>1000 km</td>
+</tr>
+<tr class="even">
+<td><em>&nbsp; &nbsp; Public Transportation</em></td>
+<td><em>&nbsp; &nbsp; 0.14</em></td>
+<td><em>&nbsp; &nbsp; 0.03</em></td>
+<td>2793 km</td>
+</tr>
+<tr class="odd">
+<td>Transportation total</td>
+<td>2.62</td>
+<td>0.52</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Food</td>
+<td>6.9</td>
+<td>1.38</td>
+<td>reduced meet, prefered local</td>
+</tr>
+<tr class="odd">
+<td>General Consumption</td>
+<td>18.45</td>
+<td>3.69</td>
+<td>default estimate</td>
+</tr>
+<tr class="even">
+<td>Public Emissions</td>
+<td>5.75</td>
+<td>1.15</td>
+<td>default estimate</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>35.37</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Total per person</strong></td>
+<td></td>
+<td><strong>7.07</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="personal-emission" class="level2">
+<h2 class="anchored" data-anchor-id="personal-emission">Personal emission</h2>
+<table class="table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th><span class="math inline">\(CO_2\)</span> emission in t</th>
+<th>German average</th>
+<th><strong><span style="color:green">-</span> / <span style="color:red">+</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Housing</td>
+<td>0.31</td>
+<td>2.49</td>
+<td><span style="color:green">-2.18 (88%)</span></td>
+</tr>
+<tr class="even">
+<td>Transportation</td>
+<td>0.92</td>
+<td>2.22</td>
+<td><span style="color:green">-1.3 (59%)</span></td>
+</tr>
+<tr class="odd">
+<td>Food</td>
+<td>1.67</td>
+<td>1.75</td>
+<td><span style="color:green">-0.08 (5%)</span></td>
+</tr>
+<tr class="even">
+<td>General Consumption</td>
+<td>3.69</td>
+<td>2.73</td>
+<td><span style="color:red">+0.96 (35%)</span></td>
+</tr>
+<tr class="odd">
+<td>Public Emissions</td>
+<td>1.15</td>
+<td>1.15</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>7.74</strong></td>
+<td><strong>10.34</strong></td>
+<td><span style="color:green">-2.6 (25%)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="methodology-and-data-sources" class="level1">
+<h1>Methodology and Data Sources</h1>
+<p>This section gives some additional information on how I come up with the data.</p>
+<section id="energy-consumption-1" class="level2">
+<h2 class="anchored" data-anchor-id="energy-consumption-1">Energy consumption</h2>
+<ul>
+<li>Electricity: Data is taken from the electricity meters</li>
+<li>Traval distance: Data is taken from car mileage display</li>
+<li>Diesel consumption: Data is taken from car mileage display</li>
+<li><span class="math inline">\(CO_2\)</span> emissions of Diesel in t: Calculation via <span class="citation" data-cites="uba_2024"><span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>”</span> (<a href="#ref-uba_2024" role="doc-biblioref">2024</a>)</span></li>
+</ul>
+</section>
+<section id="co_2-footprint-1" class="level2">
+<h2 class="anchored" data-anchor-id="co_2-footprint-1"><span class="math inline">\(CO_2\)</span> footprint</h2>
+<ul>
+<li>Emission is calculated via <span class="citation" data-cites="uba_2024"><span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>”</span> (<a href="#ref-uba_2024" role="doc-biblioref">2024</a>)</span>.</li>
+<li>Default values are taken for the categories <em>General Consumption</em> and <em>Public Emissions</em>.</li>
+<li>Milage for <em>Carpool</em> and <em>Public Transportation</em> are approximated.</li>
+<li>Categorie <em>Food</em> is calculated depending in age and diet.</li>
+<li>Personal emission is either calculated by Houshold emission divided by five (<em>Housing</em>, <em>General Consumption</em>, <em>Public Emissions</em>) or by the actual values (<em>Transportation</em>, <em>Food</em>).</li>
+<li>German average is taken from <span class="citation" data-cites="uba_2024"><span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>”</span> (<a href="#ref-uba_2024" role="doc-biblioref">2024</a>)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-uba_2024" class="csl-entry" role="doc-biblioentry">
+<span>“<span>CO2</span>-<span>Rechner</span> Des <span>Umweltbundesamtes</span>.”</span> 2024. <a href="https://uba.co2-rechner.de/de_DE/">https://uba.co2-rechner.de/de_DE/</a>.
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

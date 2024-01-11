@@ -1,0 +1,101 @@
+---
+toc: true
+layout: post
+title: Personal Energy Consumption 2023
+categories: [environment]
+image: board.png
+description: Personal Energy Consumption 2023 and $CO_2$ Footprint 
+comments:
+  utterances:
+    repo: joatom/blog
+date: "2024-01-10"
+from: markdown+emoji
+author: Johannes Tomasoni
+draft: false
+#number-sections: true
+---
+
+# Review of 2023
+2023 is over, time to wrap up some numbers.
+
+I'd like to share with you the numbers of my families energy consumption and $CO_2$ footprint of 2023.
+For one reason, it is always interesting to glance at real personal data you usualy don't get to see and I enjoy when I find others' personal numbers on the internet and when I can compare myself to it. Secondly, publishing the data will put some pressure on me to further improve the numbers in 2024.
+
+Our household consists of two adults and three kids.
+
+# Energy consumption
+This are the direct consumptions of the household that I could track - like an ESG **Scope 1** measure.
+
+## Electricity
+
+| Consumption in kWh| **2023** |2022 | **<span style="color:green">-</span> / <span style="color:red">+</span>**| 
+| -------- |-----|-----|-----|
+| Heat pump (hot water & heating) | 1695 | 1919 | <span style="color:green">-224 (12%)</span>\*|
+| Household                       | 2625 | 2999 | <span style="color:green">-374 (12%)</span>\*\* |
+Both electricity sources are renewable.
+
+\* some of the savings result from reducing the overall room temprature by 2°C
+
+\*\* some of the savings result from replacing the old dryer
+
+## Car
+| Consumption | **2023** | 2022 | **<span style="color:green">-</span> / <span style="color:red">+</span>**| 
+| -------- |-----|----|----|
+| Distance in kilometer  | **10047** | 11975 | <span style="color:green">-1928 (16%)</span>|
+| Diesel in liter | **673** | 802 | <span style="color:green">-129 (16%)</span>|
+| $CO_2$ emissions of Diesel in t | **2.05** | 2.44 | <span style="color:green">-0.39 (16%)</span>|
+The average Diesel consumption ranges between 0.065 and 0.067 l/km. The calculations are done with 0.067 l/km.
+
+# $CO_2$ footprint
+
+## Household emission
+
+| Category | $CO_2$ emission in t|$CO_2$ emission in t p.P.| Consumtion|
+|-----|-----|-----|-----|
+|*\  \  House*|*\  \  1.45*|*\  \  0.29*||
+|*\  \  Heating*|*\  \  0.05*|*\  \  0.01*|1695 kWh|
+|*\  \  Electricity*|*\  \  0.07*|*\  \  0.01*|2625 kWh|
+|Housing total|1.57|0.31||
+|*\  \  Car*|*\  \  0.35*|*\  \  0.07*||
+|*\  \  Car mileage*|*\  \  2.05*|*\  \  0.41*|10047 km|
+|*\  \  Carpool*|*\  \  0.16*|*\  \  0.03*|1000 km|
+|*\  \  Public Transportation*|*\  \  0.14*|*\  \  0.03*|2793 km|
+|Transportation total|2.62|0.52||
+|Food|6.9|1.38| reduced meet, prefered local|
+|General Consumption|18.45|3.69| default estimate|
+|Public Emissions|5.75|1.15| default estimate|
+|**Total**|**35.37**|||
+|**Total per person**|| **7.07**||
+
+## Personal emission
+
+| Category | $CO_2$ emission in t| German average | **<span style="color:green">-</span> / <span style="color:red">+</span>**| 
+|-----|-----|----|----|
+|Housing|0.31|2.49|<span style="color:green">-2.18 (88%)</span>|
+|Transportation|0.92|2.22|<span style="color:green">-1.3 (59%)</span>|
+|Food|1.67|1.75|<span style="color:green">-0.08 (5%)</span>|
+|General Consumption|3.69|2.73|<span style="color:red">+0.96 (35%)</span>|
+|Public Emissions|1.15|1.15| 0 (0%)|
+|**Total**|**7.74**|**10.34**|<span style="color:green">-2.6 (25%)</span>|
+
+
+# Methodology and Data Sources
+This section gives some additional information on how I come up with the data.
+
+## Energy consumption
+- Electricity: Data is taken from the electricity meters
+- Traval distance: Data is taken from car mileage display
+- Diesel consumption: Data is taken from car mileage display
+- $CO_2$ emissions of Diesel in t: Calculation via @uba_2024
+
+## $CO_2$ footprint
+- Emission is calculated via @uba_2024.
+- Default values are taken for the categories *General Consumption* and *Public Emissions*.
+- Milage for *Carpool* and *Public Transportation* are approximated.
+- Categorie *Food* is calculated depending in age and diet.
+- Personal emission is either calculated by Houshold emission divided by five (*Housing*, *General Consumption*, *Public Emissions*) or by the actual values (*Transportation*, *Food*).
+- German average is taken from @uba_2024.
+
+# References
+::: {#refs}
+:::

@@ -58,7 +58,7 @@ website:
 
   page-footer: 
     left:
-      - text: "Copyright 2023, Johannes Tomasoni" 
+      - text: "Copyright 2024, Johannes Tomasoni" 
     center:
       - text: "Imprint"
         href: legal/imprint.qmd
